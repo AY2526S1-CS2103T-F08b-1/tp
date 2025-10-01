@@ -11,7 +11,7 @@
         "jane-doe": "Jane Doe",
         "johnny-doe": "Johnny Doe",
         "jean-doe": "Jean Doe",
-        "james-doe": "James Doe"
+        "zhao-xin-tong": "Zhao Xin Tong"
       },
       "headingKeywords": {}
     },
@@ -38,9 +38,9 @@
     },
     {
       "src": "DeveloperGuide.md",
-      "title": "Developer Guide",
+      "title": "SummonersBook Developer Guide",
       "headings": {
-        "ab-3-developer-guide": "AB-3 Developer Guide",
+        "summonersbook-developer-guide": "SummonersBook Developer Guide",
         "acknowledgements": "Acknowledgements",
         "setting-up-getting-started": "Setting up, getting started",
         "design": "Design",
@@ -58,6 +58,14 @@
         "product-scope": "Product scope",
         "user-stories": "User stories",
         "use-cases": "Use cases",
+        "use-case-add-a-player": "Use case: Add a player",
+        "use-case-view-a-player": "Use case: View a player",
+        "use-case-delete-a-player": "Use case: Delete a player",
+        "use-case-find-players": "Use case: Find players",
+        "use-case-auto-group-players-create-teams": "Use case: Auto-group players (create teams)",
+        "use-case-ungroup-teams": "Use case: Ungroup teams",
+        "use-case-view-a-team": "Use case: View a team",
+        "use-case-help": "Use case: Help",
         "non-functional-requirements": "Non-Functional Requirements",
         "glossary": "Glossary",
         "appendix-instructions-for-manual-testing": "Appendix: Instructions for manual testing",
@@ -136,10 +144,17 @@
       "headingKeywords": {}
     },
     {
-      "src": "team/johndoe.md",
-      "title": "John Doe's Project Portfolio Page",
+      "src": "team/landonzhao.md",
+      "title": "Xin Tong's Project Portfolio Page",
       "headings": {
-        "project-addressbook-level-3": "Project: AddressBook Level 3"
+        "project-summonersbook": "Project: SummonersBook",
+        "new-features": "New Features",
+        "code-contributions": "Code Contributions",
+        "project-management": "Project Management",
+        "enhancements-to-existing-features": "Enhancements to Existing Features",
+        "documentation": "Documentation",
+        "community": "Community",
+        "tools": "Tools"
       },
       "headingKeywords": {}
     }
