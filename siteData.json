@@ -7,10 +7,10 @@
       "headings": {
         "about-us": "About Us",
         "project-team": "Project team",
-        "john-doe": "John Doe",
+        "bryan-koh": "Bryan Koh",
         "jane-doe": "Jane Doe",
         "justin-wong": "Justin Wong",
-        "jean-doe": "Jean Doe",
+        "valerie-lim": "Valerie Lim",
         "zhao-xin-tong": "Zhao Xin Tong"
       },
       "headingKeywords": {}
@@ -144,6 +144,14 @@
       "headingKeywords": {}
     },
     {
+      "src": "team/bryankcodes.md",
+      "title": "Bryan Koh's Project Portfolio Page",
+      "headings": {
+        "project-summonersbook": "Project: SummonersBook"
+      },
+      "headingKeywords": {}
+    },
+    {
       "src": "team/fatkidddd.md",
       "title": "Justin Wong's Project Portfolio Page",
       "headings": {
@@ -170,6 +178,14 @@
         "documentation": "Documentation",
         "community": "Community",
         "tools": "Tools"
+      },
+      "headingKeywords": {}
+    },
+    {
+      "src": "team/valeriexylim.md",
+      "title": "Valerie's Project Portfolio Page",
+      "headings": {
+        "project-summonersbook": "Project: SummonersBook"
       },
       "headingKeywords": {}
     }
