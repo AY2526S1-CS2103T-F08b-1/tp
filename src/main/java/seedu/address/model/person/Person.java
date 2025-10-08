@@ -24,9 +24,9 @@ public class Person {
     private final Email email;
 
     // Data fields
-    private final Role role = new Role("mid"); //dummy data
-    private final Rank rank = new Rank("challenger"); //dummy data
-    private final Champion champion = new Champion("Azir"); //dummy data
+    private final Role role; //dummy data
+    private final Rank rank; //dummy data
+    private final Champion champion; //dummy data
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
 
@@ -60,6 +60,54 @@ public class Person {
         this.name = name;
         this.phone = phone;
         this.email = email;
+        this.role = new Role("mid");
+        this.rank = new Rank("challenger");
+        this.champion = new Champion("Azir");
+        this.address = address;
+        this.tags.addAll(tags);
+    }
+
+    /**
+     * Constructor for creating a new Person with a randomly generated unique ID.
+     *
+     * @param name Name of the person.
+     * @param phone Phone of the person.
+     * @param email Email of the person.
+     * @param role Role of the person.
+     * @param rank Rank of the person.
+     * @param champion Champion of the person.
+     * @param address Address of the person.
+     * @param tags Set of tags associated with the person.
+     */
+    public Person(Name name, Phone phone, Email email, Role role, Rank rank,
+                  Champion champion, Address address, Set<Tag> tags) {
+        this(UUID.randomUUID().toString(), name, phone, email, role, rank, champion, address, tags);
+    }
+
+    /**
+     * Constructor for creating a Person with an explicit ID.
+     * This is used for deserialization from JSON to preserve the original ID.
+     *
+     * @param id Unique identifier for the person.
+     * @param name Name of the person.
+     * @param phone Phone of the person.
+     * @param email Email of the person.
+     * @param role Role of the person.
+     * @param rank Rank of the person.
+     * @param champion Champion of the person.
+     * @param address Address of the person.
+     * @param tags Set of tags associated with the person.
+     */
+    public Person(String id, Name name, Phone phone, Email email, Role role, Rank rank,
+                  Champion champion, Address address, Set<Tag> tags) {
+        requireAllNonNull(id, name, phone, email, role, rank, champion, address, tags);
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.role = role;
+        this.rank = rank;
+        this.champion = champion;
         this.address = address;
         this.tags.addAll(tags);
     }
@@ -78,6 +126,18 @@ public class Person {
 
     public Email getEmail() {
         return email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
+    public Champion getChampion() {
+        return champion;
     }
 
     public Address getAddress() {
