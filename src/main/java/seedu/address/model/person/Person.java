@@ -15,8 +15,10 @@ import seedu.address.model.tag.Tag;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Person {
+    private static int COUNT = 0;
 
     // Identity fields
+    private final int id;
     private final Name name;
     private final Phone phone;
     private final Email email;
@@ -35,6 +37,24 @@ public class Person {
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
+        this.id = COUNT++;
+    }
+
+    /**
+     * Update a current person.
+     */
+    public Person(int id, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.tags.addAll(tags);
+        this.id = id;
+    }
+
+    public int getId() {
+        return this.id;
     }
 
     public Name getName() {
