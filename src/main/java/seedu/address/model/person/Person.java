@@ -15,7 +15,7 @@ import seedu.address.model.tag.Tag;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Person {
-    private static int COUNT = 0;
+    private static int count = 0;
 
     // Identity fields
     private final int id;
@@ -37,7 +37,7 @@ public class Person {
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
-        this.id = COUNT++;
+        this.id = count++;
     }
 
     /**
