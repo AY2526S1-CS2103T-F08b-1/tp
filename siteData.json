@@ -122,7 +122,7 @@
         "viewing-help-help": "Viewing help : help",
         "adding-a-player-add": "Adding a player: add",
         "listing-all-persons-list": "Listing all persons : list",
-        "listing-all-teams-listteam": "Listing all teams : listTeam",
+        "listing-all-teams-listteam": "Listing all teams : listteam",
         "deleting-a-player-delete": "Deleting a player: delete",
         "finding-players-by-keyword-find": "Finding players by keyword : find",
         "filtering-players-filter": "Filtering players : filter",
@@ -135,8 +135,7 @@
         "editing-the-data-file": "Editing the data file",
         "faq": "FAQ",
         "known-issues": "Known issues",
-        "command-summary-summonersbook": "Command summary - SummonersBook",
-        "command-summary-ab3": "Command summary - AB3"
+        "command-summary-summonersbook": "Command summary - SummonersBook"
       },
       "headingKeywords": {}
     },
