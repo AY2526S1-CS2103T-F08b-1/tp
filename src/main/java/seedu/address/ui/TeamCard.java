@@ -42,6 +42,16 @@ public class TeamCard extends UiPart<Region> {
     private Label support;
     @FXML
     private Label supportName;
+    @FXML
+    private Label topRank;
+    @FXML
+    private Label jungleRank;
+    @FXML
+    private Label midRank;
+    @FXML
+    private Label adcRank;
+    @FXML
+    private Label supportRank;
 
 
     /**
@@ -54,24 +64,25 @@ public class TeamCard extends UiPart<Region> {
         teamName.setText("Team " + displayedIndex);
 
         for (Person person : team.getPersons()) {
-            String value = person.getRole().value;
+            String role = person.getRole().value;
             String name = person.getName().fullName;
+            String rank = person.getRank().value;
 
             switch (person.getRole().toString().toUpperCase()) {
             case "TOP":
-                configureRoleLabels(top, topName, value, name);
+                configureRoleLabels(top, topName, topRank, role, name, rank);
                 break;
             case "JUNGLE":
-                configureRoleLabels(jungle, jungleName, value, name);
+                configureRoleLabels(jungle, jungleName, jungleRank, role, name, rank);
                 break;
             case "MID":
-                configureRoleLabels(mid, midName, value, name);
+                configureRoleLabels(mid, midName, midRank, role, name, rank);
                 break;
             case "ADC":
-                configureRoleLabels(adc, adcName, value, name);
+                configureRoleLabels(adc, adcName, adcRank, role, name, rank);
                 break;
             case "SUPPORT":
-                configureRoleLabels(support, supportName, value, name);
+                configureRoleLabels(support, supportName, supportRank, role, name, rank);
                 break;
             default:
                 break;
@@ -80,11 +91,14 @@ public class TeamCard extends UiPart<Region> {
     }
 
     /**
-     * Helper method to set the text and style for a pair of role and name labels.
+     * Helper method to set the text and style for role, name, and rank labels.
      */
-    private void configureRoleLabels(Label roleLabel, Label nameLabel, String role, String name) {
+    private void configureRoleLabels(Label roleLabel, Label nameLabel, Label rankLabel,
+                                      String role, String name, String rank) {
         roleLabel.setText(role);
         nameLabel.setText(name);
+        rankLabel.setText(rank);
         roleLabel.getStyleClass().add("role_" + role.toLowerCase());
+        rankLabel.getStyleClass().add(rank.toLowerCase() + "_rank");
     }
 }
