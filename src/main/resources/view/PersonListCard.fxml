@@ -19,9 +19,9 @@
         <Insets top="5" right="10" bottom="5" left="15" />
       </padding>
       <HBox spacing="5" alignment="BASELINE_LEFT">
-        <Label fx:id="id" styleClass="cell_big_label" />
-        <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
-        <Label fx:id="teamStatus" styleClass="cell_small_label" text="\$status" />
+        <Label fx:id="id" styleClass="cell_big_label" minWidth="30" prefWidth="30" maxWidth="30"/>
+        <Label fx:id="name" styleClass="cell_big_label" text="\$first" minWidth="150" prefWidth="150" maxWidth="200"/>
+        <Label fx:id="teamStatus" styleClass="cell_small_label" text="\$status" minWidth="80" prefWidth="80" maxWidth="80"/>
       </HBox>
       <FlowPane fx:id="tags" hgap="4" vgap="4" />
       <HBox fx:id="details" spacing="8" alignment="CENTER_LEFT">
