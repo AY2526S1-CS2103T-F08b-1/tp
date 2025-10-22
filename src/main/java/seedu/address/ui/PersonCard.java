@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.logic.Logic;
 import seedu.address.model.person.Person;
 
 /**
@@ -43,13 +44,15 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label champion;
     @FXML
+    private Label teamStatus;
+    @FXML
     private FlowPane tags;
 
 
     /**
-     * Creates a {@code PersonCode} with the given {@code Person} and index to display.
+     * Creates a {@code PersonCode} with the given {@code Person}, index, and {@code Logic}.
      */
-    public PersonCard(Person person, int displayedIndex) {
+    public PersonCard(Person person, int displayedIndex, Logic logic) {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
@@ -58,6 +61,7 @@ public class PersonCard extends UiPart<Region> {
         setupDetailLabel(rank, ICON_RANK, person.getRank().value, "rank");
         setupDetailLabel(role, ICON_ROLE, person.getRole().value, "role");
         setupDetailLabel(champion, ICON_CHAMPION, person.getChampion().value, "champion");
+        setupTeamStatus(logic);
 
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
@@ -99,6 +103,21 @@ public class PersonCard extends UiPart<Region> {
         }
         if (!dynamicStyleClass.isEmpty()) {
             label.getStyleClass().add(dynamicStyleClass);
+        }
+    }
+
+    /**
+     * Configures the team status label to display whether the person is assigned to a team.
+     * @param logic The Logic component used to query team assignment status.
+     */
+    private void setupTeamStatus(Logic logic) {
+        boolean isInTeam = logic.isPersonInAnyTeam(person);
+        if (isInTeam) {
+            teamStatus.setText("✓ In Team");
+            teamStatus.getStyleClass().add("team_status_assigned");
+        } else {
+            teamStatus.setText("○ Available");
+            teamStatus.getStyleClass().add("team_status_available");
         }
     }
 }

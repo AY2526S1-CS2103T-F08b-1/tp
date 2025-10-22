@@ -21,6 +21,7 @@
       <HBox spacing="5" alignment="BASELINE_LEFT">
         <Label fx:id="id" styleClass="cell_big_label" />
         <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
+        <Label fx:id="teamStatus" styleClass="cell_small_label" text="\$status" />
       </HBox>
       <FlowPane fx:id="tags" hgap="4" vgap="4" />
       <HBox fx:id="details" spacing="8" alignment="CENTER_LEFT">

@@ -51,4 +51,9 @@ public interface Logic {
      * Set the user prefs' GUI settings.
      */
     void setGuiSettings(GuiSettings guiSettings);
+
+    /**
+     * Returns true if the given person is in any team.
+     */
+    boolean isPersonInAnyTeam(Person person);
 }
