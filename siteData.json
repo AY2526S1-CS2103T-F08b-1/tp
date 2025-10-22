@@ -128,6 +128,7 @@
         "filtering-players-filter": "Filtering players : filter",
         "editing-a-player-edit": "Editing a player : edit",
         "auto-grouping-players-into-teams-group-wip": "Auto-grouping players into teams: group (WIP)",
+        "manually-creating-a-team-makegroup": "Manually creating a team: makegroup",
         "disbanding-a-team-or-all-teams-ungroup": "Disbanding a team or all teams : ungroup",
         "clearing-all-entries-clear": "Clearing all entries : clear",
         "exiting-the-program-exit": "Exiting the program : exit",
