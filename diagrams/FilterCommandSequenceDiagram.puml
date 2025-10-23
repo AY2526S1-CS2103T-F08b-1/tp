@@ -1,0 +1,87 @@
+@startuml
+skinparam participantStyle Rectangle
+skinparam shadowing false
+skinparam ArrowFontStyle plain
+skinparam BoxPadding 10
+skinparam sequence {
+    LifeLineBorderColor black
+    LifeLineBackgroundColor #F8F8F8
+    ParticipantBorderColor black
+    ParticipantBackgroundColor #EAEAEA
+    BoxBorderColor black
+}
+
+box "UI Layer" #LightBlue
+participant "User" as User
+participant ":UI" as UI
+end box
+
+box "Logic Layer" #LightYellow
+participant ":LogicManager" as LogicManager
+participant ":AddressBookParser" as AddressBookParser
+participant ":FilterCommandParser" as FilterCommandParser
+participant "FilterCommand.FilterPersonDescriptor" as FilterPersonDescriptor
+participant "f:FilterCommand" as FilterCommand
+end box
+
+box "Model Layer" #LightGreen
+participant ":Model" as Model
+end box
+
+== User inputs command ==
+User -> UI : enter "filter rk/Diamond c/Yasuo"
+activate UI
+
+UI -> LogicManager : execute("filter rk/Diamond c/Yasuo")
+activate LogicManager
+
+== Parsing ==
+LogicManager -> AddressBookParser : parseCommand("filter rk/Diamond c/Yasuo")
+activate AddressBookParser
+
+AddressBookParser -> FilterCommandParser : parse(arguments)
+activate FilterCommandParser
+
+== Build FilterPersonDescriptor ==
+FilterCommandParser -> FilterPersonDescriptor : new FilterPersonDescriptor()
+activate FilterPersonDescriptor
+FilterPersonDescriptor --> FilterCommandParser
+deactivate FilterPersonDescriptor
+
+FilterCommandParser -> FilterCommandParser : parseRanksForFilter()
+FilterCommandParser -> FilterCommandParser : parseRolesForFilter()
+FilterCommandParser -> FilterCommandParser : parseChampionsForFilter()
+
+== Create FilterCommand ==
+create FilterCommand
+FilterCommandParser -> FilterCommand : new FilterCommand(filterPersonDescriptor)
+activate FilterCommand
+FilterCommand --> FilterCommandParser
+deactivate FilterCommand
+
+FilterCommandParser --> AddressBookParser : f
+deactivate FilterCommandParser
+
+AddressBookParser --> LogicManager : f
+deactivate AddressBookParser
+
+== Executing ==
+LogicManager -> FilterCommand : execute(model)
+activate FilterCommand
+
+FilterCommand -> Model : updateFilteredPersonList(rank ∧ role ∧ champion predicates)
+activate Model
+
+Model --> FilterCommand : (updated filtered list)
+deactivate Model
+
+FilterCommand --> LogicManager : CommandResult (filtered list message)
+deactivate FilterCommand
+
+LogicManager --> UI : CommandResult
+deactivate LogicManager
+
+UI --> User : display filtered list
+deactivate UI
+
+@enduml
