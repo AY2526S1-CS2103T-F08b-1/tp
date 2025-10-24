@@ -4,21 +4,57 @@ skinparam arrowThickness 1.1
 skinparam arrowColor MODEL_COLOR
 skinparam classBackgroundColor MODEL_COLOR
 
-AddressBook *-right-> "1" UniquePersonList
-AddressBook *-right-> "1" UniqueTagList
-AddressBook *-down-> "1" UniqueTeamList
-UniqueTagList -[hidden]down- UniquePersonList
+Package Model as ModelPackage <<Rectangle>>{
+Class "<<interface>>\nReadOnlyAddressBook" as ReadOnlyAddressBook
+Class "<<interface>>\nReadOnlyUserPrefs" as ReadOnlyUserPrefs
+Class "<<interface>>\nModel" as Model
+Class AddressBook
+Class ModelManager
+Class UserPrefs
 
-UniqueTagList -right-> "*" Tag
-UniquePersonList -right-> "*" Person
+Class UniquePersonList
+Class Person
+Class Name
+Class Tag
+Class Role
+Class Rank
+Class Champion
+Class Stats
+Class UniqueTeamList
+Class Team
+Class I #FFFFFF
+}
+
+Class HiddenOutside #FFFFFF
+HiddenOutside ..> Model
+
+AddressBook .up.|> ReadOnlyAddressBook
+
+ModelManager .up.|> Model
+Model .right.> ReadOnlyUserPrefs
+Model .left.> ReadOnlyAddressBook
+ModelManager -left-> "1" AddressBook
+ModelManager -right-> "1" UserPrefs
+UserPrefs .up.|> ReadOnlyUserPrefs
+
+AddressBook *--> "1" UniquePersonList
+
+
+Person -[hidden]up--> I
+UniquePersonList -[hidden]right-> I
+
+AddressBook *--> "1" UniqueTeamList
+
+UniquePersonList --> "*" Person
 UniqueTeamList -down-> "*" Team
 
-Person -up-> "*" Tag
+Person *--> "*" Tag
 
 Person *--> "1" Name
 Person *--> "1" Role
 Person *--> "1" Rank
 Person *--> "1" Champion
+Person *--> "1" Stats
 
-Team -> "5" Person
+Team --right> "5" Person
 @enduml

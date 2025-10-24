@@ -39,22 +39,32 @@ activate LogicManager
 LogicManager -> AddressBookParser : parseCommand("filter rk/Diamond c/Yasuo")
 activate AddressBookParser
 
-AddressBookParser -> FilterCommandParser : parse(arguments)
+AddressBookParser -> FilterCommandParser : parse("rk/Diamond c/Yasuo")
 activate FilterCommandParser
 
 == Build FilterPersonDescriptor ==
-FilterCommandParser -> FilterPersonDescriptor : new FilterPersonDescriptor()
+create FilterPersonDescriptor
+FilterCommandParser -> FilterPersonDescriptor : FilterPersonDescriptor()
 activate FilterPersonDescriptor
 FilterPersonDescriptor --> FilterCommandParser
 deactivate FilterPersonDescriptor
 
 FilterCommandParser -> FilterCommandParser : parseRanksForFilter()
+FilterCommandParser -> FilterPersonDescriptor : setRanks(Set<Rank>)
+activate FilterPersonDescriptor
+FilterPersonDescriptor --> FilterCommandParser
+deactivate FilterPersonDescriptor
 FilterCommandParser -> FilterCommandParser : parseRolesForFilter()
 FilterCommandParser -> FilterCommandParser : parseChampionsForFilter()
+FilterCommandParser -> FilterPersonDescriptor : setChampions(Set<Champion>)
+activate FilterPersonDescriptor
+FilterPersonDescriptor --> FilterCommandParser
+deactivate FilterPersonDescriptor
+
 
 == Create FilterCommand ==
 create FilterCommand
-FilterCommandParser -> FilterCommand : new FilterCommand(filterPersonDescriptor)
+FilterCommandParser -> FilterCommand : FilterCommand(filterPersonDescriptor)
 activate FilterCommand
 FilterCommand --> FilterCommandParser
 deactivate FilterCommand
