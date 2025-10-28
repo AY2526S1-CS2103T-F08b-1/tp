@@ -130,6 +130,8 @@
         "auto-grouping-players-into-teams-group-wip": "Auto-grouping players into teams: group (WIP)",
         "manually-creating-a-team-makegroup": "Manually creating a team: makegroup",
         "disbanding-a-team-or-all-teams-ungroup": "Disbanding a team or all teams : ungroup",
+        "add-new-performance-record-to-a-player-addstats": "Add new performance record to a player : addStats",
+        "remove-the-most-recent-performance-record-of-a-player-deletestats": "Remove the most recent performance record of a player : deleteStats",
         "clearing-all-entries-clear": "Clearing all entries : clear",
         "exiting-the-program-exit": "Exiting the program : exit",
         "saving-the-data": "Saving the data",
