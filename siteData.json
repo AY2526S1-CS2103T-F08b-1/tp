@@ -131,7 +131,7 @@
         "filtering-people-filter": "Filtering people : filter",
         "editing-a-person-edit": "Editing a person : edit",
         "auto-grouping-people-into-teams-group-wip": "Auto-grouping people into teams: group (WIP)",
-        "manually-creating-a-team-makegroup": "Manually creating a team: makegroup",
+        "manually-creating-a-team-makegroup": "Manually creating a team: makeGroup",
         "disbanding-a-team-or-all-teams-ungroup": "Disbanding a team or all teams : ungroup",
         "add-new-performance-record-to-a-person-addstats": "Add new performance record to a person : addStats",
         "remove-the-most-recent-performance-record-of-a-person-deletestats": "Remove the most recent performance record of a person : deleteStats",
