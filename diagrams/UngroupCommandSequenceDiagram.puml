@@ -1,0 +1,76 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":UngroupCommandParser" as UngroupCommandParser LOGIC_COLOR
+participant "u:UngroupCommand" as UngroupCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("ungroup 1")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("ungroup 1")
+activate AddressBookParser
+
+create UngroupCommandParser
+AddressBookParser -> UngroupCommandParser
+activate UngroupCommandParser
+
+UngroupCommandParser --> AddressBookParser
+deactivate UngroupCommandParser
+
+AddressBookParser -> UngroupCommandParser : parse("1")
+activate UngroupCommandParser
+
+create UngroupCommand
+UngroupCommandParser -> UngroupCommand
+activate UngroupCommand
+
+UngroupCommand --> UngroupCommandParser
+deactivate UngroupCommand
+
+UngroupCommandParser --> AddressBookParser : u
+deactivate UngroupCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+UngroupCommandParser -[hidden]-> AddressBookParser
+destroy UngroupCommandParser
+
+AddressBookParser --> LogicManager : u
+deactivate AddressBookParser
+
+LogicManager -> UngroupCommand : execute(m)
+activate UngroupCommand
+
+UngroupCommand -> Model : getFilteredTeamList()
+activate Model
+
+Model --> UngroupCommand : teamList
+deactivate Model
+
+UngroupCommand -> Model : deleteTeam(team)
+activate Model
+
+Model --> UngroupCommand
+deactivate Model
+
+create CommandResult
+UngroupCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> UngroupCommand
+deactivate CommandResult
+
+UngroupCommand --> LogicManager : r
+deactivate UngroupCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

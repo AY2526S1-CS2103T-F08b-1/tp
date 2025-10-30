@@ -1,0 +1,85 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":GroupCommandParser" as GroupCommandParser LOGIC_COLOR
+participant "g:GroupCommand" as GroupCommand LOGIC_COLOR
+participant ":TeamMatcher" as TeamMatcher LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("group")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("group")
+activate AddressBookParser
+
+create GroupCommandParser
+AddressBookParser -> GroupCommandParser
+activate GroupCommandParser
+
+GroupCommandParser --> AddressBookParser
+deactivate GroupCommandParser
+
+AddressBookParser -> GroupCommandParser : parse("")
+activate GroupCommandParser
+
+create GroupCommand
+GroupCommandParser -> GroupCommand
+activate GroupCommand
+
+GroupCommand --> GroupCommandParser
+deactivate GroupCommand
+
+GroupCommandParser --> AddressBookParser : g
+deactivate GroupCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+GroupCommandParser -[hidden]-> AddressBookParser
+destroy GroupCommandParser
+
+AddressBookParser --> LogicManager : g
+deactivate AddressBookParser
+
+LogicManager -> GroupCommand : execute(m)
+activate GroupCommand
+
+GroupCommand -> Model : getUnassignedPersonList()
+activate Model
+
+Model --> GroupCommand : unassignedPersons
+deactivate Model
+
+GroupCommand -> TeamMatcher : matchTeams(unassignedPersons)
+activate TeamMatcher
+
+TeamMatcher --> GroupCommand : teams
+deactivate TeamMatcher
+
+loop for each team
+    GroupCommand -> Model : addTeam(team)
+    activate Model
+
+    Model --> GroupCommand
+    deactivate Model
+end
+
+create CommandResult
+GroupCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> GroupCommand
+deactivate CommandResult
+
+GroupCommand --> LogicManager : r
+deactivate GroupCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml
