@@ -10,7 +10,7 @@ import seedu.summoners.model.Model;
  */
 public class ListTeamCommand extends Command {
 
-    public static final String COMMAND_WORD = "listteam";
+    public static final String COMMAND_WORD = "listTeam";
     public static final String MESSAGE_SUCCESS = "Listed all teams";
 
     @Override

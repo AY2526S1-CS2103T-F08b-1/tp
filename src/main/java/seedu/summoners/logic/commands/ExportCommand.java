@@ -24,9 +24,7 @@ public class ExportCommand extends Command {
     public static final String COMMAND_WORD = "export";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports players or teams to CSV.\n"
             + "Parameters: export [players|teams] [to/FILEPATH]\n"
-            + "Examples:\n"
-            + "  export players\n"
-            + "  export teams to/data/teams.csv";
+            + "Examples: export players | export teams to/data/teams.csv";
 
     /**
      * Represents the exportable data categories within the application.

@@ -239,7 +239,7 @@ public class MainWindow extends UiPart<Stage> {
                 handleExit();
             }
 
-            if (commandResult.isShowTeamStats()) {
+            if (commandResult.isShowTeamDetail()) {
                 commandResult.getTeamToShow().ifPresent(this::handleTeamStats);
             }
 

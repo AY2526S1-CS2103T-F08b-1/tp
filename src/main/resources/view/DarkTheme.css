@@ -1,5 +1,5 @@
 .background {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #010a13;
     background-color: #383838; /* Used in the default.html file */
 }
 
@@ -26,7 +26,7 @@
 
 .text-field {
     -fx-font-size: 12pt;
-    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-family: "Georgia", serif;
 }
 
 .tab-pane {
@@ -40,9 +40,9 @@
 }
 
 .table-view {
-    -fx-base: #1d1d1d;
-    -fx-control-inner-background: #1d1d1d;
-    -fx-background-color: #1d1d1d;
+    -fx-base: #010a13;
+    -fx-control-inner-background: #010a13;
+    -fx-background-color: #0a1428;
     -fx-table-cell-border-color: transparent;
     -fx-table-header-border-color: transparent;
     -fx-padding: 5;
@@ -73,74 +73,89 @@
 }
 
 .table-view:focused .table-row-cell:filled:focused:selected {
-    -fx-background-color: -fx-focus-color;
+    -fx-background-color: #1e3b5c;
 }
 
 .split-pane:horizontal .split-pane-divider {
-    -fx-background-color: derive(#1d1d1d, 20%);
-    -fx-border-color: transparent transparent transparent #4d4d4d;
+    -fx-background-color: #030c15;
+    -fx-border-color: transparent;
 }
 
 .split-pane {
-    -fx-border-radius: 1;
-    -fx-border-width: 1;
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
 }
 
 .list-view {
+    -fx-background-color: #0a1428;
     -fx-background-insets: 0;
     -fx-padding: 0;
-    -fx-background-color: derive(#1d1d1d, 20%);
 }
 
 .list-cell {
+    -fx-background-color: transparent;
     -fx-label-padding: 0 0 0 0;
     -fx-graphic-text-gap : 0;
     -fx-padding: 0 0 0 0;
 }
 
 .list-cell:filled:even {
-    -fx-background-color: #3c3e3f;
+    -fx-background-color: #3010a13;
+    -fx-border-color: transparent
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: #515658;
+    -fx-background-color: #101c33;
+    -fx-border-color: transparent
 }
 
 .list-cell:filled:selected {
-    -fx-background-color: #424d5f;
+    -fx-background-color: derive(#11203b, 30%);
 }
 
 .list-cell:filled:selected #cardPane {
-    -fx-border-color: #3e7b91;
-    -fx-border-width: 1;
+    -fx-border-color: #c79b3b;
+    -fx-border-width: 2;
 }
 
 .list-cell .label {
-    -fx-text-fill: white;
+    -fx-font-family: "Georgia", serif;
 }
 
 .cell_big_label {
-    -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 16px;
-    -fx-text-fill: #010504;
+    -fx-text-fill: #c69f33;
 }
 
 .cell_small_label {
-    -fx-font-family: "Segoe UI";
     -fx-font-size: 13px;
-    -fx-text-fill: #010504;
+    -fx-text-fill: white;
     -fx-text-overrun: ellipsis;
 }
 
 .stack-pane {
-     -fx-background-color: derive(#1d1d1d, 20%);
+     -fx-background-color: #1f2326;
+     -fx-background-radius: 10;
+     -fx-border-color: #20636a;
+     -fx-border-width: 2;
+     -fx-border-radius: 10;
+}
+
+.command-text-field {
+    -fx-font-family: "Georgia", serif;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-width: 0;
 }
 
 .pane-with-border {
-     -fx-background-color: derive(#1d1d1d, 20%);
-     -fx-border-color: derive(#1d1d1d, 10%);
-     -fx-border-top-width: 1px;
+     -fx-background-color: #030c15;
+}
+
+.panel-container {
+    -fx-background-color: #030c15;
+    -fx-border-color: #20636a;
+    -fx-border-width: 0;
 }
 
 .status-bar {
@@ -149,14 +164,18 @@
 
 .result-display {
     -fx-background-color: transparent;
-    -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 13pt;
+    -fx-background-radius: 10;
+    -fx-border-color: #20636a;
+    -fx-border-width: 2;
+    -fx-border-radius: 10;
+    -fx-font-family: "Georgia", serif;
+    -fx-font-size: 11pt;
     -fx-text-fill: white;
 }
 
-.result-display .label {
-    -fx-text-fill: black !important;
-}
+.result-display .viewport {
+     -fx-background-color: transparent;
+ }
 
 .status-bar .label {
     -fx-font-family: "Segoe UI Light";
@@ -179,10 +198,6 @@
     -fx-background-color: derive(#1d1d1d, 30%);
     -fx-border-color: derive(#1d1d1d, 30%);
     -fx-border-width: 1px;
-}
-
-.grid-pane .stack-pane {
-    -fx-background-color: derive(#1d1d1d, 30%);
 }
 
 .context-menu {
@@ -283,7 +298,7 @@
 }
 
 .scroll-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #1f2326;
 }
 
 .scroll-bar .thumb {
@@ -318,6 +333,7 @@
 
 .icon_label {
     -fx-font-size: 1.5em;
+    -fx-text-fill: white;
 }
 
 .tag_label {
@@ -329,69 +345,81 @@
 
 .iron_rank {
     -fx-background-color: #51484A;
-    -fx-text-fill: #e0e0e0;
+    -fx-text-fill: white;
 }
 
 .bronze_rank {
     -fx-background-color: #8C5229;
-    -fx-text-fill: #e0e0e0;
+    -fx-text-fill: white;
 }
 
 .silver_rank {
     -fx-background-color: #A1B2B2;
+    -fx-text-fill: white;
 }
 
 .gold_rank {
     -fx-background-color: #C78626;
+    -fx-text-fill: white;
 }
 
 .platinum_rank {
     -fx-background-color: #4E9996;
+    -fx-text-fill: white;
 }
 
 .emerald_rank {
     -fx-background-color: #2ECC71;
+    -fx-text-fill: white;
 }
 
 .diamond_rank {
     -fx-background-color: #7B95E0;
+    -fx-text-fill: white;
 }
 
 .master_rank {
     -fx-background-color: #9446ED;
-    -fx-text-fill: #e0e0e0;
+    -fx-text-fill: white;
 }
 
 .grandmaster_rank {
     -fx-background-color: #D90429;
-    -fx-text-fill: #e0e0e0;
+    -fx-text-fill: white;
 }
 
 .challenger_rank {
     -fx-background-color: #0BB0BD;
+    -fx-text-fill: white;
 }
 
 .role_top {
     -fx-background-color: #E74C3C;
+    -fx-text-fill: white;
 }
 
 .role_jungle {
     -fx-background-color: #27AE60;
+    -fx-text-fill: white;
 }
 
 .role_mid {
     -fx-background-color: #BA9500;
+    -fx-text-fill: white;
 }
 .role_adc {
     -fx-background-color: #3498DB;
+    -fx-text-fill: white;
 }
 
 .role_support {
     -fx-background-color: #9B59B6;
+    -fx-text-fill: white;
 }
 
 .champion_label {
     -fx-background-color: #6200FF;
+    -fx-text-fill: white;
 }
 
 #cardPane {
@@ -407,10 +435,7 @@
 #commandTextField {
     -fx-background-color: transparent #383838 transparent #383838;
     -fx-background-insets: 0;
-    -fx-border-color: #383838 #383838 #ffffff #383838;
-    -fx-border-insets: 0;
-    -fx-border-width: 1;
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: "Georgia", serif;
     -fx-font-size: 13pt;
     -fx-text-fill: white;
 }
@@ -420,8 +445,8 @@
 }
 
 #resultDisplay .content {
-    -fx-background-color: transparent, #383838, transparent, #383838;
-    -fx-background-radius: 0;
+    -fx-background-color: #1f2326;
+    -fx-background-radius: 10;
 }
 
 #tags {

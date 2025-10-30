@@ -400,6 +400,11 @@ public class GroupCommandTest {
         }
 
         @Override
+        public ObservableList<Team> getFilteredTeamList() {
+            return FXCollections.observableArrayList(this.teamsAdded);
+        }
+
+        @Override
         public void addTeam(Team team) {
             requireNonNull(team);
             teamsAdded.add(team);

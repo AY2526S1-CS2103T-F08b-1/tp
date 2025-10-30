@@ -11,7 +11,7 @@ import seedu.summoners.model.SummonersBook;
 public class ClearCommand extends Command {
 
     public static final String COMMAND_WORD = "clear";
-    public static final String MESSAGE_SUCCESS = "Summoners book has been cleared!";
+    public static final String MESSAGE_SUCCESS = "SummonersBook has been cleared!";
 
 
     @Override

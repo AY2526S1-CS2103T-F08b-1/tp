@@ -26,8 +26,8 @@ public class CommandResult {
     /** The player whose details should be shown. */
     private final Player playerToShow;
 
-    /** Team stats window should be shown to the user. */
-    private final boolean showTeamStats;
+    /** Team detail window should be shown to the user. */
+    private final boolean showTeamDetail;
 
     /** The team whose stats should be shown. */
     private final Team teamToShow;
@@ -40,18 +40,18 @@ public class CommandResult {
      * @param exit Whether the application should exit.
      * @param showPlayerDetail Whether to show the player detail window.
      * @param playerToShow The player whose details should be shown, or null.
-     * @param showTeamStats Whether to show the team stats window.
+     * @param showTeamDetail Whether to show the team detail window.
      * @param teamToShow The team whose stats should be shown, or null.
      */
     public CommandResult(String feedbackToUser, boolean showHelp, boolean exit,
                          boolean showPlayerDetail, Player playerToShow,
-                         boolean showTeamStats, Team teamToShow) {
+                         boolean showTeamDetail, Team teamToShow) {
         this.feedbackToUser = Objects.requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
         this.exit = exit;
         this.showPlayerDetail = showPlayerDetail;
         this.playerToShow = playerToShow;
-        this.showTeamStats = showTeamStats;
+        this.showTeamDetail = showTeamDetail;
         this.teamToShow = teamToShow;
     }
 
@@ -89,13 +89,13 @@ public class CommandResult {
     }
 
     /**
-     * Factory method to create a result that opens the Team stats window.
+     * Factory method to create a result that opens the Team detail window.
      *
      * @param message feedback line for the result display
      * @param team team to show
-     * @return a {@code CommandResult} configured to show the Team stats window
+     * @return a {@code CommandResult} configured to show the Team detail window
      */
-    public static CommandResult showTeamStats(String message, Team team) {
+    public static CommandResult showTeamDetail(String message, Team team) {
         return new CommandResult(message, false, false, false, null, true, team);
     }
 
@@ -119,8 +119,8 @@ public class CommandResult {
         return Optional.ofNullable(playerToShow);
     }
 
-    public boolean isShowTeamStats() {
-        return showTeamStats;
+    public boolean isShowTeamDetail() {
+        return showTeamDetail;
     }
 
     public Optional<Team> getTeamToShow() {
@@ -143,15 +143,15 @@ public class CommandResult {
                 && showHelp == otherCommandResult.showHelp
                 && exit == otherCommandResult.exit
                 && showPlayerDetail == otherCommandResult.showPlayerDetail
+                && showTeamDetail == otherCommandResult.showTeamDetail
                 && Objects.equals(playerToShow, otherCommandResult.playerToShow)
-                && showTeamStats == otherCommandResult.showTeamStats
                 && Objects.equals(teamToShow, otherCommandResult.teamToShow);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(feedbackToUser, showHelp, exit, showPlayerDetail, playerToShow,
-                showTeamStats, teamToShow);
+                showTeamDetail, teamToShow);
     }
 
     @Override
@@ -162,7 +162,7 @@ public class CommandResult {
                 .add("exit", exit)
                 .add("showPlayerDetail", showPlayerDetail)
                 .add("playerToShow", playerToShow)
-                .add("showTeamStats", showTeamStats)
+                .add("showTeamDetail", showTeamDetail)
                 .add("teamToShow", teamToShow)
                 .toString();
     }

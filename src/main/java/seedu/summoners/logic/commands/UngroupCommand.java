@@ -22,9 +22,9 @@ public class UngroupCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Removes a team by its index number or removes all teams.\n"
             + "Parameters: INDEX (must be a positive integer) or 'all'\n"
-            + "Examples:\n"
-            + COMMAND_WORD + " 1 (removes team 1)\n"
-            + COMMAND_WORD + " all (removes all teams)";
+            + "Examples: "
+            + COMMAND_WORD + " 1 | "
+            + COMMAND_WORD + " all";
 
     public static final String MESSAGE_SUCCESS = "Removed team: %1$s";
     public static final String MESSAGE_SUCCESS_ALL = "Successfully removed %1$d team(s). "

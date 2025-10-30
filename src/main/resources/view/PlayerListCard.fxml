@@ -18,8 +18,8 @@
         <Insets top="5" right="10" bottom="5" left="15" />
       </padding>
       <HBox spacing="5" alignment="BASELINE_LEFT">
-        <Label fx:id="id" styleClass="cell_big_label" minWidth="30" prefWidth="30" maxWidth="30"/>
-        <Label fx:id="name" styleClass="cell_big_label" text="\$first" minWidth="150" prefWidth="150" maxWidth="200"/>
+        <Label fx:id="id" styleClass="cell_big_label" minWidth="30" prefWidth="30" maxWidth="30" />
+        <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
       </HBox>
       <FlowPane fx:id="tags" hgap="4" vgap="4" />
       <FlowPane fx:id="details" hgap="8" vgap="4" />
