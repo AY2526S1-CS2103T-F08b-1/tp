@@ -9,8 +9,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import seedu.summoners.commons.exceptions.IllegalValueException;
-import seedu.summoners.model.SummonersBook;
 import seedu.summoners.model.ReadOnlySummonersBook;
+import seedu.summoners.model.SummonersBook;
 import seedu.summoners.model.player.Player;
 import seedu.summoners.model.team.Team;
 

@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import seedu.summoners.model.SummonersBook;
 import seedu.summoners.model.ReadOnlySummonersBook;
+import seedu.summoners.model.SummonersBook;
 import seedu.summoners.model.player.Champion;
 import seedu.summoners.model.player.Name;
 import seedu.summoners.model.player.Player;

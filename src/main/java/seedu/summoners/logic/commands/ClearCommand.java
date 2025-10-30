@@ -2,8 +2,8 @@ package seedu.summoners.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.summoners.model.SummonersBook;
 import seedu.summoners.model.Model;
+import seedu.summoners.model.SummonersBook;
 
 /**
  * Clears the summoners book.

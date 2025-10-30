@@ -106,7 +106,8 @@ public interface Model {
     /**
      * Replaces the given player {@code target} with {@code editedPlayer}.
      * {@code target} must exist in the summoners book.
-     * The player identity of {@code editedPlayer} must not be the same as another existing player in the summoners book.
+     * The player identity of {@code editedPlayer} must not be the same as
+     * another existing player in the summoners book.
      */
     void setPlayer(Player target, Player editedPlayer);
 

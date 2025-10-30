@@ -117,7 +117,8 @@ public class SummonersBook implements ReadOnlySummonersBook {
     /**
      * Replaces the given player {@code target} in the list with {@code editedPlayer}.
      * {@code target} must exist in the summoners book.
-     * The player identity of {@code editedPlayer} must not be the same as another existing player in the summoners book.
+     * The player identity of {@code editedPlayer} must not be the same as
+     * another existing player in the summoners book.
      */
     public void setPlayer(Player target, Player editedPlayer) {
         requireNonNull(editedPlayer);
