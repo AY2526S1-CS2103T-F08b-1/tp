@@ -497,7 +497,7 @@ Creates a new team with the specified players by their index numbers.
 
 ---
 
-### 👁️ Viewing team details : `viewTeam`
+### Viewing team details : `viewTeam`
 
 Opens a detailed window showing comprehensive information about a team, including all members and team statistics.
 
