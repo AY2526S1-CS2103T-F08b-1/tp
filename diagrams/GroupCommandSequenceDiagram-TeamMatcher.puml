@@ -1,0 +1,55 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+mainframe **sd** Form teams from unassigned persons
+
+box Logic LOGIC_COLOR_T1
+participant "g:GroupCommand" as GroupCommand LOGIC_COLOR
+participant ":TeamMatcher" as TeamMatcher LOGIC_COLOR
+end box
+
+activate GroupCommand
+
+GroupCommand -> TeamMatcher : matchTeams(unassignedPersons)
+activate TeamMatcher
+
+TeamMatcher -> TeamMatcher : groupPersonsByRole()
+note right
+  Group persons by their roles:
+  Top, Jungle, Mid, ADC, Support
+end note
+
+TeamMatcher -> TeamMatcher : sortEachRoleGroupByRank()
+note right
+  Sort persons in each role group
+  by rank (descending order)
+end note
+
+loop while can form a complete team (5 persons)
+    loop for each role in [Top, Jungle, Mid, ADC, Support]
+        TeamMatcher -> TeamMatcher : selectPersonWithoutChampionConflict(role, currentTeam)
+        note right
+          Select highest-ranked person
+          for this role who doesn't play
+          a duplicate champion
+        end note
+
+        alt person found without conflict
+            TeamMatcher -> TeamMatcher : addPersonToCurrentTeam(person)
+        else no person available (conflict or depleted)
+            break
+            note right: Cannot form complete team
+            end break
+        end
+    end
+
+    alt current team has 5 persons
+        TeamMatcher -> TeamMatcher : createTeam(currentTeam)
+        TeamMatcher -> TeamMatcher : addToTeamsList(team)
+    end
+end
+
+TeamMatcher --> GroupCommand : teams
+deactivate TeamMatcher
+@enduml

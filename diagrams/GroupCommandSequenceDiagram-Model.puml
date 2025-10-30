@@ -1,0 +1,46 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+skinparam sequenceReferenceBackgroundColor white
+
+mainframe **sd** Execute GroupCommand with team formation
+
+box Logic LOGIC_COLOR_T1
+participant "g:GroupCommand" as GroupCommand LOGIC_COLOR
+participant ":TeamMatcher" as TeamMatcher LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+activate GroupCommand
+[-> GroupCommand : execute(m)
+
+GroupCommand -> Model : getUnassignedPersonList()
+activate Model
+
+Model --> GroupCommand : unassignedPersons
+deactivate Model
+
+ref#white over GroupCommand, TeamMatcher : Form teams from unassigned persons
+
+loop for each team in teams
+    GroupCommand -> Model : addTeam(team)
+    activate Model
+
+    Model --> GroupCommand
+    deactivate Model
+end
+
+create CommandResult
+GroupCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> GroupCommand
+deactivate CommandResult
+
+[<-- GroupCommand : r
+deactivate GroupCommand
+@enduml

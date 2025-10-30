@@ -20,6 +20,9 @@ Class CommandBox
 Class TeamListPanel
 Class TeamCard
 Class TeamStatsWindow
+
+' === Persons UI (added) ===
+Class PersonDetailWindow
 }
 
 package Model <<Rectangle>> {
@@ -45,6 +48,9 @@ MainWindow --> "0..1" HelpWindow
 MainWindow *-down-> "1" TeamListPanel
 MainWindow --> "0..1" TeamStatsWindow
 
+' === Persons UI (added) ===
+MainWindow --> "0..1" PersonDetailWindow
+
 PersonListPanel -down-> "*" PersonCard
 ' === Teams UI (added) ===
 TeamListPanel -down-> "*" TeamCard
@@ -62,6 +68,9 @@ TeamListPanel --|> UiPart
 TeamCard --|> UiPart
 TeamStatsWindow --|> UiPart
 
+' === Persons UI (added) ===
+PersonDetailWindow --|> UiPart
+
 PersonCard ..> Model
 UiManager -right-> Logic
 MainWindow -left-> Logic
@@ -74,6 +83,8 @@ CommandBox -[hidden]left- ResultDisplay
 ResultDisplay -[hidden]left- StatusBarFooter
 ' === Teams UI (added) ===
 TeamListPanel -[hidden]left- TeamStatsWindow
+' === Persons UI (added) ===
+TeamStatsWindow -[hidden]left- PersonDetailWindow
 
 MainWindow -[hidden]-|> UiPart
 @enduml

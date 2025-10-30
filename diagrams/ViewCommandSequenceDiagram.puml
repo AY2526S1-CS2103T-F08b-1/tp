@@ -3,9 +3,6 @@
 skinparam ArrowFontStyle plain
 
 box Logic LOGIC_COLOR_T1
-participant ":LogicManager" as LogicManager LOGIC_COLOR
-participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
-participant ":ViewCommandParser" as ViewCommandParser LOGIC_COLOR
 participant "v:ViewCommand" as ViewCommand LOGIC_COLOR
 participant "r:CommandResult" as CommandResult LOGIC_COLOR
 end box
@@ -19,39 +16,7 @@ participant ":MainWindow" as MainWindow UI_COLOR
 participant ":PersonDetailWindow" as PersonDetailWindow UI_COLOR
 end box
 
-[-> LogicManager : execute("view 1")
-activate LogicManager
-
-LogicManager -> AddressBookParser : parseCommand("view 1")
-activate AddressBookParser
-
-create ViewCommandParser
-AddressBookParser -> ViewCommandParser
-activate ViewCommandParser
-
-ViewCommandParser --> AddressBookParser
-deactivate ViewCommandParser
-
-AddressBookParser -> ViewCommandParser : parse("1")
-activate ViewCommandParser
-
-create ViewCommand
-ViewCommandParser -> ViewCommand
-activate ViewCommand
-
-ViewCommand --> ViewCommandParser
-deactivate ViewCommand
-
-ViewCommandParser --> AddressBookParser : v
-deactivate ViewCommandParser
-'Hidden arrow to position the destroy marker below the end of the activation bar.
-ViewCommandParser -[hidden]-> AddressBookParser
-destroy ViewCommandParser
-
-AddressBookParser --> LogicManager : v
-deactivate AddressBookParser
-
-LogicManager -> ViewCommand : execute(m)
+[-> ViewCommand : execute(m)
 activate ViewCommand
 
 ViewCommand -> Model : getFilteredPersonList()
@@ -60,6 +25,8 @@ activate Model
 Model --> ViewCommand : personList
 deactivate Model
 
+ViewCommand -> ViewCommand : get person at index
+
 create CommandResult
 ViewCommand -> CommandResult : showPersonDetail(message, person)
 activate CommandResult
@@ -67,29 +34,18 @@ activate CommandResult
 CommandResult --> ViewCommand
 deactivate CommandResult
 
-ViewCommand --> LogicManager : r
+[<-- ViewCommand : r
 deactivate ViewCommand
 
-LogicManager --> MainWindow : r
-deactivate LogicManager
-
-MainWindow -> MainWindow : handleCommandResult(r)
+[-> MainWindow : executeCommand()
 activate MainWindow
 
-MainWindow -> CommandResult : isShowPersonDetail()
-activate CommandResult
+MainWindow -> MainWindow : isShowPersonDetail()
 
-CommandResult --> MainWindow : true
-deactivate CommandResult
-
-MainWindow -> CommandResult : getPersonToShow()
-activate CommandResult
-
-CommandResult --> MainWindow : person
-deactivate CommandResult
+MainWindow -> MainWindow : getPersonToShow()
 
 create PersonDetailWindow
-MainWindow -> PersonDetailWindow : new PersonDetailWindow()
+MainWindow -> PersonDetailWindow
 activate PersonDetailWindow
 
 PersonDetailWindow --> MainWindow
@@ -97,6 +53,9 @@ deactivate PersonDetailWindow
 
 MainWindow -> PersonDetailWindow : setPerson(person)
 activate PersonDetailWindow
+
+PersonDetailWindow -> PersonDetailWindow : displayPersonDetails()
+PersonDetailWindow -> PersonDetailWindow : displayCharts()
 
 PersonDetailWindow --> MainWindow
 deactivate PersonDetailWindow
@@ -107,6 +66,7 @@ activate PersonDetailWindow
 PersonDetailWindow --> MainWindow
 deactivate PersonDetailWindow
 
+[<-- MainWindow
 deactivate MainWindow
 
 @enduml
