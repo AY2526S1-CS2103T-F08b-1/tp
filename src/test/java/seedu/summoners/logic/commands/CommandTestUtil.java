@@ -18,8 +18,8 @@ import java.util.List;
 
 import seedu.summoners.commons.core.index.Index;
 import seedu.summoners.logic.commands.exceptions.CommandException;
-import seedu.summoners.model.SummonersBook;
 import seedu.summoners.model.Model;
+import seedu.summoners.model.SummonersBook;
 import seedu.summoners.model.player.NameContainsKeywordsPredicate;
 import seedu.summoners.model.player.Player;
 import seedu.summoners.model.team.Team;

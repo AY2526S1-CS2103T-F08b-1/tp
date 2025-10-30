@@ -16,9 +16,9 @@ import org.junit.jupiter.api.Test;
 
 import seedu.summoners.commons.core.index.Index;
 import seedu.summoners.logic.Messages;
-import seedu.summoners.model.SummonersBook;
 import seedu.summoners.model.Model;
 import seedu.summoners.model.ModelManager;
+import seedu.summoners.model.SummonersBook;
 import seedu.summoners.model.UserPrefs;
 import seedu.summoners.model.player.Player;
 import seedu.summoners.model.player.Stats;

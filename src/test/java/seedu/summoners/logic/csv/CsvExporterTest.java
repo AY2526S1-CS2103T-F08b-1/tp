@@ -9,9 +9,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import seedu.summoners.model.SummonersBook;
 import seedu.summoners.model.Model;
 import seedu.summoners.model.ModelManager;
+import seedu.summoners.model.SummonersBook;
 import seedu.summoners.model.UserPrefs;
 import seedu.summoners.testutil.TypicalPlayers;
 import seedu.summoners.testutil.TypicalTeams;

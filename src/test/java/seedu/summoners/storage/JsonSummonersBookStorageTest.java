@@ -16,8 +16,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import seedu.summoners.commons.exceptions.DataLoadingException;
-import seedu.summoners.model.SummonersBook;
 import seedu.summoners.model.ReadOnlySummonersBook;
+import seedu.summoners.model.SummonersBook;
 
 public class JsonSummonersBookStorageTest {
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonSummonersBookStorageTest");
@@ -31,7 +31,8 @@ public class JsonSummonersBookStorageTest {
     }
 
     private java.util.Optional<ReadOnlySummonersBook> readSummonersBook(String filePath) throws Exception {
-        return new JsonSummonersBookStorage(Paths.get(filePath)).readSummonersBook(addToTestDataPathIfNotNull(filePath));
+        return new JsonSummonersBookStorage(Paths.get(filePath))
+                .readSummonersBook(addToTestDataPathIfNotNull(filePath));
     }
 
     private Path addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {

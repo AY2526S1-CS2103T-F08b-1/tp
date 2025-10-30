@@ -1,5 +1,6 @@
 package seedu.summoners.logic.parser;
 
+import static seedu.summoners.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.summoners.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.summoners.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -23,6 +24,6 @@ public class LoseCommandParserTest {
     @Test
     public void parse_invalidArgs_throwsParseException() {
         assertParseFailure(parser, "a",
-                String.format(seedu.summoners.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT, LoseCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, LoseCommand.MESSAGE_USAGE));
     }
 }

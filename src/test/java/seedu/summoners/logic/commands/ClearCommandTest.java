@@ -5,9 +5,9 @@ import static seedu.summoners.testutil.TypicalPlayers.getTypicalSummonersBook;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.summoners.model.SummonersBook;
 import seedu.summoners.model.Model;
 import seedu.summoners.model.ModelManager;
+import seedu.summoners.model.SummonersBook;
 import seedu.summoners.model.UserPrefs;
 
 public class ClearCommandTest {

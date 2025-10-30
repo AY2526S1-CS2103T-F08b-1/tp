@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import seedu.summoners.commons.core.GuiSettings;
-import seedu.summoners.model.SummonersBook;
 import seedu.summoners.model.ReadOnlySummonersBook;
+import seedu.summoners.model.SummonersBook;
 import seedu.summoners.model.UserPrefs;
 
 public class StorageManagerTest {

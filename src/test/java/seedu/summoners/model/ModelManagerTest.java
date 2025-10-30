@@ -19,8 +19,8 @@ import org.junit.jupiter.api.Test;
 import seedu.summoners.commons.core.GuiSettings;
 import seedu.summoners.model.player.NameContainsKeywordsPredicate;
 import seedu.summoners.model.player.Player;
-import seedu.summoners.testutil.SummonersBookBuilder;
 import seedu.summoners.testutil.PlayerBuilder;
+import seedu.summoners.testutil.SummonersBookBuilder;
 
 public class ModelManagerTest {
 
