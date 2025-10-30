@@ -54,7 +54,7 @@ Let's form your first balanced team to see SummonersBook in action!
 ```
 add n/Faker rk/Grandmaster rl/Mid c/Azir
 add n/Zeus rk/Diamond rl/Top c/Gnar
-add n/Oner rk/Master rl/Jungle c/LeeSin
+add n/Oner rk/Master rl/Jungle c/Lee Sin
 add n/Gumayusi rk/Challenger rl/ADC c/Aphelios
 add n/Keria rk/Master rl/Support c/Thresh
 ```
