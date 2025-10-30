@@ -1,4 +1,4 @@
-package seedu.address.logic.csv;
+package seedu.summoners.logic.csv;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -9,12 +9,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.testutil.TypicalPersons;
-import seedu.address.testutil.TypicalTeams;
+import seedu.summoners.model.SummonersBook;
+import seedu.summoners.model.Model;
+import seedu.summoners.model.ModelManager;
+import seedu.summoners.model.UserPrefs;
+import seedu.summoners.testutil.TypicalPlayers;
+import seedu.summoners.testutil.TypicalTeams;
 
 public class CsvExporterTest {
 
@@ -25,7 +25,7 @@ public class CsvExporterTest {
 
     @BeforeEach
     public void setUp() {
-        AddressBook ab = TypicalTeams.getTypicalAddressBookWithTeams(); // has persons + teams
+        SummonersBook ab = TypicalTeams.getTypicalSummonersBookWithTeams(); // has players + teams
         populatedModel = new ModelManager(ab, new UserPrefs());
     }
 
@@ -38,7 +38,7 @@ public class CsvExporterTest {
         String content = Files.readString(out);
         assertTrue(content.startsWith("Name,Role,Rank,Champion,Wins,Losses"));
         // At least one known name appears
-        assertTrue(content.contains(TypicalPersons.ALICE.getName().toString()));
+        assertTrue(content.contains(TypicalPlayers.ALICE.getName().toString()));
     }
 
     @Test

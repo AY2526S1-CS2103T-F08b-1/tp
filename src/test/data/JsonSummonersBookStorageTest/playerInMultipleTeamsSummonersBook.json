@@ -1,7 +1,7 @@
 {
-  "persons": [
+  "players": [
     {
-      "id": "person-1",
+      "id": "player-1",
       "name": "Alice Pauline",
       "role": "mid",
       "rank": "gold",
@@ -15,7 +15,7 @@
       }
     },
     {
-      "id": "person-2",
+      "id": "player-2",
       "name": "Benson Meier",
       "role": "top",
       "rank": "silver",
@@ -29,7 +29,7 @@
       }
     },
     {
-      "id": "person-3",
+      "id": "player-3",
       "name": "Carl Kurz",
       "role": "jungle",
       "rank": "platinum",
@@ -43,7 +43,7 @@
       }
     },
     {
-      "id": "person-4",
+      "id": "player-4",
       "name": "Daniel Meier",
       "role": "adc",
       "rank": "gold",
@@ -57,7 +57,7 @@
       }
     },
     {
-      "id": "person-5",
+      "id": "player-5",
       "name": "Elle Meyer",
       "role": "support",
       "rank": "diamond",
@@ -71,7 +71,7 @@
       }
     },
     {
-      "id": "person-6",
+      "id": "player-6",
       "name": "Fiona Kunz",
       "role": "mid",
       "rank": "master",
@@ -88,13 +88,13 @@
   "teams": [
     {
       "id": "team-1",
-      "personIds": ["person-1", "person-2", "person-3", "person-4", "person-5"],
+      "playerIds": ["player-1", "player-2", "player-3", "player-4", "player-5"],
       "wins": 0,
       "losses": 0
     },
     {
       "id": "team-2",
-      "personIds": ["person-1", "person-6", "person-3", "person-4", "person-5"],
+      "playerIds": ["player-1", "player-6", "player-3", "player-4", "player-5"],
       "wins": 0,
       "losses": 0
     }

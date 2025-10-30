@@ -1,4 +1,4 @@
-package seedu.address.logic.csv;
+package seedu.summoners.logic.csv;
 
 import static java.util.Objects.requireNonNull;
 
@@ -13,16 +13,16 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import seedu.address.logic.csv.exceptions.InvalidCsvException;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.Model;
-import seedu.address.model.person.Champion;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Rank;
-import seedu.address.model.person.Role;
-import seedu.address.model.person.Stats;
-import seedu.address.model.tag.Tag;
+import seedu.summoners.logic.csv.exceptions.InvalidCsvException;
+import seedu.summoners.logic.parser.exceptions.ParseException;
+import seedu.summoners.model.Model;
+import seedu.summoners.model.player.Champion;
+import seedu.summoners.model.player.Name;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.player.Rank;
+import seedu.summoners.model.player.Role;
+import seedu.summoners.model.player.Stats;
+import seedu.summoners.model.tag.Tag;
 
 /**
  * CSV importer for players. Supports headers:
@@ -83,7 +83,7 @@ public final class CsvImporter {
         try (BufferedReader br = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
             HeaderType headerType = readAndValidateHeader(br);
             Result result = processDataRows(model, br, headerType);
-            model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+            model.updateFilteredPlayerList(Model.PREDICATE_SHOW_ALL_PLAYERS);
             return result;
         }
     }
@@ -154,15 +154,15 @@ public final class CsvImporter {
         try {
             List<String> cols = parseCsvLine(line);
             PlayerRow row = PlayerRow.parse(cols, headerType);
-            Person candidate = createPerson(row);
-            return addPersonToModel(model, candidate);
+            Player candidate = createPlayer(row);
+            return addPlayerToModel(model, candidate);
         } catch (IllegalArgumentException iae) {
             return ImportOutcome.invalid("line " + lineNo + ": " + iae.getMessage());
         }
     }
 
-    private static Person createPerson(PlayerRow row) {
-        return new Person(
+    private static Player createPlayer(PlayerRow row) {
+        return new Player(
                 new Name(row.name),
                 new Role(row.role),
                 new Rank(row.rank),
@@ -174,11 +174,11 @@ public final class CsvImporter {
         );
     }
 
-    private static ImportOutcome addPersonToModel(Model model, Person candidate) {
-        if (model.hasPerson(candidate)) {
+    private static ImportOutcome addPlayerToModel(Model model, Player candidate) {
+        if (model.hasPlayer(candidate)) {
             return ImportOutcome.duplicate();
         }
-        model.addPerson(candidate);
+        model.addPlayer(candidate);
         return ImportOutcome.imported();
     }
 

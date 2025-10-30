@@ -1,4 +1,4 @@
-package seedu.address.logic.commands;
+package seedu.summoners.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -9,10 +9,10 @@ import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
+import seedu.summoners.model.SummonersBook;
+import seedu.summoners.model.Model;
+import seedu.summoners.model.ModelManager;
+import seedu.summoners.model.UserPrefs;
 
 public class ExportCommandTest {
 
@@ -21,7 +21,7 @@ public class ExportCommandTest {
 
     @Test
     public void execute_players_writesFileAndReturnsMessage() throws Exception {
-        Model model = new ModelManager(new AddressBook(), new UserPrefs());
+        Model model = new ModelManager(new SummonersBook(), new UserPrefs());
         Path out = tempDir.resolve("players.csv");
 
         ExportCommand cmd = new ExportCommand(ExportCommand.Target.PLAYERS, out);

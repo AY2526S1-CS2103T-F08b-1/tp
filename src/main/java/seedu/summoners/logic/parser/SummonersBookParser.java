@@ -1,47 +1,47 @@
-package seedu.address.logic.parser;
+package seedu.summoners.logic.parser;
 
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.summoners.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.summoners.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.AddStatsCommand;
-import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.DeleteStatsCommand;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.ExportCommand;
-import seedu.address.logic.commands.FilterCommand;
-import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.commands.GroupCommand;
-import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.ImportCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.ListTeamCommand;
-import seedu.address.logic.commands.LoseCommand;
-import seedu.address.logic.commands.MakeGroupCommand;
-import seedu.address.logic.commands.UngroupCommand;
-import seedu.address.logic.commands.ViewCommand;
-import seedu.address.logic.commands.ViewTeamCommand;
-import seedu.address.logic.commands.WinCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.summoners.commons.core.LogsCenter;
+import seedu.summoners.logic.commands.AddCommand;
+import seedu.summoners.logic.commands.AddStatsCommand;
+import seedu.summoners.logic.commands.ClearCommand;
+import seedu.summoners.logic.commands.Command;
+import seedu.summoners.logic.commands.DeleteCommand;
+import seedu.summoners.logic.commands.DeleteStatsCommand;
+import seedu.summoners.logic.commands.EditCommand;
+import seedu.summoners.logic.commands.ExitCommand;
+import seedu.summoners.logic.commands.ExportCommand;
+import seedu.summoners.logic.commands.FilterCommand;
+import seedu.summoners.logic.commands.FindCommand;
+import seedu.summoners.logic.commands.GroupCommand;
+import seedu.summoners.logic.commands.HelpCommand;
+import seedu.summoners.logic.commands.ImportCommand;
+import seedu.summoners.logic.commands.ListCommand;
+import seedu.summoners.logic.commands.ListTeamCommand;
+import seedu.summoners.logic.commands.LoseCommand;
+import seedu.summoners.logic.commands.MakeGroupCommand;
+import seedu.summoners.logic.commands.UngroupCommand;
+import seedu.summoners.logic.commands.ViewCommand;
+import seedu.summoners.logic.commands.ViewTeamCommand;
+import seedu.summoners.logic.commands.WinCommand;
+import seedu.summoners.logic.parser.exceptions.ParseException;
 
 /**
  * Parses user input.
  */
-public class AddressBookParser {
+public class SummonersBookParser {
 
     /**
      * Used for initial separation of command word and args.
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
-    private static final Logger logger = LogsCenter.getLogger(AddressBookParser.class);
+    private static final Logger logger = LogsCenter.getLogger(SummonersBookParser.class);
 
     /**
      * Parses user input into command for execution.

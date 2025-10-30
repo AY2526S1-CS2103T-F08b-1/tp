@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.summoners.storage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Person;
-import seedu.address.model.team.Team;
+import seedu.summoners.commons.exceptions.IllegalValueException;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.team.Team;
 
 /**
  * Jackson-friendly version of {@link Team}.
@@ -18,7 +18,7 @@ public class JsonAdaptedTeam {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Team's %s field is missing!";
 
     private final String teamId;
-    private final List<String> personIds = new ArrayList<>();
+    private final List<String> playerIds = new ArrayList<>();
     private final int wins;
     private final int losses;
 
@@ -27,12 +27,12 @@ public class JsonAdaptedTeam {
      */
     @JsonCreator
     public JsonAdaptedTeam(@JsonProperty("teamId") String teamId,
-                           @JsonProperty("personIds") List<String> personIds,
+                           @JsonProperty("playerIds") List<String> playerIds,
                            @JsonProperty("wins") int wins,
                            @JsonProperty("losses") int losses) {
         this.teamId = teamId;
-        if (personIds != null) {
-            this.personIds.addAll(personIds);
+        if (playerIds != null) {
+            this.playerIds.addAll(playerIds);
         }
         this.wins = wins;
         this.losses = losses;
@@ -43,8 +43,8 @@ public class JsonAdaptedTeam {
      */
     public JsonAdaptedTeam(Team source) {
         this.teamId = source.getId();
-        this.personIds.addAll(source.getPersons().stream()
-                .map(Person::getId)
+        this.playerIds.addAll(source.getPlayers().stream()
+                .map(Player::getId)
                 .collect(Collectors.toList()));
         this.wins = source.getWins();
         this.losses = source.getLosses();
@@ -55,19 +55,19 @@ public class JsonAdaptedTeam {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted team.
      */
-    public Team toModelType(List<Person> allPersons) throws IllegalValueException {
+    public Team toModelType(List<Player> allPlayers) throws IllegalValueException {
         if (teamId == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "teamId"));
         }
 
-        final List<Person> teamPersons = new ArrayList<>();
-        for (String personId : personIds) {
-            Person person = allPersons.stream()
-                    .filter(p -> p.getId().equals(personId))
+        final List<Player> teamPlayers = new ArrayList<>();
+        for (String playerId : playerIds) {
+            Player player = allPlayers.stream()
+                    .filter(p -> p.getId().equals(playerId))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalValueException("Invalid Person ID in Team: " + personId));
-            teamPersons.add(person);
+                    .orElseThrow(() -> new IllegalValueException("Invalid Player ID in Team: " + playerId));
+            teamPlayers.add(player);
         }
-        return new Team(teamId, teamPersons, wins, losses);
+        return new Team(teamId, teamPlayers, wins, losses);
     }
 }

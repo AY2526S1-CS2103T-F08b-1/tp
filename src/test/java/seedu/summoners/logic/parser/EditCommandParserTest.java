@@ -1,49 +1,49 @@
-package seedu.address.logic.parser;
+package seedu.summoners.logic.parser;
 
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.CHAMPION_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.CHAMPION_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_CHAMPION_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_RANK_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_ROLE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.RANK_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.RANK_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.ROLE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.ROLE_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_CHAMPION_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_RANK_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ROLE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ROLE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CHAMPION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_RANK;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
+import static seedu.summoners.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.summoners.logic.commands.CommandTestUtil.CHAMPION_DESC_AMY;
+import static seedu.summoners.logic.commands.CommandTestUtil.CHAMPION_DESC_BOB;
+import static seedu.summoners.logic.commands.CommandTestUtil.INVALID_CHAMPION_DESC;
+import static seedu.summoners.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
+import static seedu.summoners.logic.commands.CommandTestUtil.INVALID_RANK_DESC;
+import static seedu.summoners.logic.commands.CommandTestUtil.INVALID_ROLE_DESC;
+import static seedu.summoners.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
+import static seedu.summoners.logic.commands.CommandTestUtil.NAME_DESC_AMY;
+import static seedu.summoners.logic.commands.CommandTestUtil.RANK_DESC_AMY;
+import static seedu.summoners.logic.commands.CommandTestUtil.RANK_DESC_BOB;
+import static seedu.summoners.logic.commands.CommandTestUtil.ROLE_DESC_AMY;
+import static seedu.summoners.logic.commands.CommandTestUtil.ROLE_DESC_BOB;
+import static seedu.summoners.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
+import static seedu.summoners.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_CHAMPION_AMY;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_NAME_AMY;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_RANK_AMY;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_ROLE_AMY;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_ROLE_BOB;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_CHAMPION;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_RANK;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_ROLE;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.summoners.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.summoners.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_FIRST_PLAYER;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_SECOND_PLAYER;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_THIRD_PLAYER;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.Messages;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
-import seedu.address.model.person.Champion;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Rank;
-import seedu.address.model.person.Role;
-import seedu.address.model.tag.Tag;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.summoners.commons.core.index.Index;
+import seedu.summoners.logic.Messages;
+import seedu.summoners.logic.commands.EditCommand;
+import seedu.summoners.logic.commands.EditCommand.EditPlayerDescriptor;
+import seedu.summoners.model.player.Champion;
+import seedu.summoners.model.player.Name;
+import seedu.summoners.model.player.Rank;
+import seedu.summoners.model.player.Role;
+import seedu.summoners.model.tag.Tag;
+import seedu.summoners.testutil.EditPlayerDescriptorBuilder;
 
 public class EditCommandParserTest {
 
@@ -92,7 +92,7 @@ public class EditCommandParserTest {
         // invalid phone followed by valid email
         assertParseFailure(parser, "1" + INVALID_ROLE_DESC + RANK_DESC_AMY, Role.MESSAGE_CONSTRAINTS);
 
-        // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Person} being edited,
+        // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Player} being edited,
         // parsing it together with a valid tag results in error
         assertParseFailure(parser, "1" + TAG_DESC_FRIEND + TAG_DESC_HUSBAND + TAG_EMPTY, Tag.MESSAGE_CONSTRAINTS);
         assertParseFailure(parser, "1" + TAG_DESC_FRIEND + TAG_EMPTY + TAG_DESC_HUSBAND, Tag.MESSAGE_CONSTRAINTS);
@@ -105,11 +105,11 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_allFieldsSpecified_success() {
-        Index targetIndex = INDEX_SECOND_PERSON;
+        Index targetIndex = INDEX_SECOND_PLAYER;
         String userInput = targetIndex.getOneBased() + ROLE_DESC_BOB + TAG_DESC_HUSBAND
                 + RANK_DESC_AMY + CHAMPION_DESC_AMY + NAME_DESC_AMY + TAG_DESC_FRIEND;
 
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
+        EditPlayerDescriptor descriptor = new EditPlayerDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withRole(VALID_ROLE_BOB).withRank(VALID_RANK_AMY).withChampion(VALID_CHAMPION_AMY)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
@@ -119,10 +119,10 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_someFieldsSpecified_success() {
-        Index targetIndex = INDEX_FIRST_PERSON;
+        Index targetIndex = INDEX_FIRST_PLAYER;
         String userInput = targetIndex.getOneBased() + ROLE_DESC_BOB + RANK_DESC_AMY;
 
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withRole(VALID_ROLE_BOB)
+        EditPlayerDescriptor descriptor = new EditPlayerDescriptorBuilder().withRole(VALID_ROLE_BOB)
                 .withRank(VALID_RANK_AMY).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
@@ -132,33 +132,33 @@ public class EditCommandParserTest {
     @Test
     public void parse_oneFieldSpecified_success() {
         // name
-        Index targetIndex = INDEX_THIRD_PERSON;
+        Index targetIndex = INDEX_THIRD_PLAYER;
         String userInput = targetIndex.getOneBased() + NAME_DESC_AMY;
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY).build();
+        EditPlayerDescriptor descriptor = new EditPlayerDescriptorBuilder().withName(VALID_NAME_AMY).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // role
         userInput = targetIndex.getOneBased() + ROLE_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withRole(VALID_ROLE_AMY).build();
+        descriptor = new EditPlayerDescriptorBuilder().withRole(VALID_ROLE_AMY).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // rank
         userInput = targetIndex.getOneBased() + RANK_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withRank(VALID_RANK_AMY).build();
+        descriptor = new EditPlayerDescriptorBuilder().withRank(VALID_RANK_AMY).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // champion
         userInput = targetIndex.getOneBased() + CHAMPION_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withChampion(VALID_CHAMPION_AMY).build();
+        descriptor = new EditPlayerDescriptorBuilder().withChampion(VALID_CHAMPION_AMY).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // tags
         userInput = targetIndex.getOneBased() + TAG_DESC_FRIEND;
-        descriptor = new EditPersonDescriptorBuilder().withTags(VALID_TAG_FRIEND).build();
+        descriptor = new EditPlayerDescriptorBuilder().withTags(VALID_TAG_FRIEND).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
@@ -169,7 +169,7 @@ public class EditCommandParserTest {
         // AddCommandParserTest#parse_repeatedNonTagValue_failure()
 
         // valid followed by invalid
-        Index targetIndex = INDEX_FIRST_PERSON;
+        Index targetIndex = INDEX_FIRST_PLAYER;
         String userInput = targetIndex.getOneBased() + INVALID_ROLE_DESC + ROLE_DESC_BOB;
 
         assertParseFailure(parser, userInput, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_ROLE));
@@ -197,10 +197,10 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_resetTags_success() {
-        Index targetIndex = INDEX_THIRD_PERSON;
+        Index targetIndex = INDEX_THIRD_PLAYER;
         String userInput = targetIndex.getOneBased() + TAG_EMPTY;
 
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withTags().build();
+        EditPlayerDescriptor descriptor = new EditPlayerDescriptorBuilder().withTags().build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);

@@ -1,4 +1,4 @@
-package seedu.address.ui;
+package seedu.summoners.ui;
 
 import java.util.Comparator;
 
@@ -7,24 +7,24 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.address.model.person.Person;
+import seedu.summoners.model.player.Player;
 
 /**
- * A UI component that displays information of a {@code Person}.
+ * A UI component that displays information of a {@code Player}.
  */
-public class PersonCard extends UiPart<Region> {
+public class PlayerCard extends UiPart<Region> {
 
-    private static final String FXML = "PersonListCard.fxml";
+    private static final String FXML = "PlayerListCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
      * or an exception will be thrown by JavaFX during runtime.
      *
-     * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
+     * @see <a href="https://github.com/se-edu/summonersbook-level4/issues/336">The issue on SummonersBook level 4</a>
      */
 
-    public final Person person;
+    public final Player player;
 
     @FXML
     private HBox cardPane;
@@ -39,21 +39,21 @@ public class PersonCard extends UiPart<Region> {
 
 
     /**
-     * Creates a {@code PersonCode} with the given {@code Person} and index to display.
+     * Creates a {@code PlayerCode} with the given {@code Player} and index to display.
      */
-    public PersonCard(Person person, int displayedIndex) {
+    public PlayerCard(Player player, int displayedIndex) {
         super(FXML);
-        this.person = person;
+        this.player = player;
         id.setText(displayedIndex + ". ");
-        name.setText(person.getName().fullName);
+        name.setText(player.getName().fullName);
 
-        person.getTags().stream()
+        player.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
 
-        StyledLabel rankLabel = new StyledLabel(person.getRank().value, "rank", "details_label");
-        StyledLabel roleLabel = new StyledLabel(person.getRole().value, "role", "details_label");
-        StyledLabel championLabel = new StyledLabel(person.getChampion().value, "champion", "details_label");
+        StyledLabel rankLabel = new StyledLabel(player.getRank().value, "rank", "details_label");
+        StyledLabel roleLabel = new StyledLabel(player.getRole().value, "role", "details_label");
+        StyledLabel championLabel = new StyledLabel(player.getChampion().value, "champion", "details_label");
         details.getChildren().addAll(rankLabel.getRoot(), roleLabel.getRoot(), championLabel.getRoot());
     }
 }

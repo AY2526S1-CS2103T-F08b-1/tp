@@ -1,29 +1,29 @@
-package seedu.address.logic.commands;
+package seedu.summoners.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-import static seedu.address.testutil.TypicalTeams.getTypicalAddressBookWithTeams;
+import static seedu.summoners.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.summoners.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.summoners.logic.commands.CommandTestUtil.showPlayerAtIndex;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_FIRST_PLAYER;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_SECOND_PLAYER;
+import static seedu.summoners.testutil.TypicalPlayers.ALICE;
+import static seedu.summoners.testutil.TypicalPlayers.getTypicalSummonersBook;
+import static seedu.summoners.testutil.TypicalTeams.getTypicalSummonersBookWithTeams;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.Messages;
-import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Stats;
-import seedu.address.model.team.Team;
-import seedu.address.testutil.TeamBuilder;
+import seedu.summoners.commons.core.index.Index;
+import seedu.summoners.logic.Messages;
+import seedu.summoners.model.SummonersBook;
+import seedu.summoners.model.Model;
+import seedu.summoners.model.ModelManager;
+import seedu.summoners.model.UserPrefs;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.player.Stats;
+import seedu.summoners.model.team.Team;
+import seedu.summoners.testutil.TeamBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@link AddStatsCommand}.
@@ -34,73 +34,73 @@ public class AddStatsCommandTest {
     private static final String GD15 = "2400";
     private static final String KDA = "2.6";
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalSummonersBook(), new UserPrefs());
 
     @Test
-    public void execute_unfilteredListPersonNotInAnyTeam_success() throws Exception {
-        // Use the typical address book without teams to ensure the person is not in any team
-        Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+    public void execute_unfilteredListPlayerNotInAnyTeam_success() throws Exception {
+        // Use the typical summoners book without teams to ensure the player is not in any team
+        Player playerToEdit = model.getFilteredPlayerList().get(INDEX_FIRST_PLAYER.getZeroBased());
 
-        // Build expected edited person (preserving identity & attributes, updating Stats only)
-        Stats updatedStats = personToEdit.getStats().addLatestStats(CPM, GD15, KDA);
-        Person editedPerson = new Person(personToEdit.getId(),
-                personToEdit.getName(),
-                personToEdit.getRole(),
-                personToEdit.getRank(),
-                personToEdit.getChampion(),
-                personToEdit.getTags(),
-                personToEdit.getWins(),
-                personToEdit.getLosses(),
+        // Build expected edited player (preserving identity & attributes, updating Stats only)
+        Stats updatedStats = playerToEdit.getStats().addLatestStats(CPM, GD15, KDA);
+        Player editedPlayer = new Player(playerToEdit.getId(),
+                playerToEdit.getName(),
+                playerToEdit.getRole(),
+                playerToEdit.getRank(),
+                playerToEdit.getChampion(),
+                playerToEdit.getTags(),
+                playerToEdit.getWins(),
+                playerToEdit.getLosses(),
                 updatedStats);
 
-        AddStatsCommand cmd = new AddStatsCommand(INDEX_FIRST_PERSON, CPM, GD15, KDA);
-        String expectedMessage = String.format(AddStatsCommand.MESSAGE_RECORD_SUCCESS, Messages.format(editedPerson));
+        AddStatsCommand cmd = new AddStatsCommand(INDEX_FIRST_PLAYER, CPM, GD15, KDA);
+        String expectedMessage = String.format(AddStatsCommand.MESSAGE_RECORD_SUCCESS, Messages.format(editedPlayer));
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setPerson(personToEdit, editedPerson);
-        expectedModel.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+        Model expectedModel = new ModelManager(new SummonersBook(model.getSummonersBook()), new UserPrefs());
+        expectedModel.setPlayer(playerToEdit, editedPlayer);
+        expectedModel.updateFilteredPlayerList(Model.PREDICATE_SHOW_ALL_PLAYERS);
         expectedModel.updateFilteredTeamList(Model.PREDICATE_SHOW_ALL_TEAMS);
 
         assertCommandSuccess(cmd, model, expectedMessage, expectedModel);
     }
 
     @Test
-    public void execute_unfilteredListPersonInTeamUpdatesPersonAndTeam_success() throws Exception {
-        // Model that already has teams with persons assigned
-        Model modelWithTeams = new ModelManager(getTypicalAddressBookWithTeams(), new UserPrefs());
+    public void execute_unfilteredListPlayerInTeamUpdatesPlayerAndTeam_success() throws Exception {
+        // Model that already has teams with players assigned
+        Model modelWithTeams = new ModelManager(getTypicalSummonersBookWithTeams(), new UserPrefs());
 
-        // Pick a person that is known to be in a team; use ALICE as in other tests
-        Person personToEdit = ALICE;
-        Stats updatedStats = personToEdit.getStats().addLatestStats("7.0", "1000", "2.2");
-        Person editedPerson = new Person(personToEdit.getId(),
-                personToEdit.getName(),
-                personToEdit.getRole(),
-                personToEdit.getRank(),
-                personToEdit.getChampion(),
-                personToEdit.getTags(),
-                personToEdit.getWins(),
-                personToEdit.getLosses(),
+        // Pick a player that is known to be in a team; use ALICE as in other tests
+        Player playerToEdit = ALICE;
+        Stats updatedStats = playerToEdit.getStats().addLatestStats("7.0", "1000", "2.2");
+        Player editedPlayer = new Player(playerToEdit.getId(),
+                playerToEdit.getName(),
+                playerToEdit.getRole(),
+                playerToEdit.getRank(),
+                playerToEdit.getChampion(),
+                playerToEdit.getTags(),
+                playerToEdit.getWins(),
+                playerToEdit.getLosses(),
                 updatedStats);
 
-        // Find the team containing that person in the model
+        // Find the team containing that player in the model
         Team originalTeam = modelWithTeams.getFilteredTeamList()
                 .stream()
-                .filter(t -> t.hasPerson(personToEdit))
+                .filter(t -> t.hasPlayer(playerToEdit))
                 .findFirst()
                 .orElseThrow(() -> new AssertionError("Expected ALICE to be in a team in typical teams data"));
 
         Team expectedTeam = new TeamBuilder(originalTeam)
-                .replacePerson(personToEdit, editedPerson)
+                .replacePlayer(playerToEdit, editedPlayer)
                 .build();
 
-        // Command uses the person index in filtered person list — ALICE is typically first
+        // Command uses the player index in filtered player list — ALICE is typically first
         AddStatsCommand cmd = new AddStatsCommand(Index.fromOneBased(1), "7.0", "1000", "2.2");
-        String expectedMessage = String.format(AddStatsCommand.MESSAGE_RECORD_SUCCESS, Messages.format(editedPerson));
+        String expectedMessage = String.format(AddStatsCommand.MESSAGE_RECORD_SUCCESS, Messages.format(editedPlayer));
 
-        Model expectedModel = new ModelManager(getTypicalAddressBookWithTeams(), new UserPrefs());
-        expectedModel.setPerson(personToEdit, editedPerson);
+        Model expectedModel = new ModelManager(getTypicalSummonersBookWithTeams(), new UserPrefs());
+        expectedModel.setPlayer(playerToEdit, editedPlayer);
         expectedModel.setTeam(originalTeam, expectedTeam);
-        expectedModel.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+        expectedModel.updateFilteredPlayerList(Model.PREDICATE_SHOW_ALL_PLAYERS);
         expectedModel.updateFilteredTeamList(Model.PREDICATE_SHOW_ALL_TEAMS);
 
         assertCommandSuccess(cmd, modelWithTeams, expectedMessage, expectedModel);
@@ -108,27 +108,27 @@ public class AddStatsCommandTest {
 
     @Test
     public void execute_filteredList_success() throws Exception {
-        // Filter the list to show only the first person
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        // Filter the list to show only the first player
+        showPlayerAtIndex(model, INDEX_FIRST_PLAYER);
 
-        Person personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Stats updatedStats = personInFilteredList.getStats().addLatestStats(CPM, GD15, KDA);
-        Person editedPerson = new Person(personInFilteredList.getId(),
-                personInFilteredList.getName(),
-                personInFilteredList.getRole(),
-                personInFilteredList.getRank(),
-                personInFilteredList.getChampion(),
-                personInFilteredList.getTags(),
-                personInFilteredList.getWins(),
-                personInFilteredList.getLosses(),
+        Player playerInFilteredList = model.getFilteredPlayerList().get(INDEX_FIRST_PLAYER.getZeroBased());
+        Stats updatedStats = playerInFilteredList.getStats().addLatestStats(CPM, GD15, KDA);
+        Player editedPlayer = new Player(playerInFilteredList.getId(),
+                playerInFilteredList.getName(),
+                playerInFilteredList.getRole(),
+                playerInFilteredList.getRank(),
+                playerInFilteredList.getChampion(),
+                playerInFilteredList.getTags(),
+                playerInFilteredList.getWins(),
+                playerInFilteredList.getLosses(),
                 updatedStats);
 
-        AddStatsCommand cmd = new AddStatsCommand(INDEX_FIRST_PERSON, CPM, GD15, KDA);
-        String expectedMessage = String.format(AddStatsCommand.MESSAGE_RECORD_SUCCESS, Messages.format(editedPerson));
+        AddStatsCommand cmd = new AddStatsCommand(INDEX_FIRST_PLAYER, CPM, GD15, KDA);
+        String expectedMessage = String.format(AddStatsCommand.MESSAGE_RECORD_SUCCESS, Messages.format(editedPlayer));
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setPerson(model.getFilteredPersonList().get(0), editedPerson);
-        expectedModel.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+        Model expectedModel = new ModelManager(new SummonersBook(model.getSummonersBook()), new UserPrefs());
+        expectedModel.setPlayer(model.getFilteredPlayerList().get(0), editedPlayer);
+        expectedModel.updateFilteredPlayerList(Model.PREDICATE_SHOW_ALL_PLAYERS);
         expectedModel.updateFilteredTeamList(Model.PREDICATE_SHOW_ALL_TEAMS);
 
         assertCommandSuccess(cmd, model, expectedMessage, expectedModel);
@@ -136,31 +136,31 @@ public class AddStatsCommandTest {
 
     @Test
     public void execute_invalidIndexUnfilteredList_failure() {
-        Index outOfBound = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        Index outOfBound = Index.fromOneBased(model.getFilteredPlayerList().size() + 1);
         AddStatsCommand cmd = new AddStatsCommand(outOfBound, CPM, GD15, KDA);
 
-        assertCommandFailure(cmd, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(cmd, model, Messages.MESSAGE_INVALID_PLAYER_DISPLAYED_INDEX);
     }
 
     /**
-     * Invalid index against the filtered list but still within the size of the full address book.
+     * Invalid index against the filtered list but still within the size of the full summoners book.
      */
     @Test
     public void execute_invalidIndexFilteredList_failure() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
-        Index outOfBoundIndex = INDEX_SECOND_PERSON;
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+        showPlayerAtIndex(model, INDEX_FIRST_PLAYER);
+        Index outOfBoundIndex = INDEX_SECOND_PLAYER;
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getSummonersBook().getPlayerList().size());
 
         AddStatsCommand cmd = new AddStatsCommand(outOfBoundIndex, CPM, GD15, KDA);
-        assertCommandFailure(cmd, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(cmd, model, Messages.MESSAGE_INVALID_PLAYER_DISPLAYED_INDEX);
     }
 
     @Test
     public void equals() {
-        AddStatsCommand standard = new AddStatsCommand(INDEX_FIRST_PERSON, "7.0", "1000", "2.2");
+        AddStatsCommand standard = new AddStatsCommand(INDEX_FIRST_PLAYER, "7.0", "1000", "2.2");
 
         // same values -> true
-        AddStatsCommand sameValues = new AddStatsCommand(INDEX_FIRST_PERSON, "7.0", "1000", "2.2");
+        AddStatsCommand sameValues = new AddStatsCommand(INDEX_FIRST_PLAYER, "7.0", "1000", "2.2");
         assertTrue(standard.equals(sameValues));
 
         // same object -> true
@@ -173,10 +173,10 @@ public class AddStatsCommandTest {
         assertFalse(standard.equals(new ClearCommand()));
 
         // different index -> false
-        assertFalse(standard.equals(new AddStatsCommand(INDEX_SECOND_PERSON, "7.0", "1000", "2.2")));
+        assertFalse(standard.equals(new AddStatsCommand(INDEX_SECOND_PLAYER, "7.0", "1000", "2.2")));
 
         // different params -> false
-        assertFalse(standard.equals(new AddStatsCommand(INDEX_FIRST_PERSON, "10.2", "2400", "2.6")));
+        assertFalse(standard.equals(new AddStatsCommand(INDEX_FIRST_PLAYER, "10.2", "2400", "2.6")));
     }
 
     @Test

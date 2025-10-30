@@ -1,10 +1,10 @@
-package seedu.address.logic.parser;
+package seedu.summoners.logic.parser;
 
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.summoners.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.DeleteStatsCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.summoners.commons.core.index.Index;
+import seedu.summoners.logic.commands.DeleteStatsCommand;
+import seedu.summoners.logic.parser.exceptions.ParseException;
 
 /**
  * Parses input arguments and creates a new {@link DeleteStatsCommand}.
@@ -25,7 +25,7 @@ public class DeleteStatsCommandParser implements Parser<DeleteStatsCommand> {
      * and returns a new {@code DeleteStatsCommand} object for execution.
      *
      * @param args Raw argument string following the command word (e.g., {@code " 1"}).
-     * @return A {@code DeleteStatsCommand} targeting the parsed person index.
+     * @return A {@code DeleteStatsCommand} targeting the parsed player index.
      * @throws ParseException If the input does not contain a valid index in the preamble
      *                        (e.g., missing/zero/negative/non-numeric).
      */

@@ -1,15 +1,15 @@
-package seedu.address.logic.commands;
+package seedu.summoners.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.csv.CsvImporter;
-import seedu.address.logic.csv.exceptions.InvalidCsvException;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.Model;
+import seedu.summoners.logic.commands.exceptions.CommandException;
+import seedu.summoners.logic.csv.CsvImporter;
+import seedu.summoners.logic.csv.exceptions.InvalidCsvException;
+import seedu.summoners.logic.parser.exceptions.ParseException;
+import seedu.summoners.model.Model;
 
 /**
  * Imports player data from a CSV file into the application's player database.

@@ -1,11 +1,11 @@
-package seedu.address.logic.commands;
+package seedu.summoners.logic.commands;
 
 import java.util.Objects;
 import java.util.Optional;
 
-import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.person.Person;
-import seedu.address.model.team.Team;
+import seedu.summoners.commons.util.ToStringBuilder;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.team.Team;
 
 /**
  * Represents the result of a command execution.
@@ -20,11 +20,11 @@ public class CommandResult {
     /** The application should exit. */
     private final boolean exit;
 
-    /** Person detail window should be shown to the user. */
-    private final boolean showPersonDetail;
+    /** Player detail window should be shown to the user. */
+    private final boolean showPlayerDetail;
 
-    /** The person whose details should be shown. */
-    private final Person personToShow;
+    /** The player whose details should be shown. */
+    private final Player playerToShow;
 
     /** Team stats window should be shown to the user. */
     private final boolean showTeamStats;
@@ -38,25 +38,25 @@ public class CommandResult {
      * @param feedbackToUser Feedback message to display to the user.
      * @param showHelp Whether to show the help window.
      * @param exit Whether the application should exit.
-     * @param showPersonDetail Whether to show the person detail window.
-     * @param personToShow The person whose details should be shown, or null.
+     * @param showPlayerDetail Whether to show the player detail window.
+     * @param playerToShow The player whose details should be shown, or null.
      * @param showTeamStats Whether to show the team stats window.
      * @param teamToShow The team whose stats should be shown, or null.
      */
     public CommandResult(String feedbackToUser, boolean showHelp, boolean exit,
-                         boolean showPersonDetail, Person personToShow,
+                         boolean showPlayerDetail, Player playerToShow,
                          boolean showTeamStats, Team teamToShow) {
         this.feedbackToUser = Objects.requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
         this.exit = exit;
-        this.showPersonDetail = showPersonDetail;
-        this.personToShow = personToShow;
+        this.showPlayerDetail = showPlayerDetail;
+        this.playerToShow = playerToShow;
         this.showTeamStats = showTeamStats;
         this.teamToShow = teamToShow;
     }
 
     /**
-     * Constructs a {@code CommandResult} with the specified fields (without person detail or team stats).
+     * Constructs a {@code CommandResult} with the specified fields (without player detail or team stats).
      */
     public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
         this(feedbackToUser, showHelp, exit, false, null, false, null);
@@ -71,21 +71,21 @@ public class CommandResult {
     }
 
     /**
-     * Constructs a {@code CommandResult} for showing person details.
+     * Constructs a {@code CommandResult} for showing player details.
      */
-    public CommandResult(String feedbackToUser, Person personToShow) {
-        this(feedbackToUser, false, false, true, personToShow, false, null);
+    public CommandResult(String feedbackToUser, Player playerToShow) {
+        this(feedbackToUser, false, false, true, playerToShow, false, null);
     }
 
     /**
-     * Factory method to create a result that opens the Person detail window.
+     * Factory method to create a result that opens the Player detail window.
      *
      * @param message feedback line for the result display
-     * @param person person to show
-     * @return a {@code CommandResult} configured to show the Person detail window
+     * @param player player to show
+     * @return a {@code CommandResult} configured to show the Player detail window
      */
-    public static CommandResult showPersonDetail(String message, Person person) {
-        return new CommandResult(message, false, false, true, person, false, null);
+    public static CommandResult showPlayerDetail(String message, Player player) {
+        return new CommandResult(message, false, false, true, player, false, null);
     }
 
     /**
@@ -111,12 +111,12 @@ public class CommandResult {
         return exit;
     }
 
-    public boolean isShowPersonDetail() {
-        return showPersonDetail;
+    public boolean isShowPlayerDetail() {
+        return showPlayerDetail;
     }
 
-    public Optional<Person> getPersonToShow() {
-        return Optional.ofNullable(personToShow);
+    public Optional<Player> getPlayerToShow() {
+        return Optional.ofNullable(playerToShow);
     }
 
     public boolean isShowTeamStats() {
@@ -142,15 +142,15 @@ public class CommandResult {
         return feedbackToUser.equals(otherCommandResult.feedbackToUser)
                 && showHelp == otherCommandResult.showHelp
                 && exit == otherCommandResult.exit
-                && showPersonDetail == otherCommandResult.showPersonDetail
-                && Objects.equals(personToShow, otherCommandResult.personToShow)
+                && showPlayerDetail == otherCommandResult.showPlayerDetail
+                && Objects.equals(playerToShow, otherCommandResult.playerToShow)
                 && showTeamStats == otherCommandResult.showTeamStats
                 && Objects.equals(teamToShow, otherCommandResult.teamToShow);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(feedbackToUser, showHelp, exit, showPersonDetail, personToShow,
+        return Objects.hash(feedbackToUser, showHelp, exit, showPlayerDetail, playerToShow,
                 showTeamStats, teamToShow);
     }
 
@@ -160,8 +160,8 @@ public class CommandResult {
                 .add("feedbackToUser", feedbackToUser)
                 .add("showHelp", showHelp)
                 .add("exit", exit)
-                .add("showPersonDetail", showPersonDetail)
-                .add("personToShow", personToShow)
+                .add("showPlayerDetail", showPlayerDetail)
+                .add("playerToShow", playerToShow)
                 .add("showTeamStats", showTeamStats)
                 .add("teamToShow", teamToShow)
                 .toString();

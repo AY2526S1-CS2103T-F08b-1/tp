@@ -1,16 +1,16 @@
-package seedu.address.logic.commands;
+package seedu.summoners.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CHAMPION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_RANK;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_CHAMPION;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_RANK;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_ROLE;
 
-import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.logic.Messages;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.model.person.Person;
+import seedu.summoners.commons.util.ToStringBuilder;
+import seedu.summoners.logic.Messages;
+import seedu.summoners.logic.commands.exceptions.CommandException;
+import seedu.summoners.model.Model;
+import seedu.summoners.model.player.Player;
 
 /**
  * Adds a player to SummonersBook.
@@ -32,28 +32,28 @@ public class AddCommand extends Command {
             + PREFIX_ROLE + "Mid "
             + PREFIX_CHAMPION + "Ahri";
 
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in SummonersBook";
+    public static final String MESSAGE_SUCCESS = "New player added: %1$s";
+    public static final String MESSAGE_DUPLICATE_PLAYER = "This player already exists in SummonersBook";
 
-    private final Person toAdd;
+    private final Player toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code Person}
+     * Creates an AddCommand to add the specified {@code Player}
      */
-    public AddCommand(Person person) {
-        requireNonNull(person);
-        toAdd = person;
+    public AddCommand(Player player) {
+        requireNonNull(player);
+        toAdd = player;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        if (model.hasPerson(toAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        if (model.hasPlayer(toAdd)) {
+            throw new CommandException(MESSAGE_DUPLICATE_PLAYER);
         }
 
-        model.addPerson(toAdd);
+        model.addPlayer(toAdd);
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 

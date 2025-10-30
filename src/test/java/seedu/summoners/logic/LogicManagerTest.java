@@ -1,9 +1,9 @@
-package seedu.address.logic;
+package seedu.summoners.logic;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.summoners.logic.Messages.MESSAGE_INVALID_PLAYER_DISPLAYED_INDEX;
+import static seedu.summoners.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.summoners.testutil.Assert.assertThrows;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
@@ -13,20 +13,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
-import seedu.address.storage.JsonAddressBookStorage;
-import seedu.address.storage.JsonUserPrefsStorage;
-import seedu.address.storage.StorageManager;
-import seedu.address.testutil.PersonBuilder;
+import seedu.summoners.logic.commands.AddCommand;
+import seedu.summoners.logic.commands.CommandResult;
+import seedu.summoners.logic.commands.ListCommand;
+import seedu.summoners.logic.commands.exceptions.CommandException;
+import seedu.summoners.logic.parser.exceptions.ParseException;
+import seedu.summoners.model.Model;
+import seedu.summoners.model.ModelManager;
+import seedu.summoners.model.ReadOnlySummonersBook;
+import seedu.summoners.model.UserPrefs;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.storage.JsonSummonersBookStorage;
+import seedu.summoners.storage.JsonUserPrefsStorage;
+import seedu.summoners.storage.StorageManager;
+import seedu.summoners.testutil.PlayerBuilder;
 
 public class LogicManagerTest {
     private static final IOException DUMMY_IO_EXCEPTION = new IOException("dummy IO exception");
@@ -40,10 +40,10 @@ public class LogicManagerTest {
 
     @BeforeEach
     public void setUp() {
-        JsonAddressBookStorage addressBookStorage =
-                new JsonAddressBookStorage(temporaryFolder.resolve("addressBook.json"));
+        JsonSummonersBookStorage summonersBookStorage =
+                new JsonSummonersBookStorage(temporaryFolder.resolve("summonersBook.json"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.resolve("userPrefs.json"));
-        StorageManager storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        StorageManager storage = new StorageManager(summonersBookStorage, userPrefsStorage);
         logic = new LogicManager(model, storage);
     }
 
@@ -56,7 +56,7 @@ public class LogicManagerTest {
     @Test
     public void execute_commandExecutionError_throwsCommandException() {
         String deleteCommand = "delete 9";
-        assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandException(deleteCommand, MESSAGE_INVALID_PLAYER_DISPLAYED_INDEX);
     }
 
     @Test
@@ -78,8 +78,8 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
-        assertThrows(UnsupportedOperationException.class, () -> logic.getFilteredPersonList().remove(0));
+    public void getFilteredPlayerList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> logic.getFilteredPlayerList().remove(0));
     }
 
     @Test
@@ -123,7 +123,7 @@ public class LogicManagerTest {
      */
     private void assertCommandFailure(String inputCommand, Class<? extends Throwable> expectedException,
             String expectedMessage) {
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getSummonersBook(), new UserPrefs());
         assertCommandFailure(inputCommand, expectedException, expectedMessage, expectedModel);
     }
 
@@ -149,10 +149,10 @@ public class LogicManagerTest {
     private void assertCommandFailureForExceptionFromStorage(IOException e, String expectedMessage) {
         Path prefPath = temporaryFolder.resolve("ExceptionUserPrefs.json");
 
-        // Inject LogicManager with an AddressBookStorage that throws the IOException e when saving
-        JsonAddressBookStorage addressBookStorage = new JsonAddressBookStorage(prefPath) {
+        // Inject LogicManager with an SummonersBookStorage that throws the IOException e when saving
+        JsonSummonersBookStorage summonersBookStorage = new JsonSummonersBookStorage(prefPath) {
             @Override
-            public void saveAddressBook(ReadOnlyAddressBook addressBook, Path filePath)
+            public void saveSummonersBook(ReadOnlySummonersBook summonersBook, Path filePath)
                     throws IOException {
                 throw e;
             }
@@ -160,13 +160,13 @@ public class LogicManagerTest {
 
         JsonUserPrefsStorage userPrefsStorage =
                 new JsonUserPrefsStorage(temporaryFolder.resolve("ExceptionUserPrefs.json"));
-        StorageManager storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        StorageManager storage = new StorageManager(summonersBookStorage, userPrefsStorage);
 
         logic = new LogicManager(model, storage);
 
-        // Triggers the saveAddressBook method by executing an add command
+        // Triggers the saveSummonersBook method by executing an add command
         String addCommand = AddCommand.COMMAND_WORD + " n/Amy rk/Platinum rl/Mid c/Ahri";
-        Person expectedPerson = new PersonBuilder()
+        Player expectedPlayer = new PlayerBuilder()
                 .withName("Amy")
                 .withRank("Platinum")
                 .withRole("Mid")
@@ -174,7 +174,7 @@ public class LogicManagerTest {
                 .withTags()
                 .build();
         ModelManager expectedModel = new ModelManager();
-        expectedModel.addPerson(expectedPerson);
+        expectedModel.addPlayer(expectedPlayer);
         assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);
     }
 }

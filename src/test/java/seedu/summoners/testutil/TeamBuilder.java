@@ -1,12 +1,12 @@
-package seedu.address.testutil;
+package seedu.summoners.testutil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import seedu.address.model.person.Person;
-import seedu.address.model.team.Team;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.team.Team;
 
 /**
  * A utility class to help with building Team objects.
@@ -19,7 +19,7 @@ public class TeamBuilder {
     public static final int DEFAULT_LOSSES = 0;
 
     private String id;
-    private List<Person> persons;
+    private List<Player> players;
     private int wins;
     private int losses;
 
@@ -28,7 +28,7 @@ public class TeamBuilder {
      */
     public TeamBuilder() {
         id = UUID.randomUUID().toString();
-        persons = new ArrayList<>();
+        players = new ArrayList<>();
         wins = DEFAULT_WINS;
         losses = DEFAULT_LOSSES;
     }
@@ -38,34 +38,34 @@ public class TeamBuilder {
      */
     public TeamBuilder(Team teamToCopy) {
         id = teamToCopy.getId();
-        persons = new ArrayList<>(teamToCopy.getPersons());
+        players = new ArrayList<>(teamToCopy.getPlayers());
         wins = teamToCopy.getWins();
         losses = teamToCopy.getLosses();
     }
 
     /**
-     * Sets the {@code persons} of the {@code Team} that we are building.
+     * Sets the {@code players} of the {@code Team} that we are building.
      */
-    public TeamBuilder withPersons(Person... persons) {
-        this.persons = Arrays.asList(persons);
+    public TeamBuilder withPlayers(Player... players) {
+        this.players = Arrays.asList(players);
         return this;
     }
 
     /**
-     * Replaces the target {@code Person} in the team with the {@code editedPerson}.
-     * If the target person does not exist in the team, the team remains unchanged.
+     * Replaces the target {@code Player} in the team with the {@code editedPlayer}.
+     * If the target player does not exist in the team, the team remains unchanged.
      */
-    public TeamBuilder replacePerson(Person target, Person editedPerson) {
-        List<Person> updatedPersons = new ArrayList<>(persons);
-        int index = updatedPersons.indexOf(target);
+    public TeamBuilder replacePlayer(Player target, Player editedPlayer) {
+        List<Player> updatedPlayers = new ArrayList<>(players);
+        int index = updatedPlayers.indexOf(target);
         if (index != -1) {
-            updatedPersons.set(index, editedPerson);
+            updatedPlayers.set(index, editedPlayer);
         }
-        this.persons = updatedPersons;
+        this.players = updatedPlayers;
         return this;
     }
 
     public Team build() {
-        return new Team(id, persons, wins, losses);
+        return new Team(id, players, wins, losses);
     }
 }

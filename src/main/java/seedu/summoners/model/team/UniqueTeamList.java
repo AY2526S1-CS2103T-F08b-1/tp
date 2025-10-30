@@ -1,7 +1,7 @@
-package seedu.address.model.team;
+package seedu.summoners.model.team;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.summoners.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -10,10 +10,10 @@ import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Person;
-import seedu.address.model.team.exceptions.DuplicateTeamException;
-import seedu.address.model.team.exceptions.PersonAlreadyInTeamException;
-import seedu.address.model.team.exceptions.TeamNotFoundException;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.team.exceptions.DuplicateTeamException;
+import seedu.summoners.model.team.exceptions.PlayerAlreadyInTeamException;
+import seedu.summoners.model.team.exceptions.TeamNotFoundException;
 
 /**
  * A list of teams that enforces uniqueness between its elements and does not allow nulls.
@@ -43,9 +43,9 @@ public class UniqueTeamList implements Iterable<Team> {
     /**
      * Adds a team to the list.
      * The team must not already exist in the list.
-     * All persons in the team must not be in any other existing team.
+     * All players in the team must not be in any other existing team.
      *
-     * @throws PersonAlreadyInTeamException if any person in the team is already in another team.
+     * @throws PlayerAlreadyInTeamException if any player in the team is already in another team.
      */
     public void add(Team toAdd) {
         requireNonNull(toAdd);
@@ -53,10 +53,10 @@ public class UniqueTeamList implements Iterable<Team> {
             throw new DuplicateTeamException();
         }
 
-        // Validate that no person in the team is already in another team
-        for (Person person : toAdd.getPersons()) {
-            if (isPersonInAnyTeam(person)) {
-                throw new PersonAlreadyInTeamException(person);
+        // Validate that no player in the team is already in another team
+        for (Player player : toAdd.getPlayers()) {
+            if (isPlayerInAnyTeam(player)) {
+                throw new PlayerAlreadyInTeamException(player);
             }
         }
 
@@ -102,32 +102,32 @@ public class UniqueTeamList implements Iterable<Team> {
     /**
      * Replaces the contents of this list with {@code teams}.
      * {@code teams} must not contain duplicate teams.
-     * Persons must not appear in multiple teams.
+     * Players must not appear in multiple teams.
      *
-     * @throws PersonAlreadyInTeamException if any person appears in multiple teams.
+     * @throws PlayerAlreadyInTeamException if any player appears in multiple teams.
      */
     public void setTeams(List<Team> teams) {
         requireAllNonNull(teams);
         if (!areTeamsUnique(teams)) {
             throw new DuplicateTeamException();
         }
-        if (!arePersonsUniqueAcrossTeams(teams)) {
-            throw new PersonAlreadyInTeamException();
+        if (!arePlayersUniqueAcrossTeams(teams)) {
+            throw new PlayerAlreadyInTeamException();
         }
 
         internalList.setAll(teams);
     }
 
     /**
-     * Returns the team containing the given person, or null if the person is not in any team.
+     * Returns the team containing the given player, or null if the player is not in any team.
      *
-     * @param person The person to search for.
-     * @return The team containing the person, or null if not found.
+     * @param player The player to search for.
+     * @return The team containing the player, or null if not found.
      */
-    public Team getTeamContainingPerson(Person person) {
-        requireNonNull(person);
+    public Team getTeamContainingPlayer(Player player) {
+        requireNonNull(player);
         for (Team team : internalList) {
-            if (team.hasPerson(person)) {
+            if (team.hasPlayer(player)) {
                 return team;
             }
         }
@@ -135,13 +135,13 @@ public class UniqueTeamList implements Iterable<Team> {
     }
 
     /**
-     * Returns true if the given person is currently in any team.
+     * Returns true if the given player is currently in any team.
      *
-     * @param person The person to check.
-     * @return True if the person is in a team, false otherwise.
+     * @param player The player to check.
+     * @return True if the player is in a team, false otherwise.
      */
-    public boolean isPersonInAnyTeam(Person person) {
-        return getTeamContainingPerson(person) != null;
+    public boolean isPlayerInAnyTeam(Player player) {
+        return getTeamContainingPlayer(player) != null;
     }
 
     /**
@@ -196,17 +196,17 @@ public class UniqueTeamList implements Iterable<Team> {
     }
 
     /**
-     * Returns true if no person appears in multiple teams across {@code teams}.
+     * Returns true if no player appears in multiple teams across {@code teams}.
      */
-    private boolean arePersonsUniqueAcrossTeams(List<Team> teams) {
-        Set<String> seenPersonIds = new HashSet<>();
+    private boolean arePlayersUniqueAcrossTeams(List<Team> teams) {
+        Set<String> seenPlayerIds = new HashSet<>();
         for (Team team : teams) {
-            for (Person person : team.getPersons()) {
-                String personId = person.getId().toString();
-                if (seenPersonIds.contains(personId)) {
+            for (Player player : team.getPlayers()) {
+                String playerId = player.getId().toString();
+                if (seenPlayerIds.contains(playerId)) {
                     return false;
                 }
-                seenPersonIds.add(personId);
+                seenPlayerIds.add(playerId);
             }
         }
         return true;

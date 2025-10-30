@@ -1,21 +1,21 @@
-package seedu.address.model;
+package seedu.summoners.model;
 
 import java.nio.file.Path;
 import java.util.Optional;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.GuiSettings;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.team.Team;
+import seedu.summoners.commons.core.GuiSettings;
+import seedu.summoners.model.player.Name;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.team.Team;
 
 /**
  * The API of the Model component.
  */
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
-    Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<Player> PREDICATE_SHOW_ALL_PLAYERS = unused -> true;
     Predicate<Team> PREDICATE_SHOW_ALL_TEAMS = unused -> true;
 
     /**
@@ -39,98 +39,98 @@ public interface Model {
     void setGuiSettings(GuiSettings guiSettings);
 
     /**
-     * Returns the user prefs' address book file path.
+     * Returns the user prefs' summoners book file path.
      */
-    Path getAddressBookFilePath();
+    Path getSummonersBookFilePath();
 
     /**
-     * Sets the user prefs' address book file path.
+     * Sets the user prefs' summoners book file path.
      */
-    void setAddressBookFilePath(Path addressBookFilePath);
+    void setSummonersBookFilePath(Path summonersBookFilePath);
 
     /**
-     * Replaces address book data with the data in {@code addressBook}.
+     * Replaces summoners book data with the data in {@code summonersBook}.
      */
-    void setAddressBook(ReadOnlyAddressBook addressBook);
+    void setSummonersBook(ReadOnlySummonersBook summonersBook);
 
-    /** Returns the AddressBook */
-    ReadOnlyAddressBook getAddressBook();
+    /** Returns the SummonersBook */
+    ReadOnlySummonersBook getSummonersBook();
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns true if a player with the same identity as {@code player} exists in the summoners book.
      */
-    boolean hasPerson(Person person);
+    boolean hasPlayer(Player player);
 
     /**
-     * Returns true if a team with the same identity as {@code team} exists in the address book.
+     * Returns true if a team with the same identity as {@code team} exists in the summoners book.
      */
     boolean hasTeam(Team team);
 
     /**
-     * Returns true if the given person is currently in any team.
+     * Returns true if the given player is currently in any team.
      */
-    boolean isPersonInAnyTeam(Person person);
+    boolean isPlayerInAnyTeam(Player player);
 
     /**
-     * Deletes the given person.
-     * The person must exist in the address book.
+     * Deletes the given player.
+     * The player must exist in the summoners book.
      */
-    void deletePerson(Person target);
+    void deletePlayer(Player target);
 
     /**
      * Deletes the given team.
-     * The team must exist in the address book.
+     * The team must exist in the summoners book.
      */
     void deleteTeam(Team target);
 
     /**
-     * Adds the given person.
-     * {@code person} must not already exist in the address book.
+     * Adds the given player.
+     * {@code player} must not already exist in the summoners book.
      */
-    void addPerson(Person person);
+    void addPlayer(Player player);
 
     /**
-     * Returns an {@code Optional<Person>} containing the person with the given {@code Name}, if present.
+     * Returns an {@code Optional<Player>} containing the player with the given {@code Name}, if present.
      *
-     * @param name The name of the person to find.
-     * @return An {@code Optional<Person>} containing the matching person, or an empty {@code Optional} if not found.
+     * @param name The name of the player to find.
+     * @return An {@code Optional<Player>} containing the matching player, or an empty {@code Optional} if not found.
      */
-    Optional<Person> findPersonByName(Name name);
+    Optional<Player> findPlayerByName(Name name);
 
     /**
      * Adds the given team.
-     * {@code team} must not already exist in the address book.
+     * {@code team} must not already exist in the summoners book.
      */
     void addTeam(Team team);
 
     /**
-     * Replaces the given person {@code target} with {@code editedPerson}.
-     * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * Replaces the given player {@code target} with {@code editedPlayer}.
+     * {@code target} must exist in the summoners book.
+     * The player identity of {@code editedPlayer} must not be the same as another existing player in the summoners book.
      */
-    void setPerson(Person target, Person editedPerson);
+    void setPlayer(Player target, Player editedPlayer);
 
     /**
      * Replaces the given team {@code target} with {@code editedTeam}.
-     * {@code target} must exist in the address book.
-     * The team identity of {@code editedTeam} must not be the same as another existing team in the address book.
+     * {@code target} must exist in the summoners book.
+     * The team identity of {@code editedTeam} must not be the same as another existing team in the summoners book.
      */
     void setTeam(Team target, Team editedTeam);
 
-    /** Returns an unmodifiable view of the filtered person list */
-    ObservableList<Person> getFilteredPersonList();
+    /** Returns an unmodifiable view of the filtered player list */
+    ObservableList<Player> getFilteredPlayerList();
 
     /** Returns an unmodifiable view of the filtered team list */
     ObservableList<Team> getFilteredTeamList();
 
-    /** Returns an unmodifiable view of the unassigned person list */
-    ObservableList<Person> getUnassignedPersonList();
+    /** Returns an unmodifiable view of the unassigned player list */
+    ObservableList<Player> getUnassignedPlayerList();
 
     /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * Updates the filter of the filtered player list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredPersonList(Predicate<Person> predicate);
+    void updateFilteredPlayerList(Predicate<Player> predicate);
 
     /**
      * Updates the filter of the filtered team list to filter by the given {@code predicate}.

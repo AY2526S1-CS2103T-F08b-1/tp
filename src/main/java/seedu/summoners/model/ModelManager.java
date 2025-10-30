@@ -1,7 +1,7 @@
-package seedu.address.model;
+package seedu.summoners.model;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.summoners.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -10,39 +10,39 @@ import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import seedu.address.commons.core.GuiSettings;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.team.Team;
+import seedu.summoners.commons.core.GuiSettings;
+import seedu.summoners.commons.core.LogsCenter;
+import seedu.summoners.model.player.Name;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.team.Team;
 
 /**
- * Represents the in-memory model of the address book data.
+ * Represents the in-memory model of the summoners book data.
  */
 public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final AddressBook addressBook;
+    private final SummonersBook summonersBook;
     private final UserPrefs userPrefs;
-    private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Player> filteredPlayers;
     private final FilteredList<Team> filteredTeams;
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the given summonersBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs) {
-        requireAllNonNull(addressBook, userPrefs);
+    public ModelManager(ReadOnlySummonersBook summonersBook, ReadOnlyUserPrefs userPrefs) {
+        requireAllNonNull(summonersBook, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with summoners book: " + summonersBook + " and user prefs " + userPrefs);
 
-        this.addressBook = new AddressBook(addressBook);
+        this.summonersBook = new SummonersBook(summonersBook);
         this.userPrefs = new UserPrefs(userPrefs);
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-        filteredTeams = new FilteredList<>(this.addressBook.getTeamList());
+        filteredPlayers = new FilteredList<>(this.summonersBook.getPlayerList());
+        filteredTeams = new FilteredList<>(this.summonersBook.getTeamList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new SummonersBook(), new UserPrefs());
     }
 
     //=========== UserPrefs ==================================================================================
@@ -70,71 +70,71 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public Path getAddressBookFilePath() {
-        return userPrefs.getAddressBookFilePath();
+    public Path getSummonersBookFilePath() {
+        return userPrefs.getSummonersBookFilePath();
     }
 
     @Override
-    public void setAddressBookFilePath(Path addressBookFilePath) {
-        requireNonNull(addressBookFilePath);
-        userPrefs.setAddressBookFilePath(addressBookFilePath);
+    public void setSummonersBookFilePath(Path summonersBookFilePath) {
+        requireNonNull(summonersBookFilePath);
+        userPrefs.setSummonersBookFilePath(summonersBookFilePath);
     }
 
-    //=========== AddressBook ================================================================================
+    //=========== SummonersBook ================================================================================
 
     @Override
-    public void setAddressBook(ReadOnlyAddressBook addressBook) {
-        this.addressBook.resetData(addressBook);
-    }
-
-    @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return addressBook;
-    }
-
-    //=========== Person-level Operations ====================================================================
-
-    @Override
-    public boolean hasPerson(Person person) {
-        requireNonNull(person);
-        return addressBook.hasPerson(person);
+    public void setSummonersBook(ReadOnlySummonersBook summonersBook) {
+        this.summonersBook.resetData(summonersBook);
     }
 
     @Override
-    public boolean isPersonInAnyTeam(Person person) {
-        requireNonNull(person);
-        return addressBook.isPersonInAnyTeam(person);
+    public ReadOnlySummonersBook getSummonersBook() {
+        return summonersBook;
+    }
+
+    //=========== Player-level Operations ====================================================================
+
+    @Override
+    public boolean hasPlayer(Player player) {
+        requireNonNull(player);
+        return summonersBook.hasPlayer(player);
     }
 
     @Override
-    public void deletePerson(Person target) {
-        addressBook.removePerson(target);
+    public boolean isPlayerInAnyTeam(Player player) {
+        requireNonNull(player);
+        return summonersBook.isPlayerInAnyTeam(player);
     }
 
     @Override
-    public void addPerson(Person person) {
-        addressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    public void deletePlayer(Player target) {
+        summonersBook.removePlayer(target);
     }
 
     @Override
-    public void setPerson(Person target, Person editedPerson) {
-        requireAllNonNull(target, editedPerson);
+    public void addPlayer(Player player) {
+        summonersBook.addPlayer(player);
+        updateFilteredPlayerList(PREDICATE_SHOW_ALL_PLAYERS);
+    }
 
-        addressBook.setPerson(target, editedPerson);
+    @Override
+    public void setPlayer(Player target, Player editedPlayer) {
+        requireAllNonNull(target, editedPlayer);
+
+        summonersBook.setPlayer(target, editedPlayer);
     }
 
     /**
-     * Returns an {@code Optional<Person>} containing the person with the given {@code Name}, if present.
-     * Delegates the search to the underlying {@code AddressBook}.
+     * Returns an {@code Optional<Player>} containing the player with the given {@code Name}, if present.
+     * Delegates the search to the underlying {@code SummonersBook}.
      *
-     * @param name The name of the person to find.
-     * @return An {@code Optional<Person>} containing the matching person, or an empty {@code Optional} if not found.
+     * @param name The name of the player to find.
+     * @return An {@code Optional<Player>} containing the matching player, or an empty {@code Optional} if not found.
      */
     @Override
-    public Optional<Person> findPersonByName(Name name) {
+    public Optional<Player> findPlayerByName(Name name) {
         requireNonNull(name);
-        return addressBook.findPersonByName(name);
+        return summonersBook.findPlayerByName(name);
     }
 
     //=========== Team-level Operations ======================================================================
@@ -142,17 +142,17 @@ public class ModelManager implements Model {
     @Override
     public boolean hasTeam(Team team) {
         requireNonNull(team);
-        return addressBook.hasTeam(team);
+        return summonersBook.hasTeam(team);
     }
 
     @Override
     public void deleteTeam(Team target) {
-        addressBook.removeTeam(target);
+        summonersBook.removeTeam(target);
     }
 
     @Override
     public void addTeam(Team team) {
-        addressBook.addTeam(team);
+        summonersBook.addTeam(team);
         updateFilteredTeamList(PREDICATE_SHOW_ALL_TEAMS);
     }
 
@@ -160,31 +160,31 @@ public class ModelManager implements Model {
     public void setTeam(Team target, Team editedTeam) {
         requireAllNonNull(target, editedTeam);
 
-        addressBook.setTeam(target, editedTeam);
+        summonersBook.setTeam(target, editedTeam);
     }
 
-    //=========== Filtered Person List Accessors =============================================================
+    //=========== Filtered Player List Accessors =============================================================
 
     /**
-     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
-     * {@code versionedAddressBook}
+     * Returns an unmodifiable view of the list of {@code Player} backed by the internal list of
+     * {@code versionedSummonersBook}
      */
     @Override
-    public ObservableList<Person> getFilteredPersonList() {
-        return filteredPersons;
+    public ObservableList<Player> getFilteredPlayerList() {
+        return filteredPlayers;
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<Person> predicate) {
+    public void updateFilteredPlayerList(Predicate<Player> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+        filteredPlayers.setPredicate(predicate);
     }
 
     //=========== Filtered Team List Accessors ===============================================================
 
     /**
-     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
-     * {@code versionedAddressBook}
+     * Returns an unmodifiable view of the list of {@code Player} backed by the internal list of
+     * {@code versionedSummonersBook}
      */
     @Override
     public ObservableList<Team> getFilteredTeamList() {
@@ -197,15 +197,15 @@ public class ModelManager implements Model {
         filteredTeams.setPredicate(predicate);
     }
 
-    //=========== Unassigned Person List Accessors ===============================================================
+    //=========== Unassigned Player List Accessors ===============================================================
 
     /**
-     * Returns an unmodifiable view of the list of unassigned {@code Person} backed by the internal list of
-     * {@code versionedAddressBook}
+     * Returns an unmodifiable view of the list of unassigned {@code Player} backed by the internal list of
+     * {@code versionedSummonersBook}
      */
     @Override
-    public ObservableList<Person> getUnassignedPersonList() {
-        return addressBook.getUnassignedPersonList();
+    public ObservableList<Player> getUnassignedPlayerList() {
+        return summonersBook.getUnassignedPlayerList();
     }
 
     //=========== Equals ======================================================================================
@@ -221,9 +221,9 @@ public class ModelManager implements Model {
         }
 
         ModelManager otherModelManager = (ModelManager) other;
-        return addressBook.equals(otherModelManager.addressBook)
+        return summonersBook.equals(otherModelManager.summonersBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
-                && filteredPersons.equals(otherModelManager.filteredPersons)
+                && filteredPlayers.equals(otherModelManager.filteredPlayers)
                 && filteredTeams.equals(otherModelManager.filteredTeams);
     }
 }

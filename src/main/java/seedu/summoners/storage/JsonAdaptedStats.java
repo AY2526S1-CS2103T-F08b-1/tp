@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.summoners.storage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Stats;
+import seedu.summoners.commons.exceptions.IllegalValueException;
+import seedu.summoners.model.player.Stats;
 
 /**
  * Jackson-friendly version of {@link Stats}.

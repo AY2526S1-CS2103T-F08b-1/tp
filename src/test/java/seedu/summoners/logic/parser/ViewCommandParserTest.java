@@ -1,13 +1,13 @@
-package seedu.address.logic.parser;
+package seedu.summoners.logic.parser;
 
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.summoners.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.summoners.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.summoners.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_FIRST_PLAYER;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.ViewCommand;
+import seedu.summoners.logic.commands.ViewCommand;
 
 public class ViewCommandParserTest {
 
@@ -15,7 +15,7 @@ public class ViewCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsViewCommand() {
-        assertParseSuccess(parser, "1", new ViewCommand(INDEX_FIRST_PERSON));
+        assertParseSuccess(parser, "1", new ViewCommand(INDEX_FIRST_PLAYER));
     }
 
     @Test

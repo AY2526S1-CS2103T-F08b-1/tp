@@ -1,24 +1,24 @@
-package seedu.address.logic.parser;
+package seedu.summoners.logic.parser;
 
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.CPM_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.CPM_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.GD15_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.GD15_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.KDA_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_CPM_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_GD15_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_KDA_AMY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_KDA;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.summoners.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.summoners.logic.commands.CommandTestUtil.CPM_DESC_AMY;
+import static seedu.summoners.logic.commands.CommandTestUtil.CPM_DESC_BOB;
+import static seedu.summoners.logic.commands.CommandTestUtil.GD15_DESC_AMY;
+import static seedu.summoners.logic.commands.CommandTestUtil.GD15_DESC_BOB;
+import static seedu.summoners.logic.commands.CommandTestUtil.KDA_DESC_AMY;
+import static seedu.summoners.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_CPM_AMY;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_GD15_AMY;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_KDA_AMY;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_KDA;
+import static seedu.summoners.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.summoners.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_FIRST_PLAYER;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.AddStatsCommand;
+import seedu.summoners.commons.core.index.Index;
+import seedu.summoners.logic.commands.AddStatsCommand;
 
 /**
  * Unit tests for {@link AddStatsCommandParser}.
@@ -29,7 +29,7 @@ public class AddStatsCommandParserTest {
 
     @Test
     public void parse_allRequiredFieldsPresent_success() {
-        Index idx = INDEX_FIRST_PERSON;
+        Index idx = INDEX_FIRST_PLAYER;
 
         String input = idx.getOneBased() + CPM_DESC_AMY + GD15_DESC_AMY + KDA_DESC_AMY;
         AddStatsCommand expected = new AddStatsCommand(idx, VALID_CPM_AMY, VALID_GD15_AMY, VALID_KDA_AMY);
@@ -64,15 +64,15 @@ public class AddStatsCommandParserTest {
     @Test
     public void parse_missingRequiredPrefixes_failure() {
         // missing c/
-        assertParseFailure(parser, INDEX_FIRST_PERSON.getOneBased() + GD15_DESC_AMY + KDA_DESC_AMY,
+        assertParseFailure(parser, INDEX_FIRST_PLAYER.getOneBased() + GD15_DESC_AMY + KDA_DESC_AMY,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddStatsCommand.MESSAGE_USAGE));
 
         // missing g/
-        assertParseFailure(parser, INDEX_FIRST_PERSON.getOneBased() + CPM_DESC_AMY + KDA_DESC_AMY,
+        assertParseFailure(parser, INDEX_FIRST_PLAYER.getOneBased() + CPM_DESC_AMY + KDA_DESC_AMY,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddStatsCommand.MESSAGE_USAGE));
 
         // missing k/
-        assertParseFailure(parser, INDEX_FIRST_PERSON.getOneBased() + CPM_DESC_AMY + GD15_DESC_AMY,
+        assertParseFailure(parser, INDEX_FIRST_PLAYER.getOneBased() + CPM_DESC_AMY + GD15_DESC_AMY,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddStatsCommand.MESSAGE_USAGE));
     }
 
@@ -80,20 +80,20 @@ public class AddStatsCommandParserTest {
     public void parse_emptyValuesAfterPrefixes_failure() {
         // c/ <empty>
         assertParseFailure(parser,
-                INDEX_FIRST_PERSON.getOneBased() + " " + CliSyntax.PREFIX_CPM + " "
+                INDEX_FIRST_PLAYER.getOneBased() + " " + CliSyntax.PREFIX_CPM + " "
                         + GD15_DESC_AMY + KDA_DESC_AMY,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddStatsCommand.MESSAGE_EMPTY_FIELDS));
 
         // g/ <empty>
         assertParseFailure(parser,
-                INDEX_FIRST_PERSON.getOneBased() + CPM_DESC_AMY
+                INDEX_FIRST_PLAYER.getOneBased() + CPM_DESC_AMY
                         + " " + CliSyntax.PREFIX_GD15 + " "
                         + KDA_DESC_AMY,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddStatsCommand.MESSAGE_EMPTY_FIELDS));
 
         // k/ <empty>
         assertParseFailure(parser,
-                INDEX_FIRST_PERSON.getOneBased() + CPM_DESC_AMY + GD15_DESC_AMY
+                INDEX_FIRST_PLAYER.getOneBased() + CPM_DESC_AMY + GD15_DESC_AMY
                         + " " + CliSyntax.PREFIX_KDA + " ",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddStatsCommand.MESSAGE_EMPTY_FIELDS));
     }
@@ -101,14 +101,14 @@ public class AddStatsCommandParserTest {
     @Test
     public void parse_extraPreambleTokens_failure() {
         assertParseFailure(parser,
-                "extra " + INDEX_FIRST_PERSON.getOneBased() + CPM_DESC_AMY + GD15_DESC_AMY + KDA_DESC_AMY,
+                "extra " + INDEX_FIRST_PLAYER.getOneBased() + CPM_DESC_AMY + GD15_DESC_AMY + KDA_DESC_AMY,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddStatsCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_allRequiredFieldsPresentWithDifferentValues_success() {
         // sanity check with another set to ensure no accidental coupling to a single test case
-        Index idx = INDEX_FIRST_PERSON;
+        Index idx = INDEX_FIRST_PLAYER;
         String input = idx.getOneBased() + CPM_DESC_BOB + GD15_DESC_BOB + " " + PREFIX_KDA + "0.5";
         AddStatsCommand expected = new AddStatsCommand(idx, "5.9", "-500", "0.5");
         assertParseSuccess(parser, input, expected);

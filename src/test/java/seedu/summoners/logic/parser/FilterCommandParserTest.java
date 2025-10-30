@@ -1,32 +1,32 @@
-package seedu.address.logic.parser;
+package seedu.summoners.logic.parser;
 
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.CHAMPION_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.CHAMPION_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_CHAMPION_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_RANK_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_ROLE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.RANK_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.RANK_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.ROLE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.ROLE_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_CHAMPION_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_CHAMPION_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_RANK_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_RANK_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ROLE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ROLE_BOB;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.summoners.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.summoners.logic.commands.CommandTestUtil.CHAMPION_DESC_AMY;
+import static seedu.summoners.logic.commands.CommandTestUtil.CHAMPION_DESC_BOB;
+import static seedu.summoners.logic.commands.CommandTestUtil.INVALID_CHAMPION_DESC;
+import static seedu.summoners.logic.commands.CommandTestUtil.INVALID_RANK_DESC;
+import static seedu.summoners.logic.commands.CommandTestUtil.INVALID_ROLE_DESC;
+import static seedu.summoners.logic.commands.CommandTestUtil.RANK_DESC_AMY;
+import static seedu.summoners.logic.commands.CommandTestUtil.RANK_DESC_BOB;
+import static seedu.summoners.logic.commands.CommandTestUtil.ROLE_DESC_AMY;
+import static seedu.summoners.logic.commands.CommandTestUtil.ROLE_DESC_BOB;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_CHAMPION_AMY;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_CHAMPION_BOB;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_RANK_AMY;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_RANK_BOB;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_ROLE_AMY;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_ROLE_BOB;
+import static seedu.summoners.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.summoners.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.FilterCommand;
-import seedu.address.logic.commands.FilterCommand.FilterPersonDescriptor;
-import seedu.address.model.person.Champion;
-import seedu.address.model.person.Rank;
-import seedu.address.model.person.Role;
-import seedu.address.testutil.FilterPersonDescriptorBuilder;
+import seedu.summoners.logic.commands.FilterCommand;
+import seedu.summoners.logic.commands.FilterCommand.FilterPlayerDescriptor;
+import seedu.summoners.model.player.Champion;
+import seedu.summoners.model.player.Rank;
+import seedu.summoners.model.player.Role;
+import seedu.summoners.testutil.FilterPlayerDescriptorBuilder;
 
 public class FilterCommandParserTest {
 
@@ -70,7 +70,7 @@ public class FilterCommandParserTest {
     @Test
     public void parse_allFieldsSpecified_success() {
         String userInput = ROLE_DESC_BOB + RANK_DESC_AMY + CHAMPION_DESC_AMY;
-        FilterPersonDescriptor descriptor = new FilterPersonDescriptorBuilder()
+        FilterPlayerDescriptor descriptor = new FilterPlayerDescriptorBuilder()
                 .withRoles(VALID_ROLE_BOB).withRanks(VALID_RANK_AMY).withChampions(VALID_CHAMPION_AMY)
                 .build();
         FilterCommand expectedCommand = new FilterCommand(descriptor);
@@ -82,7 +82,7 @@ public class FilterCommandParserTest {
     public void parse_someFieldsSpecified_success() {
         String userInput = ROLE_DESC_BOB + RANK_DESC_AMY;
 
-        FilterPersonDescriptor descriptor = new FilterPersonDescriptorBuilder().withRoles(VALID_ROLE_BOB)
+        FilterPlayerDescriptor descriptor = new FilterPlayerDescriptorBuilder().withRoles(VALID_ROLE_BOB)
                 .withRanks(VALID_RANK_AMY).build();
         FilterCommand expectedCommand = new FilterCommand(descriptor);
 
@@ -93,19 +93,19 @@ public class FilterCommandParserTest {
     public void parse_oneFieldSpecified_success() {
         // role
         String userInput = ROLE_DESC_AMY;
-        FilterPersonDescriptor descriptor = new FilterPersonDescriptorBuilder().withRoles(VALID_ROLE_AMY).build();
+        FilterPlayerDescriptor descriptor = new FilterPlayerDescriptorBuilder().withRoles(VALID_ROLE_AMY).build();
         FilterCommand expectedCommand = new FilterCommand(descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // rank
         userInput = RANK_DESC_AMY;
-        descriptor = new FilterPersonDescriptorBuilder().withRanks(VALID_RANK_AMY).build();
+        descriptor = new FilterPlayerDescriptorBuilder().withRanks(VALID_RANK_AMY).build();
         expectedCommand = new FilterCommand(descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // champion
         userInput = CHAMPION_DESC_AMY;
-        descriptor = new FilterPersonDescriptorBuilder().withChampions(VALID_CHAMPION_AMY).build();
+        descriptor = new FilterPlayerDescriptorBuilder().withChampions(VALID_CHAMPION_AMY).build();
         expectedCommand = new FilterCommand(descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
@@ -116,7 +116,7 @@ public class FilterCommandParserTest {
         String userInput = ROLE_DESC_AMY + ROLE_DESC_BOB
                 + RANK_DESC_AMY + RANK_DESC_BOB
                 + CHAMPION_DESC_AMY + CHAMPION_DESC_BOB;
-        FilterPersonDescriptor descriptor = new FilterPersonDescriptorBuilder()
+        FilterPlayerDescriptor descriptor = new FilterPlayerDescriptorBuilder()
                 .withRoles(VALID_ROLE_AMY, VALID_ROLE_BOB)
                 .withRanks(VALID_RANK_AMY, VALID_RANK_BOB)
                 .withChampions(VALID_CHAMPION_AMY, VALID_CHAMPION_BOB).build();
@@ -128,13 +128,13 @@ public class FilterCommandParserTest {
     public void parse_scoreFieldSpecified_success() {
         // single valid score
         String userInput = " s/5.5";
-        FilterPersonDescriptor descriptor = new FilterPersonDescriptorBuilder().withScoreThreshold(5.5f).build();
+        FilterPlayerDescriptor descriptor = new FilterPlayerDescriptorBuilder().withScoreThreshold(5.5f).build();
         FilterCommand expectedCommand = new FilterCommand(descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // score with whitespace
         userInput = " s/ 3.2 ";
-        descriptor = new FilterPersonDescriptorBuilder().withScoreThreshold(3.2f).build();
+        descriptor = new FilterPlayerDescriptorBuilder().withScoreThreshold(3.2f).build();
         expectedCommand = new FilterCommand(descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
@@ -142,7 +142,7 @@ public class FilterCommandParserTest {
     @Test
     public void parse_scoreWithOtherFields_success() {
         String userInput = ROLE_DESC_AMY + RANK_DESC_AMY + CHAMPION_DESC_AMY + " s/7.7";
-        FilterPersonDescriptor descriptor = new FilterPersonDescriptorBuilder()
+        FilterPlayerDescriptor descriptor = new FilterPlayerDescriptorBuilder()
                 .withRoles(VALID_ROLE_AMY)
                 .withRanks(VALID_RANK_AMY)
                 .withChampions(VALID_CHAMPION_AMY)

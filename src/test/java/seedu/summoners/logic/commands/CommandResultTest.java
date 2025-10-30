@@ -1,16 +1,16 @@
-package seedu.address.logic.commands;
+package seedu.summoners.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalTeams.TEAM_A;
+import static seedu.summoners.testutil.TypicalPlayers.ALICE;
+import static seedu.summoners.testutil.TypicalTeams.TEAM_A;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.model.person.Person;
-import seedu.address.model.team.Team;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.team.Team;
 
 public class CommandResultTest {
     @Test
@@ -39,24 +39,24 @@ public class CommandResultTest {
         // different exit value -> returns false
         assertFalse(commandResult.equals(new CommandResult("feedback", false, true)));
 
-        // different showPersonDetail value -> returns false
-        Person person = ALICE;
-        CommandResult personDetailResult = new CommandResult("feedback", person);
-        assertFalse(commandResult.equals(personDetailResult));
+        // different showPlayerDetail value -> returns false
+        Player player = ALICE;
+        CommandResult playerDetailResult = new CommandResult("feedback", player);
+        assertFalse(commandResult.equals(playerDetailResult));
 
         // different showTeamStats value -> returns false
         Team team = TEAM_A;
         CommandResult teamStatsResult = CommandResult.showTeamStats("feedback", team);
         assertFalse(commandResult.equals(teamStatsResult));
 
-        // same person detail values -> returns true
-        CommandResult personDetailResult1 = new CommandResult("message", person);
-        CommandResult personDetailResult2 = new CommandResult("message", person);
-        assertTrue(personDetailResult1.equals(personDetailResult2));
+        // same player detail values -> returns true
+        CommandResult playerDetailResult1 = new CommandResult("message", player);
+        CommandResult playerDetailResult2 = new CommandResult("message", player);
+        assertTrue(playerDetailResult1.equals(playerDetailResult2));
 
-        // different person -> returns false
-        CommandResult personDetailResultNull = new CommandResult("message", (Person) null);
-        assertFalse(personDetailResult1.equals(personDetailResultNull));
+        // different player -> returns false
+        CommandResult playerDetailResultNull = new CommandResult("message", (Player) null);
+        assertFalse(playerDetailResult1.equals(playerDetailResultNull));
 
         // same team stats values -> returns true
         CommandResult teamStatsResult1 = CommandResult.showTeamStats("team msg", team);
@@ -84,20 +84,20 @@ public class CommandResultTest {
         // different exit value -> returns different hashcode
         assertNotEquals(commandResult.hashCode(), new CommandResult("feedback", false, true).hashCode());
 
-        // different showPersonDetail value -> returns different hashcode
-        Person person = ALICE;
-        CommandResult personDetailResult = new CommandResult("feedback", person);
-        assertNotEquals(commandResult.hashCode(), personDetailResult.hashCode());
+        // different showPlayerDetail value -> returns different hashcode
+        Player player = ALICE;
+        CommandResult playerDetailResult = new CommandResult("feedback", player);
+        assertNotEquals(commandResult.hashCode(), playerDetailResult.hashCode());
 
         // different showTeamStats value -> returns different hashcode
         Team team = TEAM_A;
         CommandResult teamStatsResult = CommandResult.showTeamStats("feedback", team);
         assertNotEquals(commandResult.hashCode(), teamStatsResult.hashCode());
 
-        // same person detail values -> returns same hashcode
-        CommandResult personDetailResult1 = new CommandResult("message", person);
-        CommandResult personDetailResult2 = new CommandResult("message", person);
-        assertEquals(personDetailResult1.hashCode(), personDetailResult2.hashCode());
+        // same player detail values -> returns same hashcode
+        CommandResult playerDetailResult1 = new CommandResult("message", player);
+        CommandResult playerDetailResult2 = new CommandResult("message", player);
+        assertEquals(playerDetailResult1.hashCode(), playerDetailResult2.hashCode());
 
         // same team stats values -> returns same hashcode
         CommandResult teamStatsResult1 = CommandResult.showTeamStats("team msg", team);
@@ -112,8 +112,8 @@ public class CommandResultTest {
                 + "{feedbackToUser=" + commandResult.getFeedbackToUser()
                 + ", showHelp=" + commandResult.isShowHelp()
                 + ", exit=" + commandResult.isExit()
-                + ", showPersonDetail=" + commandResult.isShowPersonDetail()
-                + ", personToShow=" + commandResult.getPersonToShow().orElse(null)
+                + ", showPlayerDetail=" + commandResult.isShowPlayerDetail()
+                + ", playerToShow=" + commandResult.getPlayerToShow().orElse(null)
                 + ", showTeamStats=" + commandResult.isShowTeamStats()
                 + ", teamToShow=" + commandResult.getTeamToShow().orElse(null) + "}";
         assertEquals(expected, commandResult.toString());
@@ -126,8 +126,8 @@ public class CommandResultTest {
         assertEquals("feedback", result.getFeedbackToUser());
         assertFalse(result.isShowHelp());
         assertFalse(result.isExit());
-        assertFalse(result.isShowPersonDetail());
-        assertFalse(result.getPersonToShow().isPresent());
+        assertFalse(result.isShowPlayerDetail());
+        assertFalse(result.getPlayerToShow().isPresent());
         assertFalse(result.isShowTeamStats());
         assertFalse(result.getTeamToShow().isPresent());
     }
@@ -141,26 +141,26 @@ public class CommandResultTest {
         assertEquals("help", helpResult.getFeedbackToUser());
         assertTrue(helpResult.isShowHelp());
         assertFalse(helpResult.isExit());
-        assertFalse(helpResult.isShowPersonDetail());
+        assertFalse(helpResult.isShowPlayerDetail());
         assertFalse(helpResult.isShowTeamStats());
 
         // test exit result
         assertEquals("exit", exitResult.getFeedbackToUser());
         assertFalse(exitResult.isShowHelp());
         assertTrue(exitResult.isExit());
-        assertFalse(exitResult.isShowPersonDetail());
+        assertFalse(exitResult.isShowPlayerDetail());
         assertFalse(exitResult.isShowTeamStats());
     }
 
     @Test
-    public void constructor_personDetail_success() {
-        Person person = ALICE;
-        CommandResult result = new CommandResult("Viewing person", person);
+    public void constructor_playerDetail_success() {
+        Player player = ALICE;
+        CommandResult result = new CommandResult("Viewing player", player);
 
-        assertEquals("Viewing person", result.getFeedbackToUser());
-        assertTrue(result.isShowPersonDetail());
-        assertTrue(result.getPersonToShow().isPresent());
-        assertEquals(person, result.getPersonToShow().get());
+        assertEquals("Viewing player", result.getFeedbackToUser());
+        assertTrue(result.isShowPlayerDetail());
+        assertTrue(result.getPlayerToShow().isPresent());
+        assertEquals(player, result.getPlayerToShow().get());
         assertFalse(result.isShowHelp());
         assertFalse(result.isExit());
         assertFalse(result.isShowTeamStats());
@@ -168,14 +168,14 @@ public class CommandResultTest {
 
     @Test
     public void getters_allFields_success() {
-        Person person = ALICE;
+        Player player = ALICE;
         Team team = TEAM_A;
 
-        // test with person detail
-        CommandResult personResult = new CommandResult("message", person);
-        assertEquals("message", personResult.getFeedbackToUser());
-        assertTrue(personResult.isShowPersonDetail());
-        assertEquals(person, personResult.getPersonToShow().get());
+        // test with player detail
+        CommandResult playerResult = new CommandResult("message", player);
+        assertEquals("message", playerResult.getFeedbackToUser());
+        assertTrue(playerResult.isShowPlayerDetail());
+        assertEquals(player, playerResult.getPlayerToShow().get());
 
         // test with team stats
         CommandResult teamResult = CommandResult.showTeamStats("team message", team);
@@ -193,34 +193,34 @@ public class CommandResultTest {
     }
 
     @Test
-    public void equals_personDetail_success() {
-        Person person = ALICE;
-        CommandResult result1 = new CommandResult("message", person);
-        CommandResult result2 = new CommandResult("message", person);
+    public void equals_playerDetail_success() {
+        Player player = ALICE;
+        CommandResult result1 = new CommandResult("message", player);
+        CommandResult result2 = new CommandResult("message", player);
 
         // same values -> returns true
         assertEquals(result1, result2);
 
-        // different person -> returns false
-        CommandResult result3 = new CommandResult("message", (Person) null);
+        // different player -> returns false
+        CommandResult result3 = new CommandResult("message", (Player) null);
         assertNotEquals(result1, result3);
 
         // different message -> returns false
-        CommandResult result4 = new CommandResult("different", person);
+        CommandResult result4 = new CommandResult("different", player);
         assertNotEquals(result1, result4);
     }
 
     @Test
-    public void hashCode_personDetail_success() {
-        Person person = ALICE;
-        CommandResult result1 = new CommandResult("message", person);
-        CommandResult result2 = new CommandResult("message", person);
+    public void hashCode_playerDetail_success() {
+        Player player = ALICE;
+        CommandResult result1 = new CommandResult("message", player);
+        CommandResult result2 = new CommandResult("message", player);
 
         // same values -> same hashcode
         assertEquals(result1.hashCode(), result2.hashCode());
 
-        // different person -> different hashcode
-        CommandResult result3 = new CommandResult("message", (Person) null);
+        // different player -> different hashcode
+        CommandResult result3 = new CommandResult("message", (Player) null);
         assertNotEquals(result1.hashCode(), result3.hashCode());
     }
 
@@ -239,7 +239,7 @@ public class CommandResultTest {
         // verify other flags are not set
         assertFalse(result.isShowHelp());
         assertFalse(result.isExit());
-        assertFalse(result.isShowPersonDetail());
+        assertFalse(result.isShowPlayerDetail());
 
         // verify feedback message
         assertEquals("Viewing team stats", result.getFeedbackToUser());

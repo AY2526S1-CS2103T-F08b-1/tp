@@ -1,4 +1,4 @@
-package seedu.address.logic.parser;
+package seedu.summoners.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -7,8 +7,8 @@ import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.ImportCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.summoners.logic.commands.ImportCommand;
+import seedu.summoners.logic.parser.exceptions.ParseException;
 
 public class ImportCommandParserTest {
 

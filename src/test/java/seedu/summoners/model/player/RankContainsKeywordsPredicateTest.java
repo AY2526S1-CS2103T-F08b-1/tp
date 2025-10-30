@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.summoners.model.player;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.testutil.PersonBuilder;
+import seedu.summoners.testutil.PlayerBuilder;
 
 public class RankContainsKeywordsPredicateTest {
 
@@ -35,7 +35,7 @@ public class RankContainsKeywordsPredicateTest {
         // null -> returns false
         assertFalse(firstPredicate.equals(null));
 
-        // different person -> returns false
+        // different player -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
     }
 
@@ -43,31 +43,31 @@ public class RankContainsKeywordsPredicateTest {
     public void test_rankContainsKeywords_returnsTrue() {
         // One keyword
         RankContainsKeywordsPredicate predicate = new RankContainsKeywordsPredicate(Collections.singletonList("gold"));
-        assertTrue(predicate.test(new PersonBuilder().withRank("gold").build()));
+        assertTrue(predicate.test(new PlayerBuilder().withRank("gold").build()));
 
         // Multiple keywords
         predicate = new RankContainsKeywordsPredicate(Arrays.asList("silver", "gold"));
-        assertTrue(predicate.test(new PersonBuilder().withRank("silver").build()));
-        assertTrue(predicate.test(new PersonBuilder().withRank("gold").build()));
+        assertTrue(predicate.test(new PlayerBuilder().withRank("silver").build()));
+        assertTrue(predicate.test(new PlayerBuilder().withRank("gold").build()));
 
         // Only one matching keyword
         predicate = new RankContainsKeywordsPredicate(Arrays.asList("diamond", "challenger"));
-        assertTrue(predicate.test(new PersonBuilder().withRank("challenger").build()));
+        assertTrue(predicate.test(new PlayerBuilder().withRank("challenger").build()));
 
         // Mixed-case keywords
         predicate = new RankContainsKeywordsPredicate(Arrays.asList("gRanDmaSTer"));
-        assertTrue(predicate.test(new PersonBuilder().withRank("Grandmaster").build()));
+        assertTrue(predicate.test(new PlayerBuilder().withRank("Grandmaster").build()));
 
         // Zero keywords
         predicate = new RankContainsKeywordsPredicate(Collections.emptyList());
-        assertTrue(predicate.test(new PersonBuilder().withRank("gold").build()));
+        assertTrue(predicate.test(new PlayerBuilder().withRank("gold").build()));
     }
 
     @Test
     public void test_rankDoesNotContainKeywords_returnsFalse() {
         // Non-matching keyword
         RankContainsKeywordsPredicate predicate = new RankContainsKeywordsPredicate(Arrays.asList("Challenger"));
-        assertFalse(predicate.test(new PersonBuilder().withRank("diamond").build()));
+        assertFalse(predicate.test(new PlayerBuilder().withRank("diamond").build()));
     }
 
     @Test

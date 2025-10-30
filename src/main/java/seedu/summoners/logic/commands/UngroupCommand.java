@@ -1,19 +1,19 @@
-package seedu.address.logic.commands;
+package seedu.summoners.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 import java.util.Objects;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.logic.Messages;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.model.team.Team;
+import seedu.summoners.commons.core.index.Index;
+import seedu.summoners.commons.util.ToStringBuilder;
+import seedu.summoners.logic.Messages;
+import seedu.summoners.logic.commands.exceptions.CommandException;
+import seedu.summoners.model.Model;
+import seedu.summoners.model.team.Team;
 
 /**
- * Removes a specific team or all teams from the address book.
+ * Removes a specific team or all teams from the summoners book.
  */
 public class UngroupCommand extends Command {
 
@@ -28,7 +28,7 @@ public class UngroupCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Removed team: %1$s";
     public static final String MESSAGE_SUCCESS_ALL = "Successfully removed %1$d team(s). "
-            + "All persons are now unassigned.";
+            + "All players are now unassigned.";
     public static final String MESSAGE_NO_TEAMS = "No teams to remove.";
 
     private final Index targetIndex;

@@ -1,12 +1,12 @@
-package seedu.address.logic.parser;
+package seedu.summoners.logic.parser;
 
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.summoners.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.summoners.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.WinCommand;
+import seedu.summoners.commons.core.index.Index;
+import seedu.summoners.logic.commands.WinCommand;
 
 /**
  * Tests for {@code WinCommandParser}.
@@ -23,6 +23,6 @@ public class WinCommandParserTest {
     @Test
     public void parse_invalidArgs_throwsParseException() {
         assertParseFailure(parser, "a",
-                String.format(seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT, WinCommand.MESSAGE_USAGE));
+                String.format(seedu.summoners.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT, WinCommand.MESSAGE_USAGE));
     }
 }

@@ -1,4 +1,4 @@
-package seedu.address.ui;
+package seedu.summoners.ui;
 
 import java.util.logging.Logger;
 
@@ -7,8 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.team.Team;
+import seedu.summoners.commons.core.LogsCenter;
+import seedu.summoners.model.team.Team;
 
 /**
  * Panel containing the list of teams.

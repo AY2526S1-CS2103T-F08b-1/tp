@@ -1,4 +1,4 @@
-package seedu.address.ui;
+package seedu.summoners.ui;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -15,8 +15,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import seedu.address.model.person.Person;
-import seedu.address.model.team.Team;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.team.Team;
 
 /**
  * A standalone JavaFX window that displays detailed statistics for a selected {@code Team}.
@@ -93,7 +93,7 @@ public class TeamStatsWindow extends Stage {
         roleToName.put("Adc", "");
         roleToName.put("Support", "");
 
-        for (Person p : team.getPersons()) {
+        for (Player p : team.getPlayers()) {
             String role = p.getRole().toString(); // ensure your Role#toString returns Top/Jungle/Mid/Adc/Support
             roleToName.put(role, p.getName().toString());
         }

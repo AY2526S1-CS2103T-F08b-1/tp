@@ -4,7 +4,7 @@ skinparam ArrowFontStyle plain
 
 box Logic LOGIC_COLOR_T1
 participant ":LogicManager" as LogicManager LOGIC_COLOR
-participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":SummonersBookParser" as SummonersBookParser LOGIC_COLOR
 participant ":GroupCommandParser" as GroupCommandParser LOGIC_COLOR
 participant "g:GroupCommand" as GroupCommand LOGIC_COLOR
 participant ":TeamMatcher" as TeamMatcher LOGIC_COLOR
@@ -18,17 +18,17 @@ end box
 [-> LogicManager : execute("group")
 activate LogicManager
 
-LogicManager -> AddressBookParser : parseCommand("group")
-activate AddressBookParser
+LogicManager -> SummonersBookParser : parseCommand("group")
+activate SummonersBookParser
 
 create GroupCommandParser
-AddressBookParser -> GroupCommandParser
+SummonersBookParser -> GroupCommandParser
 activate GroupCommandParser
 
-GroupCommandParser --> AddressBookParser
+GroupCommandParser --> SummonersBookParser
 deactivate GroupCommandParser
 
-AddressBookParser -> GroupCommandParser : parse("")
+SummonersBookParser -> GroupCommandParser : parse("")
 activate GroupCommandParser
 
 create GroupCommand
@@ -38,25 +38,25 @@ activate GroupCommand
 GroupCommand --> GroupCommandParser
 deactivate GroupCommand
 
-GroupCommandParser --> AddressBookParser : g
+GroupCommandParser --> SummonersBookParser : g
 deactivate GroupCommandParser
 'Hidden arrow to position the destroy marker below the end of the activation bar.
-GroupCommandParser -[hidden]-> AddressBookParser
+GroupCommandParser -[hidden]-> SummonersBookParser
 destroy GroupCommandParser
 
-AddressBookParser --> LogicManager : g
-deactivate AddressBookParser
+SummonersBookParser --> LogicManager : g
+deactivate SummonersBookParser
 
 LogicManager -> GroupCommand : execute(m)
 activate GroupCommand
 
-GroupCommand -> Model : getUnassignedPersonList()
+GroupCommand -> Model : getUnassignedPlayerList()
 activate Model
 
-Model --> GroupCommand : unassignedPersons
+Model --> GroupCommand : unassignedPlayers
 deactivate Model
 
-GroupCommand -> TeamMatcher : matchTeams(unassignedPersons)
+GroupCommand -> TeamMatcher : matchTeams(unassignedPlayers)
 activate TeamMatcher
 
 TeamMatcher --> GroupCommand : teams

@@ -1,39 +1,39 @@
-package seedu.address.logic.commands;
+package seedu.summoners.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CPM;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_GD15;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_KDA;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TEAMS;
+import static seedu.summoners.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_CPM;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_GD15;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_KDA;
+import static seedu.summoners.model.Model.PREDICATE_SHOW_ALL_PLAYERS;
+import static seedu.summoners.model.Model.PREDICATE_SHOW_ALL_TEAMS;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.logic.Messages;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.model.person.Champion;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Rank;
-import seedu.address.model.person.Role;
-import seedu.address.model.person.Stats;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.team.Team;
+import seedu.summoners.commons.core.index.Index;
+import seedu.summoners.commons.util.ToStringBuilder;
+import seedu.summoners.logic.Messages;
+import seedu.summoners.logic.commands.exceptions.CommandException;
+import seedu.summoners.model.Model;
+import seedu.summoners.model.player.Champion;
+import seedu.summoners.model.player.Name;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.player.Rank;
+import seedu.summoners.model.player.Role;
+import seedu.summoners.model.player.Stats;
+import seedu.summoners.model.tag.Tag;
+import seedu.summoners.model.team.Team;
 
 /**
- * Adds a new set of performance statistics (CPM, GD@15, KDA) to a specified person,
- * and updates any team containing that person to reference the edited person.
+ * Adds a new set of performance statistics (CPM, GD@15, KDA) to a specified player,
+ * and updates any team containing that player to reference the edited player.
  * <p>
- * The command targets a person by index in the currently displayed person list.
- * If the person is part of a team shown in the current team list, that team is updated
- * to point to the edited person instance, preserving team identity and order.
+ * The command targets a player by index in the currently displayed player list.
+ * If the player is part of a team shown in the current team list, that team is updated
+ * to point to the edited player instance, preserving team identity and order.
  * </p>
  *
  * <p><b>Usage:</b></p>
@@ -49,8 +49,8 @@ public class AddStatsCommand extends Command {
     public static final String COMMAND_WORD = "addStats";
 
     /** Usage string describing parameters and an example. */
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add new performance stats of the person identified "
-            + "by the index number used in the displayed person list.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add new performance stats of the player identified "
+            + "by the index number used in the displayed player list.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_CPM + "CPM "
             + PREFIX_GD15 + "GD15 "
@@ -73,7 +73,7 @@ public class AddStatsCommand extends Command {
     /**
      * Constructs an {@code AddStatsCommand}.
      *
-     * @param index Index of the target person in the current filtered person list. Must be non-null.
+     * @param index Index of the target player in the current filtered player list. Must be non-null.
      * @param cpm   CS per minute as a string (validated by {@link Stats#isValidStats(String, String, String)}).
      * @param gd15  Gold difference at 15 minutes as a string.
      * @param kda   KDA as a string.
@@ -90,107 +90,107 @@ public class AddStatsCommand extends Command {
     }
 
     /**
-     * Executes the command: appends a new statistics entry to the selected person, and if that
-     * person appears in a displayed team, updates that team to reference the edited person.
+     * Executes the command: appends a new statistics entry to the selected player, and if that
+     * player appears in a displayed team, updates that team to reference the edited player.
      * <ul>
-     *   <li>Validates the index against the current filtered person list.</li>
-     *   <li>Builds an edited {@link Person} with updated {@link Stats}.</li>
-     *   <li>Updates the model's person and, if applicable, the owning team.</li>
-     *   <li>Refreshes both person and team filtered lists.</li>
+     *   <li>Validates the index against the current filtered player list.</li>
+     *   <li>Builds an edited {@link Player} with updated {@link Stats}.</li>
+     *   <li>Updates the model's player and, if applicable, the owning team.</li>
+     *   <li>Refreshes both player and team filtered lists.</li>
      * </ul>
      *
      * @param model The model in which the update is performed. Must be non-null.
-     * @return Command result with a success message describing the edited person.
+     * @return Command result with a success message describing the edited player.
      * @throws CommandException if the index is invalid or the model rejects the update.
      */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Person> lastShownPersonList = model.getFilteredPersonList();
+        List<Player> lastShownPlayerList = model.getFilteredPlayerList();
         List<Team> lastShownTeamList = model.getFilteredTeamList();
 
-        if (index.getZeroBased() >= lastShownPersonList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        if (index.getZeroBased() >= lastShownPlayerList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PLAYER_DISPLAYED_INDEX);
         }
 
-        Person personToEdit = lastShownPersonList.get(index.getZeroBased());
-        Person editedPerson = createEditedPerson(personToEdit, cpm, gd15, kda);
+        Player playerToEdit = lastShownPlayerList.get(index.getZeroBased());
+        Player editedPlayer = createEditedPlayer(playerToEdit, cpm, gd15, kda);
 
         Optional<Team> teamToEditOptional = lastShownTeamList.stream()
-                .filter(team -> team.hasPerson(personToEdit))
+                .filter(team -> team.hasPlayer(playerToEdit))
                 .findFirst();
 
         if (teamToEditOptional.isPresent()) {
             Team teamToEdit = teamToEditOptional.get();
-            Team editedTeam = createEditedTeam(teamToEdit, personToEdit, editedPerson);
+            Team editedTeam = createEditedTeam(teamToEdit, playerToEdit, editedPlayer);
 
             // Apply the updates only after successful validation.
-            model.setPerson(personToEdit, editedPerson);
+            model.setPlayer(playerToEdit, editedPlayer);
             model.setTeam(teamToEdit, editedTeam);
         } else {
-            model.setPerson(personToEdit, editedPerson);
+            model.setPlayer(playerToEdit, editedPlayer);
         }
 
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredPlayerList(PREDICATE_SHOW_ALL_PLAYERS);
         model.updateFilteredTeamList(PREDICATE_SHOW_ALL_TEAMS);
-        return new CommandResult(String.format(MESSAGE_RECORD_SUCCESS, Messages.format(editedPerson)));
+        return new CommandResult(String.format(MESSAGE_RECORD_SUCCESS, Messages.format(editedPlayer)));
     }
 
     /**
-     * Creates a new {@link Person} based on {@code personToEdit} with updated {@link Stats}
+     * Creates a new {@link Player} based on {@code playerToEdit} with updated {@link Stats}
      * produced by appending the given CPM, GD@15, and KDA values.
      * <p>
      * Identity (ID) and other attributes are preserved; wins and losses are also carried over.
      * </p>
      *
-     * @param personToEdit The original person to update. Must be non-null.
+     * @param playerToEdit The original player to update. Must be non-null.
      * @param cpm          CS per minute as a string.
      * @param gd15         Gold difference at 15 minutes as a string.
      * @param kda          KDA as a string.
-     * @return A new {@code Person} instance with the updated stats.
+     * @return A new {@code Player} instance with the updated stats.
      * @throws IllegalArgumentException if the stats values are invalid.
      */
-    private static Person createEditedPerson(Person personToEdit, String cpm, String gd15, String kda) {
-        assert personToEdit != null;
+    private static Player createEditedPlayer(Player playerToEdit, String cpm, String gd15, String kda) {
+        assert playerToEdit != null;
 
-        String id = personToEdit.getId();
-        Name updatedName = personToEdit.getName();
-        Rank updatedRank = personToEdit.getRank();
-        Role updatedRole = personToEdit.getRole();
-        Champion updatedChampion = personToEdit.getChampion();
-        Set<Tag> updatedTags = personToEdit.getTags();
-        int wins = personToEdit.getWins();
-        int losses = personToEdit.getLosses();
+        String id = playerToEdit.getId();
+        Name updatedName = playerToEdit.getName();
+        Rank updatedRank = playerToEdit.getRank();
+        Role updatedRole = playerToEdit.getRole();
+        Champion updatedChampion = playerToEdit.getChampion();
+        Set<Tag> updatedTags = playerToEdit.getTags();
+        int wins = playerToEdit.getWins();
+        int losses = playerToEdit.getLosses();
 
-        Stats updatedStats = personToEdit.getStats().addLatestStats(cpm, gd15, kda);
+        Stats updatedStats = playerToEdit.getStats().addLatestStats(cpm, gd15, kda);
 
-        // Preserve id from the original person
-        return new Person(id, updatedName, updatedRole, updatedRank, updatedChampion, updatedTags,
+        // Preserve id from the original player
+        return new Player(id, updatedName, updatedRole, updatedRank, updatedChampion, updatedTags,
                 wins, losses, updatedStats);
     }
 
     /**
      * Produces a new {@link Team} identical to {@code teamToEdit} except that
-     * {@code personToEdit} is replaced by {@code editedPerson} in the team roster.
+     * {@code playerToEdit} is replaced by {@code editedPlayer} in the team roster.
      * Preserves team identity (ID) and its win–loss record.
      *
-     * @param teamToEdit    The team currently containing {@code personToEdit}. Must contain that person.
-     * @param personToEdit  The original person entry to replace.
-     * @param editedPerson  The new person entry to insert.
-     * @return A new {@code Team} reflecting the person update.
-     * @throws AssertionError if the team does not contain {@code personToEdit}.
+     * @param teamToEdit    The team currently containing {@code playerToEdit}. Must contain that player.
+     * @param playerToEdit  The original player entry to replace.
+     * @param editedPlayer  The new player entry to insert.
+     * @return A new {@code Team} reflecting the player update.
+     * @throws AssertionError if the team does not contain {@code playerToEdit}.
      */
-    private static Team createEditedTeam(Team teamToEdit, Person personToEdit, Person editedPerson) {
-        assert teamToEdit.hasPerson(personToEdit);
+    private static Team createEditedTeam(Team teamToEdit, Player playerToEdit, Player editedPlayer) {
+        assert teamToEdit.hasPlayer(playerToEdit);
 
         String id = teamToEdit.getId();
-        List<Person> updatedPersonList = new ArrayList<>(teamToEdit.getPersons());
-        int personIndex = updatedPersonList.indexOf(personToEdit);
-        updatedPersonList.set(personIndex, editedPerson);
+        List<Player> updatedPlayerList = new ArrayList<>(teamToEdit.getPlayers());
+        int playerIndex = updatedPlayerList.indexOf(playerToEdit);
+        updatedPlayerList.set(playerIndex, editedPlayer);
         int wins = teamToEdit.getWins();
         int losses = teamToEdit.getLosses();
 
-        return new Team(id, updatedPersonList, wins, losses);
+        return new Team(id, updatedPlayerList, wins, losses);
     }
 
     @Override

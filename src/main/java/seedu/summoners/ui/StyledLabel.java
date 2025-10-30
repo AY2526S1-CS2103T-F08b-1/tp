@@ -1,4 +1,4 @@
-package seedu.address.ui;
+package seedu.summoners.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

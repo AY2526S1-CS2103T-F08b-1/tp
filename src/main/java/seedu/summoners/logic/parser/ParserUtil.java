@@ -1,4 +1,4 @@
-package seedu.address.logic.parser;
+package seedu.summoners.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
@@ -8,14 +8,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.util.StringUtil;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Champion;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Rank;
-import seedu.address.model.person.Role;
-import seedu.address.model.tag.Tag;
+import seedu.summoners.commons.core.index.Index;
+import seedu.summoners.commons.util.StringUtil;
+import seedu.summoners.logic.parser.exceptions.ParseException;
+import seedu.summoners.model.player.Champion;
+import seedu.summoners.model.player.Name;
+import seedu.summoners.model.player.Rank;
+import seedu.summoners.model.player.Role;
+import seedu.summoners.model.tag.Tag;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.

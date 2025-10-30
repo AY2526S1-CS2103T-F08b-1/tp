@@ -1,4 +1,4 @@
-package seedu.address.model.team.exceptions;
+package seedu.summoners.model.team.exceptions;
 
 /**
  * Signals that the operation is unable to find the specified team.

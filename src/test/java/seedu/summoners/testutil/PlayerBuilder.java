@@ -1,22 +1,22 @@
-package seedu.address.testutil;
+package seedu.summoners.testutil;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-import seedu.address.model.person.Champion;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Rank;
-import seedu.address.model.person.Role;
-import seedu.address.model.person.Stats;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.util.SampleDataUtil;
+import seedu.summoners.model.player.Champion;
+import seedu.summoners.model.player.Name;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.player.Rank;
+import seedu.summoners.model.player.Role;
+import seedu.summoners.model.player.Stats;
+import seedu.summoners.model.tag.Tag;
+import seedu.summoners.model.util.SampleDataUtil;
 
 /**
- * A utility class to help with building Person objects.
+ * A utility class to help with building Player objects.
  */
-public class PersonBuilder {
+public class PlayerBuilder {
 
     public static final String DEFAULT_NAME = "Amy Bee";
     public static final String DEFAULT_ROLE = "mid";
@@ -36,9 +36,9 @@ public class PersonBuilder {
     private Stats stats;
 
     /**
-     * Creates a {@code PersonBuilder} with the default details.
+     * Creates a {@code PlayerBuilder} with the default details.
      */
-    public PersonBuilder() {
+    public PlayerBuilder() {
         id = UUID.randomUUID().toString();
         name = new Name(DEFAULT_NAME);
         role = new Role(DEFAULT_ROLE);
@@ -51,69 +51,69 @@ public class PersonBuilder {
     }
 
     /**
-     * Initializes the PersonBuilder with the data of {@code personToCopy}.
+     * Initializes the PlayerBuilder with the data of {@code playerToCopy}.
      */
-    public PersonBuilder(Person personToCopy) {
-        id = personToCopy.getId();
-        name = personToCopy.getName();
-        role = personToCopy.getRole();
-        rank = personToCopy.getRank();
-        champion = personToCopy.getChampion();
-        tags = new HashSet<>(personToCopy.getTags());
-        wins = personToCopy.getWins();
-        losses = personToCopy.getLosses();
+    public PlayerBuilder(Player playerToCopy) {
+        id = playerToCopy.getId();
+        name = playerToCopy.getName();
+        role = playerToCopy.getRole();
+        rank = playerToCopy.getRank();
+        champion = playerToCopy.getChampion();
+        tags = new HashSet<>(playerToCopy.getTags());
+        wins = playerToCopy.getWins();
+        losses = playerToCopy.getLosses();
     }
 
     /**
-     * Sets the {@code Name} of the {@code Person} that we are building.
+     * Sets the {@code Name} of the {@code Player} that we are building.
      */
-    public PersonBuilder withName(String name) {
+    public PlayerBuilder withName(String name) {
         this.name = new Name(name);
         return this;
     }
 
     /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
+     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Player} that we are building.
      */
-    public PersonBuilder withTags(String ... tags) {
+    public PlayerBuilder withTags(String ... tags) {
         this.tags = SampleDataUtil.getTagSet(tags);
         return this;
     }
 
     /**
-     * Sets the {@code Role} of the {@code Person} that we are building.
+     * Sets the {@code Role} of the {@code Player} that we are building.
      */
-    public PersonBuilder withRole(String role) {
+    public PlayerBuilder withRole(String role) {
         this.role = new Role(role);
         return this;
     }
 
     /**
-     * Sets the {@code Rank} of the {@code Person} that we are building.
+     * Sets the {@code Rank} of the {@code Player} that we are building.
      */
-    public PersonBuilder withRank(String rank) {
+    public PlayerBuilder withRank(String rank) {
         this.rank = new Rank(rank);
         return this;
     }
 
     /**
-     * Sets the {@code Champion} of the {@code Person} that we are building.
+     * Sets the {@code Champion} of the {@code Player} that we are building.
      */
-    public PersonBuilder withChampion(String champion) {
+    public PlayerBuilder withChampion(String champion) {
         this.champion = new Champion(champion);
         return this;
     }
 
     /**
-     * Sets the {@code Stats} of the {@code Person} that we are building.
+     * Sets the {@code Stats} of the {@code Player} that we are building.
      */
-    public PersonBuilder withStats(Stats stats) {
+    public PlayerBuilder withStats(Stats stats) {
         this.stats = stats;
         return this;
     }
 
-    public Person build() {
-        return new Person(id, name, role, rank, champion, tags, wins, losses, stats);
+    public Player build() {
+        return new Player(id, name, role, rank, champion, tags, wins, losses, stats);
     }
 
 }

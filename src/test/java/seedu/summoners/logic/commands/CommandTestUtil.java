@@ -1,30 +1,30 @@
-package seedu.address.logic.commands;
+package seedu.summoners.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CHAMPION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CPM;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_GD15;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_KDA;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_RANK;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_CHAMPION;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_CPM;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_GD15;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_KDA;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_RANK;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_ROLE;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.summoners.testutil.Assert.assertThrows;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.Person;
-import seedu.address.model.team.Team;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
-import seedu.address.testutil.FilterPersonDescriptorBuilder;
+import seedu.summoners.commons.core.index.Index;
+import seedu.summoners.logic.commands.exceptions.CommandException;
+import seedu.summoners.model.SummonersBook;
+import seedu.summoners.model.Model;
+import seedu.summoners.model.player.NameContainsKeywordsPredicate;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.team.Team;
+import seedu.summoners.testutil.EditPlayerDescriptorBuilder;
+import seedu.summoners.testutil.FilterPlayerDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
@@ -77,26 +77,26 @@ public class CommandTestUtil {
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
-    public static final EditCommand.EditPersonDescriptor DESC_AMY;
-    public static final EditCommand.EditPersonDescriptor DESC_BOB;
+    public static final EditCommand.EditPlayerDescriptor DESC_AMY;
+    public static final EditCommand.EditPlayerDescriptor DESC_BOB;
 
     static {
-        DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
+        DESC_AMY = new EditPlayerDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withRole(VALID_ROLE_AMY).withRank(VALID_RANK_AMY).withChampion(VALID_CHAMPION_AMY)
                 .withTags(VALID_TAG_FRIEND).build();
-        DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
+        DESC_BOB = new EditPlayerDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withRole(VALID_ROLE_AMY).withRank(VALID_RANK_AMY).withChampion(VALID_CHAMPION_AMY)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 
-    public static final FilterCommand.FilterPersonDescriptor FILTER_AMY;
-    public static final FilterCommand.FilterPersonDescriptor FILTER_AMY_AND_BOB;
+    public static final FilterCommand.FilterPlayerDescriptor FILTER_AMY;
+    public static final FilterCommand.FilterPlayerDescriptor FILTER_AMY_AND_BOB;
 
     static {
-        FILTER_AMY = new FilterPersonDescriptorBuilder()
+        FILTER_AMY = new FilterPlayerDescriptorBuilder()
                 .withRoles(VALID_ROLE_AMY).withRanks(VALID_RANK_AMY)
                 .withChampions(VALID_CHAMPION_AMY).build();
-        FILTER_AMY_AND_BOB = new FilterPersonDescriptorBuilder()
+        FILTER_AMY_AND_BOB = new FilterPlayerDescriptorBuilder()
                 .withRoles(VALID_ROLE_AMY, VALID_ROLE_BOB)
                 .withRanks(VALID_RANK_AMY, VALID_RANK_BOB)
                 .withChampions(VALID_CHAMPION_AMY, VALID_CHAMPION_BOB).build();
@@ -132,31 +132,31 @@ public class CommandTestUtil {
      * Executes the given {@code command}, confirms that <br>
      * - a {@code CommandException} is thrown <br>
      * - the CommandException message matches {@code expectedMessage} <br>
-     * - the address book, filtered person list and selected person in {@code actualModel} remain unchanged
+     * - the summoners book, filtered player list and selected player in {@code actualModel} remain unchanged
      */
     public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
-        AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
-        List<Person> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
+        SummonersBook expectedSummonersBook = new SummonersBook(actualModel.getSummonersBook());
+        List<Player> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPlayerList());
 
         assertThrows(CommandException.class, expectedMessage, () -> command.execute(actualModel));
-        assertEquals(expectedAddressBook, actualModel.getAddressBook());
-        assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
+        assertEquals(expectedSummonersBook, actualModel.getSummonersBook());
+        assertEquals(expectedFilteredList, actualModel.getFilteredPlayerList());
     }
 
     /**
-     * Updates {@code model}'s filtered list to show only the person at the given {@code targetIndex} in the
-     * {@code model}'s address book.
+     * Updates {@code model}'s filtered list to show only the player at the given {@code targetIndex} in the
+     * {@code model}'s summoners book.
      */
-    public static void showPersonAtIndex(Model model, Index targetIndex) {
-        assertTrue(targetIndex.getZeroBased() < model.getFilteredPersonList().size());
+    public static void showPlayerAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredPlayerList().size());
 
-        Person person = model.getFilteredPersonList().get(targetIndex.getZeroBased());
-        final String[] splitName = person.getName().fullName.split("\\s+");
-        model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        Player player = model.getFilteredPlayerList().get(targetIndex.getZeroBased());
+        final String[] splitName = player.getName().fullName.split("\\s+");
+        model.updateFilteredPlayerList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
-        assertEquals(1, model.getFilteredPersonList().size());
+        assertEquals(1, model.getFilteredPlayerList().size());
     }
 
     /**

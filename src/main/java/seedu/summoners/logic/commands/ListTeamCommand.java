@@ -1,12 +1,12 @@
-package seedu.address.logic.commands;
+package seedu.summoners.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TEAMS;
+import static seedu.summoners.model.Model.PREDICATE_SHOW_ALL_TEAMS;
 
-import seedu.address.model.Model;
+import seedu.summoners.model.Model;
 
 /**
- * Lists all teams in the address book.
+ * Lists all teams in the summoners book.
  */
 public class ListTeamCommand extends Command {
 

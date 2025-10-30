@@ -1,51 +1,51 @@
-package seedu.address.logic.commands;
+package seedu.summoners.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_EIGHTH_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIFTH_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FOURTH_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_NINTH_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SEVENTH_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SIXTH_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-import static seedu.address.testutil.TypicalTeams.getTypicalAddressBookWithTeams;
+import static seedu.summoners.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.summoners.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_EIGHTH_PLAYER;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_FIFTH_PLAYER;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_FIRST_PLAYER;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_FOURTH_PLAYER;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_NINTH_PLAYER;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_SECOND_PLAYER;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_SEVENTH_PLAYER;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_SIXTH_PLAYER;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_THIRD_PLAYER;
+import static seedu.summoners.testutil.TypicalPlayers.ALICE;
+import static seedu.summoners.testutil.TypicalPlayers.getTypicalSummonersBook;
+import static seedu.summoners.testutil.TypicalTeams.getTypicalSummonersBookWithTeams;
 
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.Messages;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
-import seedu.address.model.team.Team;
+import seedu.summoners.commons.core.index.Index;
+import seedu.summoners.logic.Messages;
+import seedu.summoners.logic.commands.exceptions.CommandException;
+import seedu.summoners.model.SummonersBook;
+import seedu.summoners.model.Model;
+import seedu.summoners.model.ModelManager;
+import seedu.summoners.model.UserPrefs;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.team.Team;
 
 public class MakeGroupCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalSummonersBook(), new UserPrefs());
 
     @Test
     public void execute_validIndicesUnfilteredList_success() throws CommandException {
-        List<Index> indices = Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON,
-                INDEX_THIRD_PERSON, INDEX_FOURTH_PERSON, INDEX_FIFTH_PERSON);
+        List<Index> indices = Arrays.asList(INDEX_FIRST_PLAYER, INDEX_SECOND_PLAYER,
+                INDEX_THIRD_PLAYER, INDEX_FOURTH_PLAYER, INDEX_FIFTH_PLAYER);
         MakeGroupCommand makeGroupCommand = new MakeGroupCommand(indices);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        List<Person> expectedTeamMembers = indices.stream()
-                .map(index -> model.getFilteredPersonList().get(index.getZeroBased()))
+        Model expectedModel = new ModelManager(new SummonersBook(model.getSummonersBook()), new UserPrefs());
+        List<Player> expectedTeamMembers = indices.stream()
+                .map(index -> model.getFilteredPlayerList().get(index.getZeroBased()))
                 .toList();
         Team expectedTeam = new Team(expectedTeamMembers);
         expectedModel.addTeam(expectedTeam);
@@ -58,37 +58,37 @@ public class MakeGroupCommandTest {
 
     @Test
     public void execute_duplicateIndices_throwsCommandException() {
-        List<Index> duplicateIndices = Arrays.asList(INDEX_FIRST_PERSON, INDEX_FIRST_PERSON,
-                INDEX_SECOND_PERSON, INDEX_THIRD_PERSON, INDEX_FOURTH_PERSON);
+        List<Index> duplicateIndices = Arrays.asList(INDEX_FIRST_PLAYER, INDEX_FIRST_PLAYER,
+                INDEX_SECOND_PLAYER, INDEX_THIRD_PLAYER, INDEX_FOURTH_PLAYER);
         MakeGroupCommand command = new MakeGroupCommand(duplicateIndices);
         assertCommandFailure(command, model, MakeGroupCommand.MESSAGE_DUPLICATE_INDEX);
     }
 
     @Test
-    public void execute_invalidPersonIndex_throwsCommandException() {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        List<Index> indicesWithInvalid = Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON,
-                INDEX_THIRD_PERSON, INDEX_FOURTH_PERSON, outOfBoundIndex);
+    public void execute_invalidPlayerIndex_throwsCommandException() {
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPlayerList().size() + 1);
+        List<Index> indicesWithInvalid = Arrays.asList(INDEX_FIRST_PLAYER, INDEX_SECOND_PLAYER,
+                INDEX_THIRD_PLAYER, INDEX_FOURTH_PLAYER, outOfBoundIndex);
         MakeGroupCommand command = new MakeGroupCommand(indicesWithInvalid);
-        assertCommandFailure(command, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(command, model, Messages.MESSAGE_INVALID_PLAYER_DISPLAYED_INDEX);
     }
 
     @Test
-    public void execute_personAlreadyInTeam_throwsCommandException() {
-        Model modelWithTeam = new ModelManager(getTypicalAddressBookWithTeams(), new UserPrefs());
+    public void execute_playerAlreadyInTeam_throwsCommandException() {
+        Model modelWithTeam = new ModelManager(getTypicalSummonersBookWithTeams(), new UserPrefs());
 
-        // Attempt to create a new team using the same person
+        // Attempt to create a new team using the same player
         List<Index> indices = Arrays.asList(
-                INDEX_FIRST_PERSON, // ALICE, who is already in a team
-                INDEX_SIXTH_PERSON,
-                INDEX_SEVENTH_PERSON,
-                INDEX_EIGHTH_PERSON,
-                INDEX_NINTH_PERSON
+                INDEX_FIRST_PLAYER, // ALICE, who is already in a team
+                INDEX_SIXTH_PLAYER,
+                INDEX_SEVENTH_PLAYER,
+                INDEX_EIGHTH_PLAYER,
+                INDEX_NINTH_PLAYER
         );
 
         MakeGroupCommand command = new MakeGroupCommand(indices);
 
-        String expectedMessage = String.format(MakeGroupCommand.MESSAGE_REUSED_PERSON, Messages.format(ALICE));
+        String expectedMessage = String.format(MakeGroupCommand.MESSAGE_REUSED_PLAYER, Messages.format(ALICE));
         assertCommandFailure(command, modelWithTeam, expectedMessage);
     }
 
@@ -96,25 +96,25 @@ public class MakeGroupCommandTest {
     public void execute_invalidTeamSize_throwsCommandException() {
         String expectedMessage = String.format(MakeGroupCommand.MESSAGE_INVALID_TEAM_SIZE, Team.TEAM_SIZE);
 
-        List<Index> fewerIndices = Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON);
+        List<Index> fewerIndices = Arrays.asList(INDEX_FIRST_PLAYER, INDEX_SECOND_PLAYER);
         MakeGroupCommand command = new MakeGroupCommand(fewerIndices);
         assertCommandFailure(command, model, expectedMessage);
 
-        List<Index> moreIndices = Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON, INDEX_THIRD_PERSON,
-                INDEX_FOURTH_PERSON, INDEX_FIFTH_PERSON, INDEX_SIXTH_PERSON);
+        List<Index> moreIndices = Arrays.asList(INDEX_FIRST_PLAYER, INDEX_SECOND_PLAYER, INDEX_THIRD_PLAYER,
+                INDEX_FOURTH_PLAYER, INDEX_FIFTH_PLAYER, INDEX_SIXTH_PLAYER);
         command = new MakeGroupCommand(moreIndices);
         assertCommandFailure(command, model, expectedMessage);
     }
 
     @Test
     public void execute_invalidTeamComposition_throwsCommandException() {
-        // Assumes TypicalPersons has persons with conflicting roles/champions at certain indices
-        // For example, if person 1 and 6 have the same role.
-        List<Index> conflictingIndices = Arrays.asList(INDEX_FIRST_PERSON, Index.fromOneBased(6),
-                INDEX_THIRD_PERSON, INDEX_FOURTH_PERSON, INDEX_FIFTH_PERSON);
+        // Assumes TypicalPlayers has players with conflicting roles/champions at certain indices
+        // For example, if player 1 and 6 have the same role.
+        List<Index> conflictingIndices = Arrays.asList(INDEX_FIRST_PLAYER, Index.fromOneBased(6),
+                INDEX_THIRD_PLAYER, INDEX_FOURTH_PLAYER, INDEX_FIFTH_PLAYER);
         MakeGroupCommand command = new MakeGroupCommand(conflictingIndices);
 
-        // We can't check the exact error message as it depends on your TypicalPersons,
+        // We can't check the exact error message as it depends on your TypicalPlayers,
         // so we assert that a CommandException is thrown.
         // A more specific test would require crafting a specific model.
         org.junit.jupiter.api.Assertions.assertThrows(CommandException.class, () -> command.execute(model));
@@ -122,10 +122,10 @@ public class MakeGroupCommandTest {
 
     @Test
     public void equals() {
-        List<Index> indices1 = Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON, INDEX_THIRD_PERSON,
-                INDEX_FOURTH_PERSON, INDEX_FIFTH_PERSON);
-        List<Index> indices2 = Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON, INDEX_THIRD_PERSON,
-                INDEX_FOURTH_PERSON, INDEX_SIXTH_PERSON);
+        List<Index> indices1 = Arrays.asList(INDEX_FIRST_PLAYER, INDEX_SECOND_PLAYER, INDEX_THIRD_PLAYER,
+                INDEX_FOURTH_PLAYER, INDEX_FIFTH_PLAYER);
+        List<Index> indices2 = Arrays.asList(INDEX_FIRST_PLAYER, INDEX_SECOND_PLAYER, INDEX_THIRD_PLAYER,
+                INDEX_FOURTH_PLAYER, INDEX_SIXTH_PLAYER);
 
         MakeGroupCommand command1 = new MakeGroupCommand(indices1);
         MakeGroupCommand command2 = new MakeGroupCommand(indices1);
@@ -149,8 +149,8 @@ public class MakeGroupCommandTest {
 
     @Test
     public void toStringMethod() {
-        List<Index> indices = Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON, INDEX_THIRD_PERSON,
-                INDEX_FOURTH_PERSON, INDEX_FIFTH_PERSON);
+        List<Index> indices = Arrays.asList(INDEX_FIRST_PLAYER, INDEX_SECOND_PLAYER, INDEX_THIRD_PLAYER,
+                INDEX_FOURTH_PLAYER, INDEX_FIFTH_PLAYER);
         MakeGroupCommand makeGroupCommand = new MakeGroupCommand(indices);
         String expected = MakeGroupCommand.class.getCanonicalName() + "{indexList=" + indices + "}";
         assertEquals(expected, makeGroupCommand.toString());

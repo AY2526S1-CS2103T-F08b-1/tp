@@ -1,4 +1,4 @@
-package seedu.address.ui;
+package seedu.summoners.ui;
 
 import java.util.logging.Logger;
 
@@ -10,13 +10,13 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import seedu.address.commons.core.GuiSettings;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.Logic;
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Person;
+import seedu.summoners.commons.core.GuiSettings;
+import seedu.summoners.commons.core.LogsCenter;
+import seedu.summoners.logic.Logic;
+import seedu.summoners.logic.commands.CommandResult;
+import seedu.summoners.logic.commands.exceptions.CommandException;
+import seedu.summoners.logic.parser.exceptions.ParseException;
+import seedu.summoners.model.player.Player;
 
 /**
  * The main JavaFX window that provides the overall UI layout for the application.
@@ -39,7 +39,7 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private PersonListPanel personListPanel;
+    private PlayerListPanel playerListPanel;
     private TeamListPanel teamListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
@@ -52,7 +52,7 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane playerListPanelPlaceholder;
 
     @FXML
     private StackPane teamListPanelPlaceholder;
@@ -123,8 +123,8 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        playerListPanel = new PlayerListPanel(logic.getFilteredPlayerList());
+        playerListPanelPlaceholder.getChildren().add(playerListPanel.getRoot());
 
         teamListPanel = new TeamListPanel(logic.getFilteredTeamList());
         teamListPanelPlaceholder.getChildren().add(teamListPanel.getRoot());
@@ -132,7 +132,7 @@ public class MainWindow extends UiPart<Stage> {
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getSummonersBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
@@ -164,15 +164,15 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Opens a new person detail window for the specified person.
+     * Opens a new player detail window for the specified player.
      * A new window is created for each call to ensure a clean UI state.
      * This prevents UI issues that may arise from reusing the same window instance.
      */
-    public void handlePersonDetail(Person person) {
+    public void handlePlayerDetail(Player player) {
         // Create a new instance each time the command is called.
-        PersonDetailWindow newPersonDetailWindow = new PersonDetailWindow();
-        newPersonDetailWindow.setPerson(person);
-        newPersonDetailWindow.show(); // This will show the new stage.
+        PlayerDetailWindow newPlayerDetailWindow = new PlayerDetailWindow();
+        newPlayerDetailWindow.setPlayer(player);
+        newPlayerDetailWindow.show(); // This will show the new stage.
     }
 
     void show() {
@@ -198,7 +198,7 @@ public class MainWindow extends UiPart<Stage> {
      *
      * @param team the team to display
      */
-    private void handleTeamStats(seedu.address.model.team.Team team) {
+    private void handleTeamStats(seedu.summoners.model.team.Team team) {
         if (teamStatsWindow == null) {
             teamStatsWindow = new TeamStatsWindow();
         }
@@ -212,14 +212,14 @@ public class MainWindow extends UiPart<Stage> {
         teamStatsWindow.focus();
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return personListPanel;
+    public PlayerListPanel getPlayerListPanel() {
+        return playerListPanel;
     }
 
     /**
      * Executes the command and returns the result.
      *
-     * @see seedu.address.logic.Logic#execute(String)
+     * @see seedu.summoners.logic.Logic#execute(String)
      */
     private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
         try {
@@ -231,8 +231,8 @@ public class MainWindow extends UiPart<Stage> {
                 handleHelp();
             }
 
-            if (commandResult.isShowPersonDetail()) {
-                commandResult.getPersonToShow().ifPresent(this::handlePersonDetail);
+            if (commandResult.isShowPlayerDetail()) {
+                commandResult.getPlayerToShow().ifPresent(this::handlePlayerDetail);
             }
 
             if (commandResult.isExit()) {

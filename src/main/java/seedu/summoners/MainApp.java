@@ -1,4 +1,4 @@
-package seedu.address;
+package seedu.summoners;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -7,29 +7,29 @@ import java.util.logging.Logger;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import seedu.address.commons.core.Config;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.core.Version;
-import seedu.address.commons.exceptions.DataLoadingException;
-import seedu.address.commons.util.ConfigUtil;
-import seedu.address.commons.util.StringUtil;
-import seedu.address.logic.Logic;
-import seedu.address.logic.LogicManager;
-import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.ReadOnlyUserPrefs;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.util.SampleDataUtil;
-import seedu.address.storage.AddressBookStorage;
-import seedu.address.storage.JsonAddressBookStorage;
-import seedu.address.storage.JsonUserPrefsStorage;
-import seedu.address.storage.Storage;
-import seedu.address.storage.StorageManager;
-import seedu.address.storage.UserPrefsStorage;
-import seedu.address.ui.Ui;
-import seedu.address.ui.UiManager;
+import seedu.summoners.commons.core.Config;
+import seedu.summoners.commons.core.LogsCenter;
+import seedu.summoners.commons.core.Version;
+import seedu.summoners.commons.exceptions.DataLoadingException;
+import seedu.summoners.commons.util.ConfigUtil;
+import seedu.summoners.commons.util.StringUtil;
+import seedu.summoners.logic.Logic;
+import seedu.summoners.logic.LogicManager;
+import seedu.summoners.model.SummonersBook;
+import seedu.summoners.model.Model;
+import seedu.summoners.model.ModelManager;
+import seedu.summoners.model.ReadOnlySummonersBook;
+import seedu.summoners.model.ReadOnlyUserPrefs;
+import seedu.summoners.model.UserPrefs;
+import seedu.summoners.model.util.SampleDataUtil;
+import seedu.summoners.storage.SummonersBookStorage;
+import seedu.summoners.storage.JsonSummonersBookStorage;
+import seedu.summoners.storage.JsonUserPrefsStorage;
+import seedu.summoners.storage.Storage;
+import seedu.summoners.storage.StorageManager;
+import seedu.summoners.storage.UserPrefsStorage;
+import seedu.summoners.ui.Ui;
+import seedu.summoners.ui.UiManager;
 
 /**
  * Runs the application.
@@ -48,7 +48,7 @@ public class MainApp extends Application {
 
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing AddressBook ]===========================");
+        logger.info("=============================[ Initializing SummonersBook ]===========================");
         super.init();
 
         AppParameters appParameters = AppParameters.parse(getParameters());
@@ -57,8 +57,8 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
-        AddressBookStorage addressBookStorage = new JsonAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        SummonersBookStorage summonersBookStorage = new JsonSummonersBookStorage(userPrefs.getSummonersBookFilePath());
+        storage = new StorageManager(summonersBookStorage, userPrefsStorage);
 
         model = initModelManager(storage, userPrefs);
 
@@ -68,31 +68,31 @@ public class MainApp extends Application {
     }
 
     /**
-     * Returns a {@code ModelManager} with the data from {@code storage}'s address book and {@code userPrefs}. <br>
-     * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
-     * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
+     * Returns a {@code ModelManager} with the data from {@code storage}'s summoners book and {@code userPrefs}. <br>
+     * The data from the sample summoners book will be used instead if {@code storage}'s summoners book is not found,
+     * or an empty summoners book will be used instead if errors occur when reading {@code storage}'s summoners book.
      */
     protected Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
-        logger.info("Using data file : " + storage.getAddressBookFilePath());
+        logger.info("Using data file : " + storage.getSummonersBookFilePath());
 
-        Optional<ReadOnlyAddressBook> addressBookOptional;
-        ReadOnlyAddressBook initialData;
+        Optional<ReadOnlySummonersBook> summonersBookOptional;
+        ReadOnlySummonersBook initialData;
         try {
-            addressBookOptional = storage.readAddressBook();
-            if (!addressBookOptional.isPresent()) {
-                logger.info("Creating a new data file " + storage.getAddressBookFilePath()
-                        + " populated with a sample AddressBook.");
+            summonersBookOptional = storage.readSummonersBook();
+            if (!summonersBookOptional.isPresent()) {
+                logger.info("Creating a new data file " + storage.getSummonersBookFilePath()
+                        + " populated with a sample SummonersBook.");
             }
-            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            initialData = summonersBookOptional.orElseGet(SampleDataUtil::getSampleSummonersBook);
         } catch (DataLoadingException e) {
-            logger.warning("Data file at " + storage.getAddressBookFilePath() + " could not be loaded."
-                    + " Will be starting with an empty AddressBook.");
-            initialData = new AddressBook();
+            logger.warning("Data file at " + storage.getSummonersBookFilePath() + " could not be loaded."
+                    + " Will be starting with an empty SummonersBook.");
+            initialData = new SummonersBook();
         } catch (Exception e) {
-            logger.warning("Data file at " + storage.getAddressBookFilePath()
-                    + " contains invalid data (e.g., person in multiple teams, duplicate roles/champions)."
-                    + " Will be starting with an empty AddressBook. Error: " + e.getMessage());
-            initialData = new AddressBook();
+            logger.warning("Data file at " + storage.getSummonersBookFilePath()
+                    + " contains invalid data (e.g., player in multiple teams, duplicate roles/champions)."
+                    + " Will be starting with an empty SummonersBook. Error: " + e.getMessage());
+            initialData = new SummonersBook();
         }
 
         return new ModelManager(initialData, userPrefs);
@@ -175,13 +175,13 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting AddressBook " + MainApp.VERSION);
+        logger.info("Starting SummonersBook " + MainApp.VERSION);
         ui.start(primaryStage);
     }
 
     @Override
     public void stop() {
-        logger.info("============================ [ Stopping AddressBook ] =============================");
+        logger.info("============================ [ Stopping SummonersBook ] =============================");
         try {
             storage.saveUserPrefs(model.getUserPrefs());
         } catch (IOException e) {

@@ -1,13 +1,13 @@
-package seedu.address.logic.parser;
+package seedu.summoners.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.summoners.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.GroupCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.summoners.logic.commands.GroupCommand;
+import seedu.summoners.logic.parser.exceptions.ParseException;
 
 public class GroupCommandParserTest {
 

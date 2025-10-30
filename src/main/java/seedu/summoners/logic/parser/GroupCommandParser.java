@@ -1,7 +1,7 @@
-package seedu.address.logic.parser;
+package seedu.summoners.logic.parser;
 
-import seedu.address.logic.commands.GroupCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.summoners.logic.commands.GroupCommand;
+import seedu.summoners.logic.parser.exceptions.ParseException;
 
 /**
  * Parses input arguments and creates a new GroupCommand object.

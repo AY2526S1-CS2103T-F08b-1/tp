@@ -1,20 +1,20 @@
-package seedu.address.logic.commands;
+package seedu.summoners.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TEAM;
-import static seedu.address.testutil.TypicalTeams.getTypicalAddressBookWithTeams;
+import static seedu.summoners.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.summoners.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_FIRST_TEAM;
+import static seedu.summoners.testutil.TypicalTeams.getTypicalSummonersBookWithTeams;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.team.Team;
+import seedu.summoners.commons.core.index.Index;
+import seedu.summoners.model.Model;
+import seedu.summoners.model.ModelManager;
+import seedu.summoners.model.UserPrefs;
+import seedu.summoners.model.team.Team;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code WinCommand}.
@@ -25,7 +25,7 @@ public class WinCommandTest {
 
     @BeforeEach
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBookWithTeams(), new UserPrefs());
+        model = new ModelManager(getTypicalSummonersBookWithTeams(), new UserPrefs());
     }
 
     @Test
@@ -39,8 +39,8 @@ public class WinCommandTest {
         String expectedMessage = String.format(WinCommand.MESSAGE_WIN_TEAM_SUCCESS,
                 INDEX_FIRST_TEAM.getOneBased(), expectedWins, expectedLosses);
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.setTeam(firstTeam, new Team(firstTeam.getId(), firstTeam.getPersons(),
+        Model expectedModel = new ModelManager(model.getSummonersBook(), new UserPrefs());
+        expectedModel.setTeam(firstTeam, new Team(firstTeam.getId(), firstTeam.getPlayers(),
                 expectedWins, expectedLosses));
 
         assertCommandSuccess(winCommand, model, expectedMessage, expectedModel);
@@ -49,14 +49,14 @@ public class WinCommandTest {
     @Test
     public void execute_invalidIndex_throwsCommandException() {
         int outOfBoundsIndex = model.getFilteredTeamList().size() + 1;
-        WinCommand winCommand = new WinCommand(seedu.address.commons.core.index.Index.fromOneBased(outOfBoundsIndex));
-        assertCommandFailure(winCommand, model, seedu.address.logic.Messages.MESSAGE_INVALID_TEAM_DISPLAYED_INDEX);
+        WinCommand winCommand = new WinCommand(seedu.summoners.commons.core.index.Index.fromOneBased(outOfBoundsIndex));
+        assertCommandFailure(winCommand, model, seedu.summoners.logic.Messages.MESSAGE_INVALID_TEAM_DISPLAYED_INDEX);
     }
 
     @Test
     public void equals() {
         WinCommand first = new WinCommand(INDEX_FIRST_TEAM);
-        WinCommand second = new WinCommand(seedu.address.commons.core.index.Index.fromOneBased(2));
+        WinCommand second = new WinCommand(seedu.summoners.commons.core.index.Index.fromOneBased(2));
 
         // same object -> true
         assertTrue(first.equals(first));

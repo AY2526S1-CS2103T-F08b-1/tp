@@ -1,6 +1,6 @@
-package seedu.address.model.person;
+package seedu.summoners.model.player;
 
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.summoners.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -8,14 +8,14 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.tag.Tag;
+import seedu.summoners.commons.util.ToStringBuilder;
+import seedu.summoners.model.tag.Tag;
 
 /**
- * Represents a Person in the address book.
+ * Represents a Player in the summoners book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Person {
+public class Player {
 
     // Identity fields
     private final String id;
@@ -33,47 +33,47 @@ public class Person {
     private final int losses;
 
     /**
-     * Constructor for creating a new Person with specified role, rank, and champion.
-     * Generates a random UUID for the person.
+     * Constructor for creating a new Player with specified role, rank, and champion.
+     * Generates a random UUID for the player.
      *
-     * @param name     Name of the person.
-     * @param role     Role of the person.
-     * @param rank     Rank of the person.
-     * @param champion Champion of the person.
-     * @param tags     Set of tags associated with the person.
+     * @param name     Name of the player.
+     * @param role     Role of the player.
+     * @param rank     Rank of the player.
+     * @param champion Champion of the player.
+     * @param tags     Set of tags associated with the player.
      */
-    public Person(Name name, Role role, Rank rank, Champion champion, Set<Tag> tags) {
+    public Player(Name name, Role role, Rank rank, Champion champion, Set<Tag> tags) {
         this(UUID.randomUUID().toString(), name, role, rank, champion, tags, 0, 0);
     }
 
     /**
-     * Constructor for creating a new Person with specified role, rank, and champion.
-     * Generates a random UUID for the person.
+     * Constructor for creating a new Player with specified role, rank, and champion.
+     * Generates a random UUID for the player.
      *
-     * @param name     Name of the person.
-     * @param role     Role of the person.
-     * @param rank     Rank of the person.
-     * @param champion Champion of the person.
-     * @param tags     Set of tags associated with the person.
-     * @param stats    Performance stats of the person.
+     * @param name     Name of the player.
+     * @param role     Role of the player.
+     * @param rank     Rank of the player.
+     * @param champion Champion of the player.
+     * @param tags     Set of tags associated with the player.
+     * @param stats    Performance stats of the player.
      */
-    public Person(Name name, Role role, Rank rank, Champion champion, Set<Tag> tags,
+    public Player(Name name, Role role, Rank rank, Champion champion, Set<Tag> tags,
                   int wins, int losses, Stats stats) {
         this(UUID.randomUUID().toString(), name, role, rank, champion, tags, wins, losses, stats);
     }
 
     /**
-     * Constructor for creating a Person with an explicit ID.
+     * Constructor for creating a Player with an explicit ID.
      * This is used for deserialization from JSON to preserve the original ID.
      *
-     * @param id       Unique identifier for the person.
-     * @param name     Name of the person.
-     * @param role     Role of the person.
-     * @param rank     Rank of the person.
-     * @param champion Champion of the person.
-     * @param tags     Set of tags associated with the person.
+     * @param id       Unique identifier for the player.
+     * @param name     Name of the player.
+     * @param role     Role of the player.
+     * @param rank     Rank of the player.
+     * @param champion Champion of the player.
+     * @param tags     Set of tags associated with the player.
      */
-    public Person(String id, Name name, Role role, Rank rank, Champion champion, Set<Tag> tags, int wins, int losses) {
+    public Player(String id, Name name, Role role, Rank rank, Champion champion, Set<Tag> tags, int wins, int losses) {
         requireAllNonNull(id, name, role, rank, champion, tags);
         this.id = id;
         this.name = name;
@@ -87,18 +87,18 @@ public class Person {
     }
 
     /**
-     * Constructor for creating a Person with an explicit ID.
+     * Constructor for creating a Player with an explicit ID.
      * This is used for deserialization from JSON to preserve the original ID.
      *
-     * @param id       Unique identifier for the person.
-     * @param name     Name of the person.
-     * @param role     Role of the person.
-     * @param rank     Rank of the person.
-     * @param champion Champion of the person.
-     * @param tags     Set of tags associated with the person.
-     * @param stats    Performance stats of the person.
+     * @param id       Unique identifier for the player.
+     * @param name     Name of the player.
+     * @param role     Role of the player.
+     * @param rank     Rank of the player.
+     * @param champion Champion of the player.
+     * @param tags     Set of tags associated with the player.
+     * @param stats    Performance stats of the player.
      */
-    public Person(String id, Name name, Role role, Rank rank, Champion champion, Set<Tag> tags,
+    public Player(String id, Name name, Role role, Rank rank, Champion champion, Set<Tag> tags,
                   int wins, int losses, Stats stats) {
         requireAllNonNull(id, name, role, rank, champion, tags);
         this.id = id;
@@ -153,21 +153,21 @@ public class Person {
     }
 
     /**
-     * Returns true if both persons have the same name.
-     * This defines a weaker notion of equality between two persons.
+     * Returns true if both players have the same name.
+     * This defines a weaker notion of equality between two players.
      */
-    public boolean isSamePerson(Person otherPerson) {
-        if (otherPerson == this) {
+    public boolean isSamePlayer(Player otherPlayer) {
+        if (otherPlayer == this) {
             return true;
         }
 
-        return otherPerson != null
-                && otherPerson.getName().equals(getName());
+        return otherPlayer != null
+                && otherPlayer.getName().equals(getName());
     }
 
     /**
-     * Returns true if both persons have the same identity and data fields.
-     * This defines a stronger notion of equality between two persons.
+     * Returns true if both players have the same identity and data fields.
+     * This defines a stronger notion of equality between two players.
      */
     @Override
     public boolean equals(Object other) {
@@ -176,16 +176,16 @@ public class Person {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Person)) {
+        if (!(other instanceof Player)) {
             return false;
         }
 
-        Person otherPerson = (Person) other;
-        return name.equals(otherPerson.name)
-                && role.equals(otherPerson.role)
-                && rank.equals(otherPerson.rank)
-                && champion.equals(otherPerson.champion)
-                && tags.equals(otherPerson.tags);
+        Player otherPlayer = (Player) other;
+        return name.equals(otherPlayer.name)
+                && role.equals(otherPlayer.role)
+                && rank.equals(otherPlayer.rank)
+                && champion.equals(otherPlayer.champion)
+                && tags.equals(otherPlayer.tags);
     }
 
     @Override

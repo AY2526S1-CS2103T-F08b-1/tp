@@ -18,9 +18,9 @@ end box
 
 box "Logic Layer" #LightYellow
 participant ":LogicManager" as LogicManager
-participant ":AddressBookParser" as AddressBookParser
+participant ":SummonersBookParser" as SummonersBookParser
 participant ":FilterCommandParser" as FilterCommandParser
-participant "FilterCommand.FilterPersonDescriptor" as FilterPersonDescriptor
+participant "FilterCommand.FilterPlayerDescriptor" as FilterPlayerDescriptor
 participant "f:FilterCommand" as FilterCommand
 end box
 
@@ -36,50 +36,50 @@ UI -> LogicManager : execute("filter rk/Diamond c/Yasuo")
 activate LogicManager
 
 == Parsing ==
-LogicManager -> AddressBookParser : parseCommand("filter rk/Diamond c/Yasuo")
-activate AddressBookParser
+LogicManager -> SummonersBookParser : parseCommand("filter rk/Diamond c/Yasuo")
+activate SummonersBookParser
 
-AddressBookParser -> FilterCommandParser : parse("rk/Diamond c/Yasuo")
+SummonersBookParser -> FilterCommandParser : parse("rk/Diamond c/Yasuo")
 activate FilterCommandParser
 
-== Build FilterPersonDescriptor ==
-create FilterPersonDescriptor
-FilterCommandParser -> FilterPersonDescriptor : FilterPersonDescriptor()
-activate FilterPersonDescriptor
-FilterPersonDescriptor --> FilterCommandParser
-deactivate FilterPersonDescriptor
+== Build FilterPlayerDescriptor ==
+create FilterPlayerDescriptor
+FilterCommandParser -> FilterPlayerDescriptor : FilterPlayerDescriptor()
+activate FilterPlayerDescriptor
+FilterPlayerDescriptor --> FilterCommandParser
+deactivate FilterPlayerDescriptor
 
 FilterCommandParser -> FilterCommandParser : parseRanksForFilter()
-FilterCommandParser -> FilterPersonDescriptor : setRanks(Set<Rank>)
-activate FilterPersonDescriptor
-FilterPersonDescriptor --> FilterCommandParser
-deactivate FilterPersonDescriptor
+FilterCommandParser -> FilterPlayerDescriptor : setRanks(Set<Rank>)
+activate FilterPlayerDescriptor
+FilterPlayerDescriptor --> FilterCommandParser
+deactivate FilterPlayerDescriptor
 FilterCommandParser -> FilterCommandParser : parseRolesForFilter()
 FilterCommandParser -> FilterCommandParser : parseChampionsForFilter()
-FilterCommandParser -> FilterPersonDescriptor : setChampions(Set<Champion>)
-activate FilterPersonDescriptor
-FilterPersonDescriptor --> FilterCommandParser
-deactivate FilterPersonDescriptor
+FilterCommandParser -> FilterPlayerDescriptor : setChampions(Set<Champion>)
+activate FilterPlayerDescriptor
+FilterPlayerDescriptor --> FilterCommandParser
+deactivate FilterPlayerDescriptor
 
 
 == Create FilterCommand ==
 create FilterCommand
-FilterCommandParser -> FilterCommand : FilterCommand(filterPersonDescriptor)
+FilterCommandParser -> FilterCommand : FilterCommand(filterPlayerDescriptor)
 activate FilterCommand
 FilterCommand --> FilterCommandParser
 deactivate FilterCommand
 
-FilterCommandParser --> AddressBookParser : f
+FilterCommandParser --> SummonersBookParser : f
 deactivate FilterCommandParser
 
-AddressBookParser --> LogicManager : f
-deactivate AddressBookParser
+SummonersBookParser --> LogicManager : f
+deactivate SummonersBookParser
 
 == Executing ==
 LogicManager -> FilterCommand : execute(model)
 activate FilterCommand
 
-FilterCommand -> Model : updateFilteredPersonList(rank ∧ role ∧ champion predicates)
+FilterCommand -> Model : updateFilteredPlayerList(rank ∧ role ∧ champion predicates)
 activate Model
 
 Model --> FilterCommand : (updated filtered list)

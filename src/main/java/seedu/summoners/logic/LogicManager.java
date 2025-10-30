@@ -1,4 +1,4 @@
-package seedu.address.logic;
+package seedu.summoners.logic;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
@@ -6,18 +6,18 @@ import java.nio.file.Path;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.GuiSettings;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.AddressBookParser;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Person;
-import seedu.address.model.team.Team;
-import seedu.address.storage.Storage;
+import seedu.summoners.commons.core.GuiSettings;
+import seedu.summoners.commons.core.LogsCenter;
+import seedu.summoners.logic.commands.Command;
+import seedu.summoners.logic.commands.CommandResult;
+import seedu.summoners.logic.commands.exceptions.CommandException;
+import seedu.summoners.logic.parser.SummonersBookParser;
+import seedu.summoners.logic.parser.exceptions.ParseException;
+import seedu.summoners.model.Model;
+import seedu.summoners.model.ReadOnlySummonersBook;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.team.Team;
+import seedu.summoners.storage.Storage;
 
 /**
  * The main LogicManager of the app.
@@ -32,7 +32,7 @@ public class LogicManager implements Logic {
 
     private final Model model;
     private final Storage storage;
-    private final AddressBookParser addressBookParser;
+    private final SummonersBookParser summonersBookParser;
 
     /**
      * Constructs a {@code LogicManager} with the given {@code Model} and {@code Storage}.
@@ -40,7 +40,7 @@ public class LogicManager implements Logic {
     public LogicManager(Model model, Storage storage) {
         this.model = model;
         this.storage = storage;
-        addressBookParser = new AddressBookParser();
+        summonersBookParser = new SummonersBookParser();
     }
 
     @Override
@@ -48,11 +48,11 @@ public class LogicManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
 
         CommandResult commandResult;
-        Command command = addressBookParser.parseCommand(commandText);
+        Command command = summonersBookParser.parseCommand(commandText);
         commandResult = command.execute(model);
 
         try {
-            storage.saveAddressBook(model.getAddressBook());
+            storage.saveSummonersBook(model.getSummonersBook());
         } catch (AccessDeniedException e) {
             throw new CommandException(String.format(FILE_OPS_PERMISSION_ERROR_FORMAT, e.getMessage()), e);
         } catch (IOException ioe) {
@@ -63,13 +63,13 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return model.getAddressBook();
+    public ReadOnlySummonersBook getSummonersBook() {
+        return model.getSummonersBook();
     }
 
     @Override
-    public ObservableList<Person> getFilteredPersonList() {
-        return model.getFilteredPersonList();
+    public ObservableList<Player> getFilteredPlayerList() {
+        return model.getFilteredPlayerList();
     }
 
     @Override
@@ -78,8 +78,8 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public Path getAddressBookFilePath() {
-        return model.getAddressBookFilePath();
+    public Path getSummonersBookFilePath() {
+        return model.getSummonersBookFilePath();
     }
 
     @Override

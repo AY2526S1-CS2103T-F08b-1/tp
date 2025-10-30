@@ -1,27 +1,27 @@
-package seedu.address.logic.commands;
+package seedu.summoners.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_CHAMPION_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_RANK_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ROLE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.summoners.logic.commands.CommandTestUtil.DESC_AMY;
+import static seedu.summoners.logic.commands.CommandTestUtil.DESC_BOB;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_CHAMPION_BOB;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_RANK_BOB;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_ROLE_BOB;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.summoners.logic.commands.EditCommand.EditPlayerDescriptor;
+import seedu.summoners.testutil.EditPlayerDescriptorBuilder;
 
-public class EditPersonDescriptorTest {
+public class EditPlayerDescriptorTest {
 
     @Test
     public void equals() {
         // same values -> returns true
-        EditPersonDescriptor descriptorWithSameValues = new EditPersonDescriptor(DESC_AMY);
+        EditPlayerDescriptor descriptorWithSameValues = new EditPlayerDescriptor(DESC_AMY);
         assertTrue(DESC_AMY.equals(descriptorWithSameValues));
 
         // same object -> returns true
@@ -37,35 +37,35 @@ public class EditPersonDescriptorTest {
         assertFalse(DESC_AMY.equals(DESC_BOB));
 
         // different name -> returns false
-        EditPersonDescriptor editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withName(VALID_NAME_BOB).build();
+        EditPlayerDescriptor editedAmy = new EditPlayerDescriptorBuilder(DESC_AMY).withName(VALID_NAME_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different role -> returns false
-        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withRole(VALID_ROLE_BOB).build();
+        editedAmy = new EditPlayerDescriptorBuilder(DESC_AMY).withRole(VALID_ROLE_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different rank -> returns false
-        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withRank(VALID_RANK_BOB).build();
+        editedAmy = new EditPlayerDescriptorBuilder(DESC_AMY).withRank(VALID_RANK_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different champion -> returns false
-        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withChampion(VALID_CHAMPION_BOB).build();
+        editedAmy = new EditPlayerDescriptorBuilder(DESC_AMY).withChampion(VALID_CHAMPION_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different tags -> returns false
-        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withTags(VALID_TAG_HUSBAND).build();
+        editedAmy = new EditPlayerDescriptorBuilder(DESC_AMY).withTags(VALID_TAG_HUSBAND).build();
         assertFalse(DESC_AMY.equals(editedAmy));
     }
 
     @Test
     public void toStringMethod() {
-        EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
-        String expected = EditPersonDescriptor.class.getCanonicalName() + "{name="
-                + editPersonDescriptor.getName().orElse(null) + ", role="
-                + editPersonDescriptor.getRole().orElse(null) + ", rank="
-                + editPersonDescriptor.getRank().orElse(null) + ", champion="
-                + editPersonDescriptor.getChampion().orElse(null) + ", tags="
-                + editPersonDescriptor.getTags().orElse(null) + "}";
-        assertEquals(expected, editPersonDescriptor.toString());
+        EditPlayerDescriptor editPlayerDescriptor = new EditPlayerDescriptor();
+        String expected = EditPlayerDescriptor.class.getCanonicalName() + "{name="
+                + editPlayerDescriptor.getName().orElse(null) + ", role="
+                + editPlayerDescriptor.getRole().orElse(null) + ", rank="
+                + editPlayerDescriptor.getRank().orElse(null) + ", champion="
+                + editPlayerDescriptor.getChampion().orElse(null) + ", tags="
+                + editPlayerDescriptor.getTags().orElse(null) + "}";
+        assertEquals(expected, editPlayerDescriptor.toString());
     }
 }

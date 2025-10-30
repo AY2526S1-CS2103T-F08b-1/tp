@@ -1,13 +1,13 @@
-package seedu.address.logic.commands;
+package seedu.summoners.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.csv.CsvExporter;
-import seedu.address.model.Model;
+import seedu.summoners.logic.commands.exceptions.CommandException;
+import seedu.summoners.logic.csv.CsvExporter;
+import seedu.summoners.model.Model;
 
 
 /**

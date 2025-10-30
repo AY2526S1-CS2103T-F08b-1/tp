@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.summoners.model.player;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.testutil.PersonBuilder;
+import seedu.summoners.testutil.PlayerBuilder;
 
 public class ChampionContainsKeywordsPredicateTest {
 
@@ -38,7 +38,7 @@ public class ChampionContainsKeywordsPredicateTest {
         // null -> returns false
         assertFalse(firstPredicate.equals(null));
 
-        // different person -> returns false
+        // different player -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
     }
 
@@ -47,31 +47,31 @@ public class ChampionContainsKeywordsPredicateTest {
         // One keyword
         ChampionContainsKeywordsPredicate predicate =
                 new ChampionContainsKeywordsPredicate(Collections.singletonList("lux"));
-        assertTrue(predicate.test(new PersonBuilder().withChampion("lux").build()));
+        assertTrue(predicate.test(new PlayerBuilder().withChampion("lux").build()));
 
         // Multiple keywords
         predicate = new ChampionContainsKeywordsPredicate(Arrays.asList("zac", "zed"));
-        assertTrue(predicate.test(new PersonBuilder().withChampion("zac").build()));
-        assertTrue(predicate.test(new PersonBuilder().withChampion("zed").build()));
+        assertTrue(predicate.test(new PlayerBuilder().withChampion("zac").build()));
+        assertTrue(predicate.test(new PlayerBuilder().withChampion("zed").build()));
 
         // Only one matching keyword
         predicate = new ChampionContainsKeywordsPredicate(Arrays.asList("corki", "orianna"));
-        assertTrue(predicate.test(new PersonBuilder().withChampion("orianna").build()));
+        assertTrue(predicate.test(new PlayerBuilder().withChampion("orianna").build()));
 
         // Mixed-case keywords
         predicate = new ChampionContainsKeywordsPredicate(Arrays.asList("gArEN"));
-        assertTrue(predicate.test(new PersonBuilder().withChampion("garen").build()));
+        assertTrue(predicate.test(new PlayerBuilder().withChampion("garen").build()));
 
         // Zero keywords
         predicate = new ChampionContainsKeywordsPredicate(Collections.emptyList());
-        assertTrue(predicate.test(new PersonBuilder().withChampion("poppy").build()));
+        assertTrue(predicate.test(new PlayerBuilder().withChampion("poppy").build()));
     }
 
     @Test
     public void test_championDoesNotContainKeywords_returnsFalse() {
         // Non-matching keyword
         ChampionContainsKeywordsPredicate predicate = new ChampionContainsKeywordsPredicate(Arrays.asList("trundle"));
-        assertFalse(predicate.test(new PersonBuilder().withChampion("neeko").build()));
+        assertFalse(predicate.test(new PlayerBuilder().withChampion("neeko").build()));
     }
 
     @Test

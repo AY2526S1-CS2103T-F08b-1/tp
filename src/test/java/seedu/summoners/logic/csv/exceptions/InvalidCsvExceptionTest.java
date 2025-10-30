@@ -1,4 +1,4 @@
-package seedu.address.logic.csv.exceptions;
+package seedu.summoners.logic.csv.exceptions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;

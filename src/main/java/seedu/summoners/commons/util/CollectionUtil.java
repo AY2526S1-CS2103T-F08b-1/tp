@@ -1,4 +1,4 @@
-package seedu.address.commons.util;
+package seedu.summoners.commons.util;
 
 import static java.util.Objects.requireNonNull;
 

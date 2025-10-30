@@ -1,15 +1,15 @@
-package seedu.address.logic;
+package seedu.summoners.logic;
 
 import java.nio.file.Path;
 
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.GuiSettings;
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Person;
-import seedu.address.model.team.Team;
+import seedu.summoners.commons.core.GuiSettings;
+import seedu.summoners.logic.commands.CommandResult;
+import seedu.summoners.logic.commands.exceptions.CommandException;
+import seedu.summoners.logic.parser.exceptions.ParseException;
+import seedu.summoners.model.ReadOnlySummonersBook;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.team.Team;
 
 /**
  * API of the Logic component
@@ -25,22 +25,22 @@ public interface Logic {
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
     /**
-     * Returns the AddressBook.
+     * Returns the SummonersBook.
      *
-     * @see seedu.address.model.Model#getAddressBook()
+     * @see seedu.summoners.model.Model#getSummonersBook()
      */
-    ReadOnlyAddressBook getAddressBook();
+    ReadOnlySummonersBook getSummonersBook();
 
-    /** Returns an unmodifiable view of the filtered list of persons */
-    ObservableList<Person> getFilteredPersonList();
+    /** Returns an unmodifiable view of the filtered list of players */
+    ObservableList<Player> getFilteredPlayerList();
 
     /** Returns an unmodifiable view of the filtered list of teams */
     ObservableList<Team> getFilteredTeamList();
 
     /**
-     * Returns the user prefs' address book file path.
+     * Returns the user prefs' summoners book file path.
      */
-    Path getAddressBookFilePath();
+    Path getSummonersBookFilePath();
 
     /**
      * Returns the user prefs' GUI settings.

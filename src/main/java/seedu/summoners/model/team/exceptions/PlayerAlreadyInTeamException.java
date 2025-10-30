@@ -1,27 +1,27 @@
-package seedu.address.model.team.exceptions;
+package seedu.summoners.model.team.exceptions;
 
-import seedu.address.model.person.Person;
+import seedu.summoners.model.player.Player;
 
 /**
- * Signals that the operation will result in a person being assigned to multiple teams.
- * A person can only be in one team at a time.
+ * Signals that the operation will result in a player being assigned to multiple teams.
+ * A player can only be in one team at a time.
  */
-public class PersonAlreadyInTeamException extends RuntimeException {
+public class PlayerAlreadyInTeamException extends RuntimeException {
 
     /**
-     * Constructs a PersonAlreadyInTeamException with a default message.
+     * Constructs a PlayerAlreadyInTeamException with a default message.
      */
-    public PersonAlreadyInTeamException() {
-        super("Operation would result in a person being assigned to multiple teams");
+    public PlayerAlreadyInTeamException() {
+        super("Operation would result in a player being assigned to multiple teams");
     }
 
     /**
-     * Constructs a PersonAlreadyInTeamException with details about which person is already in a team.
+     * Constructs a PlayerAlreadyInTeamException with details about which player is already in a team.
      *
-     * @param person The person who is already in a team.
+     * @param player The player who is already in a team.
      */
-    public PersonAlreadyInTeamException(Person person) {
-        super(String.format("Person %s is already in a team and cannot be added to another team",
-                person.getName()));
+    public PlayerAlreadyInTeamException(Player player) {
+        super(String.format("Player %s is already in a team and cannot be added to another team",
+                player.getName()));
     }
 }

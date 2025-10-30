@@ -1,14 +1,14 @@
-package seedu.address.logic.commands;
+package seedu.summoners.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.Messages;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.model.team.Team;
+import seedu.summoners.commons.core.index.Index;
+import seedu.summoners.logic.Messages;
+import seedu.summoners.logic.commands.exceptions.CommandException;
+import seedu.summoners.model.Model;
+import seedu.summoners.model.team.Team;
 
 /**
  * Displays the details of a specific {@code Team} in a popup window.

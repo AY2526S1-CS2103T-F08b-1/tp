@@ -21,15 +21,15 @@
                 <Label fx:id="teamName" text="\$teamName" styleClass="cell_big_label" />
             </HBox>
             <!-- Top -->
-            <HBox fx:id="topPersonDetails" alignment="CENTER_LEFT" spacing="8" />
+            <HBox fx:id="topPlayerDetails" alignment="CENTER_LEFT" spacing="8" />
             <!-- Jungle -->
-            <HBox fx:id="junglePersonDetails" alignment="CENTER_LEFT" spacing="8" />
+            <HBox fx:id="junglePlayerDetails" alignment="CENTER_LEFT" spacing="8" />
             <!-- Mid Lane -->
-            <HBox fx:id="midPersonDetails" alignment="CENTER_LEFT" spacing="8" />
+            <HBox fx:id="midPlayerDetails" alignment="CENTER_LEFT" spacing="8" />
             <!-- ADC -->
-            <HBox fx:id="adcPersonDetails" alignment="CENTER_LEFT" spacing="8" />
+            <HBox fx:id="adcPlayerDetails" alignment="CENTER_LEFT" spacing="8" />
             <!-- Support -->
-            <HBox fx:id="supportPersonDetails" alignment="CENTER_LEFT" spacing="8" />
+            <HBox fx:id="supportPlayerDetails" alignment="CENTER_LEFT" spacing="8" />
         </VBox>
     </GridPane>
 </HBox>

@@ -1,21 +1,21 @@
-package seedu.address.logic.parser;
+package seedu.summoners.logic.parser;
 
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIFTH_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FOURTH_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
+import static seedu.summoners.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.summoners.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.summoners.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_FIFTH_PLAYER;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_FIRST_PLAYER;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_FOURTH_PLAYER;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_SECOND_PLAYER;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_THIRD_PLAYER;
 
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.MakeGroupCommand;
+import seedu.summoners.commons.core.index.Index;
+import seedu.summoners.logic.commands.MakeGroupCommand;
 
 public class MakeGroupCommandParserTest {
 
@@ -24,11 +24,11 @@ public class MakeGroupCommandParserTest {
     @Test
     public void parse_validArgs_returnsMakeGroupCommand() {
         List<Index> expectedIndices = Arrays.asList(
-                INDEX_FIRST_PERSON,
-                INDEX_SECOND_PERSON,
-                INDEX_THIRD_PERSON,
-                INDEX_FOURTH_PERSON,
-                INDEX_FIFTH_PERSON
+                INDEX_FIRST_PLAYER,
+                INDEX_SECOND_PLAYER,
+                INDEX_THIRD_PLAYER,
+                INDEX_FOURTH_PLAYER,
+                INDEX_FIFTH_PLAYER
         );
         MakeGroupCommand expectedCommand = new MakeGroupCommand(expectedIndices);
 

@@ -1,4 +1,4 @@
-package seedu.address.model;
+package seedu.summoners.model;
 
 import static java.util.Objects.requireNonNull;
 
@@ -6,20 +6,20 @@ import java.util.List;
 import java.util.Optional;
 
 import javafx.collections.ObservableList;
-import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.UniquePersonList;
-import seedu.address.model.team.Team;
-import seedu.address.model.team.UniqueTeamList;
+import seedu.summoners.commons.util.ToStringBuilder;
+import seedu.summoners.model.player.Name;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.player.UniquePlayerList;
+import seedu.summoners.model.team.Team;
+import seedu.summoners.model.team.UniqueTeamList;
 
 /**
- * Wraps all data at the address-book level
- * Duplicates are not allowed (by .isSamePerson comparison)
+ * Wraps all data at the summoners-book level
+ * Duplicates are not allowed (by .isSamePlayer comparison)
  */
-public class AddressBook implements ReadOnlyAddressBook {
+public class SummonersBook implements ReadOnlySummonersBook {
 
-    private final UniquePersonList persons;
+    private final UniquePlayerList players;
     private final UniqueTeamList teams;
 
     /*
@@ -30,16 +30,16 @@ public class AddressBook implements ReadOnlyAddressBook {
      *   among constructors.
      */
     {
-        persons = new UniquePersonList();
+        players = new UniquePlayerList();
         teams = new UniqueTeamList();
     }
 
-    public AddressBook() {}
+    public SummonersBook() {}
 
     /**
-     * Creates an AddressBook using the Persons in the {@code toBeCopied}
+     * Creates an SummonersBook using the Players in the {@code toBeCopied}
      */
-    public AddressBook(ReadOnlyAddressBook toBeCopied) {
+    public SummonersBook(ReadOnlySummonersBook toBeCopied) {
         this();
         resetData(toBeCopied);
     }
@@ -47,11 +47,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     //// list overwrite operations
 
     /**
-     * Replaces the contents of the person list with {@code persons}.
-     * {@code persons} must not contain duplicate persons.
+     * Replaces the contents of the player list with {@code players}.
+     * {@code players} must not contain duplicate players.
      */
-    public void setPersons(List<Person> persons) {
-        this.persons.setPersons(persons);
+    public void setPlayers(List<Player> players) {
+        this.players.setPlayers(players);
     }
 
     /**
@@ -63,27 +63,27 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Resets the existing data of this {@code AddressBook} with {@code newData}.
+     * Resets the existing data of this {@code SummonersBook} with {@code newData}.
      */
-    public void resetData(ReadOnlyAddressBook newData) {
+    public void resetData(ReadOnlySummonersBook newData) {
         requireNonNull(newData);
 
-        setPersons(newData.getPersonList());
+        setPlayers(newData.getPlayerList());
         setTeams(newData.getTeamList());
     }
 
-    //// person-level operations
+    //// player-level operations
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns true if a player with the same identity as {@code player} exists in the summoners book.
      */
-    public boolean hasPerson(Person person) {
-        requireNonNull(person);
-        return persons.contains(person);
+    public boolean hasPlayer(Player player) {
+        requireNonNull(player);
+        return players.contains(player);
     }
 
     /**
-     * Returns true if a team with the same identity as {@code team} exists in the address book.
+     * Returns true if a team with the same identity as {@code team} exists in the summoners book.
      */
     public boolean hasTeam(Team team) {
         requireNonNull(team);
@@ -91,49 +91,49 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Returns true if the given person is currently in any team.
+     * Returns true if the given player is currently in any team.
      */
-    public boolean isPersonInAnyTeam(Person person) {
-        requireNonNull(person);
-        return teams.isPersonInAnyTeam(person);
+    public boolean isPlayerInAnyTeam(Player player) {
+        requireNonNull(player);
+        return teams.isPlayerInAnyTeam(player);
     }
 
     /**
-     * Adds a person to the address book.
-     * The person must not already exist in the address book.
+     * Adds a player to the summoners book.
+     * The player must not already exist in the summoners book.
      */
-    public void addPerson(Person p) {
-        persons.add(p);
+    public void addPlayer(Player p) {
+        players.add(p);
     }
 
     /**
-     * Adds a team to the address book.
-     * The team must not already exist in the address book.
+     * Adds a team to the summoners book.
+     * The team must not already exist in the summoners book.
      */
     public void addTeam(Team t) {
         teams.add(t);
     }
 
     /**
-     * Replaces the given person {@code target} in the list with {@code editedPerson}.
-     * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * Replaces the given player {@code target} in the list with {@code editedPlayer}.
+     * {@code target} must exist in the summoners book.
+     * The player identity of {@code editedPlayer} must not be the same as another existing player in the summoners book.
      */
-    public void setPerson(Person target, Person editedPerson) {
-        requireNonNull(editedPerson);
-        persons.setPerson(target, editedPerson);
+    public void setPlayer(Player target, Player editedPlayer) {
+        requireNonNull(editedPlayer);
+        players.setPlayer(target, editedPlayer);
     }
 
     /**
-     * Returns an {@code Optional<Person>} containing the person with the given {@code Name}, if present
-     * in the address book.
+     * Returns an {@code Optional<Player>} containing the player with the given {@code Name}, if present
+     * in the summoners book.
      *
-     * @param name The name of the person to find.
-     * @return An {@code Optional<Person>} containing the matching person, or an empty {@code Optional} if not found.
+     * @param name The name of the player to find.
+     * @return An {@code Optional<Player>} containing the matching player, or an empty {@code Optional} if not found.
      */
-    public Optional<Person> findPersonByName(Name name) {
+    public Optional<Player> findPlayerByName(Name name) {
         requireNonNull(name);
-        return persons.asUnmodifiableObservableList()
+        return players.asUnmodifiableObservableList()
                 .stream()
                 .filter(p -> p.getName().equals(name))
                 .findFirst();
@@ -141,8 +141,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Replaces the given team {@code target} in the list with {@code editedTeam}.
-     * {@code target} must exist in the address book.
-     * The team identity of {@code editedTeam} must not be the same as another existing team in the address book.
+     * {@code target} must exist in the summoners book.
+     * The team identity of {@code editedTeam} must not be the same as another existing team in the summoners book.
      */
     public void setTeam(Team target, Team editedTeam) {
         requireNonNull(editedTeam);
@@ -150,16 +150,16 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Removes {@code key} from this {@code AddressBook}.
-     * {@code key} must exist in the address book.
+     * Removes {@code key} from this {@code SummonersBook}.
+     * {@code key} must exist in the summoners book.
      */
-    public void removePerson(Person key) {
-        persons.remove(key);
+    public void removePlayer(Player key) {
+        players.remove(key);
     }
 
     /**
-     * Removes {@code key} from this {@code AddressBook}.
-     * {@code key} must exist in the address book.
+     * Removes {@code key} from this {@code SummonersBook}.
+     * {@code key} must exist in the summoners book.
      */
     public void removeTeam(Team key) {
         teams.remove(key);
@@ -170,14 +170,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("persons", persons)
+                .add("players", players)
                 .add("teams", teams)
                 .toString();
     }
 
     @Override
-    public ObservableList<Person> getPersonList() {
-        return persons.asUnmodifiableObservableList();
+    public ObservableList<Player> getPlayerList() {
+        return players.asUnmodifiableObservableList();
     }
 
     @Override
@@ -186,12 +186,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Returns an observable list of persons who are not currently in any team.
-     * @return Observable list of unassigned persons.
+     * Returns an observable list of players who are not currently in any team.
+     * @return Observable list of unassigned players.
      */
-    public ObservableList<Person> getUnassignedPersonList() {
-        return persons.asUnmodifiableObservableList()
-                .filtered(person -> !teams.isPersonInAnyTeam(person));
+    public ObservableList<Player> getUnassignedPlayerList() {
+        return players.asUnmodifiableObservableList()
+                .filtered(player -> !teams.isPlayerInAnyTeam(player));
     }
 
 
@@ -202,17 +202,17 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof AddressBook)) {
+        if (!(other instanceof SummonersBook)) {
             return false;
         }
 
-        AddressBook otherAddressBook = (AddressBook) other;
-        return persons.equals(otherAddressBook.persons)
-                && teams.equals(otherAddressBook.teams);
+        SummonersBook otherSummonersBook = (SummonersBook) other;
+        return players.equals(otherSummonersBook.players)
+                && teams.equals(otherSummonersBook.teams);
     }
 
     @Override
     public int hashCode() {
-        return java.util.Objects.hash(persons, teams);
+        return java.util.Objects.hash(players, teams);
     }
 }

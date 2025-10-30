@@ -1,15 +1,15 @@
-package seedu.address.model.person;
+package seedu.summoners.model.player;
 
 import java.util.List;
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.StringUtil;
-import seedu.address.commons.util.ToStringBuilder;
+import seedu.summoners.commons.util.StringUtil;
+import seedu.summoners.commons.util.ToStringBuilder;
 
 /**
- * Tests that a {@code Person}'s {@code Champion} matches any of the keywords given.
+ * Tests that a {@code Player}'s {@code Champion} matches any of the keywords given.
  */
-public class ChampionContainsKeywordsPredicate implements Predicate<Person> {
+public class ChampionContainsKeywordsPredicate implements Predicate<Player> {
     private final List<String> keywords;
 
     public ChampionContainsKeywordsPredicate(List<String> keywords) {
@@ -17,13 +17,13 @@ public class ChampionContainsKeywordsPredicate implements Predicate<Person> {
     }
 
     @Override
-    public boolean test(Person person) {
+    public boolean test(Player player) {
         if (keywords.isEmpty()) {
             return true;
         }
 
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getChampion().value, keyword));
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(player.getChampion().value, keyword));
     }
 
     @Override

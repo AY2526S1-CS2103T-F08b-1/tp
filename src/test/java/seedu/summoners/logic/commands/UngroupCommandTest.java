@@ -1,11 +1,11 @@
-package seedu.address.logic.commands;
+package seedu.summoners.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TEAM;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_TEAM;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_FIRST_TEAM;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_SECOND_TEAM;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -17,17 +17,17 @@ import org.junit.jupiter.api.Test;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.GuiSettings;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.Messages;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.ReadOnlyUserPrefs;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.team.Team;
-import seedu.address.testutil.PersonBuilder;
+import seedu.summoners.commons.core.GuiSettings;
+import seedu.summoners.commons.core.index.Index;
+import seedu.summoners.logic.Messages;
+import seedu.summoners.logic.commands.exceptions.CommandException;
+import seedu.summoners.model.Model;
+import seedu.summoners.model.ReadOnlySummonersBook;
+import seedu.summoners.model.ReadOnlyUserPrefs;
+import seedu.summoners.model.player.Name;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.team.Team;
+import seedu.summoners.testutil.PlayerBuilder;
 
 public class UngroupCommandTest {
 
@@ -36,28 +36,28 @@ public class UngroupCommandTest {
         ModelStubWithTeams modelStub = new ModelStubWithTeams();
 
         // Create 2 teams
-        Person top = new PersonBuilder().withName("Top1").withRole("top")
+        Player top = new PlayerBuilder().withName("Top1").withRole("top")
                 .withRank("Gold").withChampion("Garen").build();
-        Person jungle = new PersonBuilder().withName("Jungle1").withRole("jungle")
+        Player jungle = new PlayerBuilder().withName("Jungle1").withRole("jungle")
                 .withRank("Gold").withChampion("Lee Sin").build();
-        Person mid = new PersonBuilder().withName("Mid1").withRole("mid")
+        Player mid = new PlayerBuilder().withName("Mid1").withRole("mid")
                 .withRank("Gold").withChampion("Ahri").build();
-        Person adc = new PersonBuilder().withName("Adc1").withRole("adc")
+        Player adc = new PlayerBuilder().withName("Adc1").withRole("adc")
                 .withRank("Gold").withChampion("Jinx").build();
-        Person support = new PersonBuilder().withName("Support1").withRole("support")
+        Player support = new PlayerBuilder().withName("Support1").withRole("support")
                 .withRank("Gold").withChampion("Leona").build();
 
         Team team1 = new Team(Arrays.asList(top, jungle, mid, adc, support));
 
-        Person top2 = new PersonBuilder().withName("Top2").withRole("top")
+        Player top2 = new PlayerBuilder().withName("Top2").withRole("top")
                 .withRank("Silver").withChampion("Darius").build();
-        Person jungle2 = new PersonBuilder().withName("Jungle2").withRole("jungle")
+        Player jungle2 = new PlayerBuilder().withName("Jungle2").withRole("jungle")
                 .withRank("Silver").withChampion("Jarvan IV").build();
-        Person mid2 = new PersonBuilder().withName("Mid2").withRole("mid")
+        Player mid2 = new PlayerBuilder().withName("Mid2").withRole("mid")
                 .withRank("Silver").withChampion("Zed").build();
-        Person adc2 = new PersonBuilder().withName("Adc2").withRole("adc")
+        Player adc2 = new PlayerBuilder().withName("Adc2").withRole("adc")
                 .withRank("Silver").withChampion("Ashe").build();
-        Person support2 = new PersonBuilder().withName("Support2").withRole("support")
+        Player support2 = new PlayerBuilder().withName("Support2").withRole("support")
                 .withRank("Silver").withChampion("Thresh").build();
 
         Team team2 = new Team(Arrays.asList(top2, jungle2, mid2, adc2, support2));
@@ -87,28 +87,28 @@ public class UngroupCommandTest {
         ModelStubWithTeams modelStub = new ModelStubWithTeams();
 
         // Create 2 teams
-        Person top = new PersonBuilder().withName("Top1").withRole("top")
+        Player top = new PlayerBuilder().withName("Top1").withRole("top")
                 .withRank("Gold").withChampion("Garen").build();
-        Person jungle = new PersonBuilder().withName("Jungle1").withRole("jungle")
+        Player jungle = new PlayerBuilder().withName("Jungle1").withRole("jungle")
                 .withRank("Gold").withChampion("Lee Sin").build();
-        Person mid = new PersonBuilder().withName("Mid1").withRole("mid")
+        Player mid = new PlayerBuilder().withName("Mid1").withRole("mid")
                 .withRank("Gold").withChampion("Ahri").build();
-        Person adc = new PersonBuilder().withName("Adc1").withRole("adc")
+        Player adc = new PlayerBuilder().withName("Adc1").withRole("adc")
                 .withRank("Gold").withChampion("Jinx").build();
-        Person support = new PersonBuilder().withName("Support1").withRole("support")
+        Player support = new PlayerBuilder().withName("Support1").withRole("support")
                 .withRank("Gold").withChampion("Leona").build();
 
         Team team1 = new Team(Arrays.asList(top, jungle, mid, adc, support));
 
-        Person top2 = new PersonBuilder().withName("Top2").withRole("top")
+        Player top2 = new PlayerBuilder().withName("Top2").withRole("top")
                 .withRank("Silver").withChampion("Darius").build();
-        Person jungle2 = new PersonBuilder().withName("Jungle2").withRole("jungle")
+        Player jungle2 = new PlayerBuilder().withName("Jungle2").withRole("jungle")
                 .withRank("Silver").withChampion("Jarvan IV").build();
-        Person mid2 = new PersonBuilder().withName("Mid2").withRole("mid")
+        Player mid2 = new PlayerBuilder().withName("Mid2").withRole("mid")
                 .withRank("Silver").withChampion("Zed").build();
-        Person adc2 = new PersonBuilder().withName("Adc2").withRole("adc")
+        Player adc2 = new PlayerBuilder().withName("Adc2").withRole("adc")
                 .withRank("Silver").withChampion("Ashe").build();
-        Person support2 = new PersonBuilder().withName("Support2").withRole("support")
+        Player support2 = new PlayerBuilder().withName("Support2").withRole("support")
                 .withRank("Silver").withChampion("Thresh").build();
 
         Team team2 = new Team(Arrays.asList(top2, jungle2, mid2, adc2, support2));
@@ -223,17 +223,17 @@ public class UngroupCommandTest {
         }
 
         @Override
-        public Path getAddressBookFilePath() {
+        public Path getSummonersBookFilePath() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void setAddressBookFilePath(Path addressBookFilePath) {
+        public void setSummonersBookFilePath(Path summonersBookFilePath) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void addPerson(Person person) {
+        public void addPlayer(Player player) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -243,17 +243,17 @@ public class UngroupCommandTest {
         }
 
         @Override
-        public void setAddressBook(ReadOnlyAddressBook newData) {
+        public void setSummonersBook(ReadOnlySummonersBook newData) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
+        public ReadOnlySummonersBook getSummonersBook() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public boolean hasPerson(Person person) {
+        public boolean hasPlayer(Player player) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -263,12 +263,12 @@ public class UngroupCommandTest {
         }
 
         @Override
-        public boolean isPersonInAnyTeam(Person person) {
+        public boolean isPlayerInAnyTeam(Player player) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void deletePerson(Person target) {
+        public void deletePlayer(Player target) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -278,7 +278,7 @@ public class UngroupCommandTest {
         }
 
         @Override
-        public void setPerson(Person target, Person editedPerson) {
+        public void setPlayer(Player target, Player editedPlayer) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -288,7 +288,7 @@ public class UngroupCommandTest {
         }
 
         @Override
-        public ObservableList<Person> getFilteredPersonList() {
+        public ObservableList<Player> getFilteredPlayerList() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -298,12 +298,12 @@ public class UngroupCommandTest {
         }
 
         @Override
-        public ObservableList<Person> getUnassignedPersonList() {
+        public ObservableList<Player> getUnassignedPlayerList() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void updateFilteredPersonList(Predicate<Person> predicate) {
+        public void updateFilteredPlayerList(Predicate<Player> predicate) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -313,7 +313,7 @@ public class UngroupCommandTest {
         }
 
         @Override
-        public Optional<Person> findPersonByName(Name name) {
+        public Optional<Player> findPlayerByName(Name name) {
             return Optional.empty(); // default stub returns empty
         }
 

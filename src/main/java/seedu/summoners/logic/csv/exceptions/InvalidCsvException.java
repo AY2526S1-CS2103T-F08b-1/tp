@@ -1,4 +1,4 @@
-package seedu.address.logic.csv.exceptions;
+package seedu.summoners.logic.csv.exceptions;
 
 /**
  * Signals that a CSV file used for import is invalid or malformed.

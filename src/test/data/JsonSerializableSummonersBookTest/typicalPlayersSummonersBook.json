@@ -1,6 +1,6 @@
 {
-  "_comment": "AddressBook save file which contains the same Person values as in TypicalPersons#getTypicalAddressBook()",
-  "persons": [
+  "_comment": "SummonersBook save file which contains the same Player values as in TypicalPlayers#getTypicalSummonersBook()",
+  "players": [
     {
       "id": "6ec2d5ad-b84c-48f1-adc1-cac753f4d961",
       "name": "Alice Pauline",

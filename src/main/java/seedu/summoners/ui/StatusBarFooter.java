@@ -1,4 +1,4 @@
-package seedu.address.ui;
+package seedu.summoners.ui;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

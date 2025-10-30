@@ -1,7 +1,7 @@
 {
-  "persons": [
+  "players": [
     {
-      "id": "person-1",
+      "id": "player-1",
       "role": "mid",
       "rank": "gold",
       "champion": "Ahri",

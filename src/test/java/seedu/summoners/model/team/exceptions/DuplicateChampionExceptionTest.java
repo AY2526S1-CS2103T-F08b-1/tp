@@ -1,26 +1,26 @@
-package seedu.address.model.team.exceptions;
+package seedu.summoners.model.team.exceptions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.model.person.Person;
-import seedu.address.testutil.PersonBuilder;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.testutil.PlayerBuilder;
 
 public class DuplicateChampionExceptionTest {
 
     @Test
-    public void constructor_validPersons_success() {
-        Person person1 = new PersonBuilder().withName("Alice")
+    public void constructor_validPlayers_success() {
+        Player player1 = new PlayerBuilder().withName("Alice")
                 .withRole("mid").withChampion("Ahri").build();
-        Person person2 = new PersonBuilder().withName("Bob")
+        Player player2 = new PlayerBuilder().withName("Bob")
                 .withRole("top").withChampion("Ahri").build();
 
-        DuplicateChampionException exception = new DuplicateChampionException(person1, person2);
+        DuplicateChampionException exception = new DuplicateChampionException(player1, player2);
 
-        assertEquals(person1, exception.getPerson1());
-        assertEquals(person2, exception.getPerson2());
+        assertEquals(player1, exception.getPlayer1());
+        assertEquals(player2, exception.getPlayer2());
         assertTrue(exception.getMessage().contains("Ahri"));
     }
 }

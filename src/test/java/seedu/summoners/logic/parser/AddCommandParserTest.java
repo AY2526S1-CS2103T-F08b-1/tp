@@ -1,24 +1,24 @@
-package seedu.address.logic.parser;
+package seedu.summoners.logic.parser;
 
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CHAMPION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_RANK;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.summoners.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_CHAMPION;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_RANK;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_ROLE;
+import static seedu.summoners.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.summoners.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.Messages;
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.model.person.Champion;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Rank;
-import seedu.address.model.person.Role;
-import seedu.address.model.tag.Tag;
-import seedu.address.testutil.PersonBuilder;
+import seedu.summoners.logic.Messages;
+import seedu.summoners.logic.commands.AddCommand;
+import seedu.summoners.model.player.Champion;
+import seedu.summoners.model.player.Name;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.player.Rank;
+import seedu.summoners.model.player.Role;
+import seedu.summoners.model.tag.Tag;
+import seedu.summoners.testutil.PlayerBuilder;
 
 public class AddCommandParserTest {
     private static final String WHITESPACE_PREAMBLE = " ";
@@ -26,7 +26,7 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() throws Exception {
-        Person expectedPerson = new PersonBuilder()
+        Player expectedPlayer = new PlayerBuilder()
                 .withName("Bob")
                 .withRank("Gold")
                 .withRole("Top")
@@ -37,10 +37,10 @@ public class AddCommandParserTest {
         // whitespace preamble
         assertParseSuccess(parser,
                 WHITESPACE_PREAMBLE + "n/Bob rk/Gold rl/Top c/Garen t/friend",
-                new AddCommand(expectedPerson));
+                new AddCommand(expectedPlayer));
 
         // multiple tags
-        Person expectedPersonMultipleTags = new PersonBuilder()
+        Player expectedPlayerMultipleTags = new PlayerBuilder()
                 .withName("Bob")
                 .withRank("Gold")
                 .withRole("Top")
@@ -50,7 +50,7 @@ public class AddCommandParserTest {
 
         assertParseSuccess(parser,
                 " n/Bob rk/Gold rl/Top c/Garen t/friend t/husband",
-                new AddCommand(expectedPersonMultipleTags));
+                new AddCommand(expectedPlayerMultipleTags));
     }
 
     @Test
@@ -76,7 +76,7 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_optionalFieldsMissing_success() throws Exception {
-        Person expectedPerson = new PersonBuilder()
+        Player expectedPlayer = new PlayerBuilder()
                 .withName("Amy")
                 .withRank("Platinum")
                 .withRole("Mid")
@@ -87,7 +87,7 @@ public class AddCommandParserTest {
         // no tags
         assertParseSuccess(parser,
                 " n/Amy rk/Platinum rl/Mid c/Ahri",
-                new AddCommand(expectedPerson));
+                new AddCommand(expectedPlayer));
     }
 
     @Test

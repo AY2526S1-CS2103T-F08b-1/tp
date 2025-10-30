@@ -1,8 +1,8 @@
 {
-  "persons": [
+  "players": [
     {
       "id": "6634fd0a-0b4d-47eb-a8c1-0dfc6c13798d",
-      "name": "Person with invalid name field: Ha!ns Mu@ster",
+      "name": "Player with invalid name field: Ha!ns Mu@ster",
       "role": "jungle",
       "rank": "iron",
       "champion": "Vi",

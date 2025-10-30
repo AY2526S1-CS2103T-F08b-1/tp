@@ -1,4 +1,4 @@
-package seedu.address.model.team.exceptions;
+package seedu.summoners.model.team.exceptions;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -9,7 +9,7 @@ public class InvalidTeamSizeExceptionTest {
     @Test
     public void constructor_noArgs_success() {
         InvalidTeamSizeException exception = new InvalidTeamSizeException();
-        assertTrue(exception.getMessage().contains("5 persons"));
+        assertTrue(exception.getMessage().contains("5 players"));
     }
 
     @Test

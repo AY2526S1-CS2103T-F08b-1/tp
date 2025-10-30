@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.summoners.model.player;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.testutil.PersonBuilder;
+import seedu.summoners.testutil.PlayerBuilder;
 
 public class RoleContainsKeywordsPredicateTest {
 
@@ -35,7 +35,7 @@ public class RoleContainsKeywordsPredicateTest {
         // null -> returns false
         assertFalse(firstPredicate.equals(null));
 
-        // different person -> returns false
+        // different player -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
     }
 
@@ -43,31 +43,31 @@ public class RoleContainsKeywordsPredicateTest {
     public void test_roleContainsKeywords_returnsTrue() {
         // One keyword
         RoleContainsKeywordsPredicate predicate = new RoleContainsKeywordsPredicate(Collections.singletonList("mid"));
-        assertTrue(predicate.test(new PersonBuilder().withRole("mid").build()));
+        assertTrue(predicate.test(new PlayerBuilder().withRole("mid").build()));
 
         // Multiple keywords
         predicate = new RoleContainsKeywordsPredicate(Arrays.asList("mid", "top"));
-        assertTrue(predicate.test(new PersonBuilder().withRole("mid").build()));
-        assertTrue(predicate.test(new PersonBuilder().withRole("top").build()));
+        assertTrue(predicate.test(new PlayerBuilder().withRole("mid").build()));
+        assertTrue(predicate.test(new PlayerBuilder().withRole("top").build()));
 
         // Only one matching keyword
         predicate = new RoleContainsKeywordsPredicate(Arrays.asList("ADC", "jungle"));
-        assertTrue(predicate.test(new PersonBuilder().withRole("ADC").build()));
+        assertTrue(predicate.test(new PlayerBuilder().withRole("ADC").build()));
 
         // Mixed-case keywords
         predicate = new RoleContainsKeywordsPredicate(Arrays.asList("SuPPorT"));
-        assertTrue(predicate.test(new PersonBuilder().withRole("Support").build()));
+        assertTrue(predicate.test(new PlayerBuilder().withRole("Support").build()));
 
         // Zero keywords
         predicate = new RoleContainsKeywordsPredicate(Collections.emptyList());
-        assertTrue(predicate.test(new PersonBuilder().withRole("mid").build()));
+        assertTrue(predicate.test(new PlayerBuilder().withRole("mid").build()));
     }
 
     @Test
     public void test_roleDoesNotContainKeywords_returnsFalse() {
         // Non-matching keyword
         RoleContainsKeywordsPredicate predicate = new RoleContainsKeywordsPredicate(Arrays.asList("mid"));
-        assertFalse(predicate.test(new PersonBuilder().withRole("top").build()));
+        assertFalse(predicate.test(new PlayerBuilder().withRole("top").build()));
     }
 
     @Test

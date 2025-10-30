@@ -1,4 +1,4 @@
-package seedu.address.ui;
+package seedu.summoners.ui;
 
 import static java.util.Objects.requireNonNull;
 
@@ -12,21 +12,21 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Stats;
+import seedu.summoners.commons.core.LogsCenter;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.player.Stats;
 
 /**
- * Controller for a window that displays detailed information about a person.
+ * Controller for a window that displays detailed information about a player.
  *
  * This class follows a robust hybrid UI design pattern:
  * 1.  Declarative FXML for Static Content: The window's static structure, layout,
- *     labels, and chart components are all defined in PersonDetailWindow.fxml.
+ *     labels, and chart components are all defined in PlayerDetailWindow.fxml.
  *     This adheres to the principle of Separation of Concerns, making the view's
  *     structure easy to understand and modify without touching Java code.
  *
  * 2.  Dynamic Data Binding: The Java controller populates the static FXML components
- *     with data from the Person object. Charts are populated with data series through
+ *     with data from the Player object. Charts are populated with data series through
  *     private methods that handle data transformation and axis configuration.
  *
  * The controller's primary role is to act as a coordinator: it binds data to both
@@ -35,13 +35,13 @@ import seedu.address.model.person.Stats;
  * attempting to make it open for extension would be over-engineering and a
  * violation of YAGNI and KISS.
  */
-public class PersonDetailWindow extends UiPart<Stage> {
+public class PlayerDetailWindow extends UiPart<Stage> {
 
-    private static final String FXML = "PersonDetailWindow.fxml";
+    private static final String FXML = "PlayerDetailWindow.fxml";
     private static final int MAX_DISPLAYED_MATCHES = 10;
     private final Logger logger = LogsCenter.getLogger(getClass());
 
-    private Person person;
+    private Player player;
 
     // @FXML fields for the static components defined in the FXML file.
     @FXML private Label nameLabel;
@@ -61,55 +61,55 @@ public class PersonDetailWindow extends UiPart<Stage> {
     @FXML private LineChart<Number, Number> goldDiffChart;
 
     /**
-     * Creates a PersonDetailWindow.
+     * Creates a PlayerDetailWindow.
      */
-    public PersonDetailWindow() {
+    public PlayerDetailWindow() {
         this(new Stage());
     }
 
     /**
-     * Creates a PersonDetailWindow with the given Stage.
+     * Creates a PlayerDetailWindow with the given Stage.
      *
      * @param root The Stage to be used as the root of this window.
      */
-    public PersonDetailWindow(Stage root) {
+    public PlayerDetailWindow(Stage root) {
         super(FXML, root);
     }
 
     /**
-     * Sets the person to be displayed and populates all UI elements.
+     * Sets the player to be displayed and populates all UI elements.
      * This is the single entry point for updating the window's content.
      *
-     * @param person The person whose details will be displayed. Must not be null.
+     * @param player The player whose details will be displayed. Must not be null.
      */
-    public void setPerson(Person person) {
-        assert person != null : "Person object cannot be null.";
-        this.person = person;
-        displayPersonDetails();
+    public void setPlayer(Player player) {
+        assert player != null : "Player object cannot be null.";
+        this.player = player;
+        displayPlayerDetails();
         displayCharts();
     }
 
     /**
-     * Populates the static labels (defined in FXML) with the person's information.
+     * Populates the static labels (defined in FXML) with the player's information.
      * This method's responsibility is purely data binding.
      */
-    private void displayPersonDetails() {
-        nameLabel.setText(person.getName().toString());
-        roleLabel.setText(person.getRole().toString());
-        rankLabel.setText(person.getRank().toString());
-        championLabel.setText(person.getChampion().toString());
-        tagsLabel.setText(person.getTags().toString());
-        winsLabel.setText(String.valueOf(person.getWins()));
-        lossesLabel.setText(String.valueOf(person.getLosses()));
-        performanceLabel.setText(String.format("%.1f / 10.0", person.getStats().getValue()));
+    private void displayPlayerDetails() {
+        nameLabel.setText(player.getName().toString());
+        roleLabel.setText(player.getRole().toString());
+        rankLabel.setText(player.getRank().toString());
+        championLabel.setText(player.getChampion().toString());
+        tagsLabel.setText(player.getTags().toString());
+        winsLabel.setText(String.valueOf(player.getWins()));
+        lossesLabel.setText(String.valueOf(player.getLosses()));
+        performanceLabel.setText(String.format("%.1f / 10.0", player.getStats().getValue()));
     }
 
     /**
-     * Populates the charts with data from the person's stats.
+     * Populates the charts with data from the player's stats.
      * Charts are statically defined in FXML; only their data is populated here.
      */
     private void displayCharts() {
-        Stats stats = person.getStats();
+        Stats stats = player.getStats();
 
         // Populate each chart with data
         populatePerformanceChart(stats.getScores());
@@ -247,7 +247,7 @@ public class PersonDetailWindow extends UiPart<Stage> {
     }
 
     /**
-     * Shows the person detail window.
+     * Shows the player detail window.
      * @throws IllegalStateException
      *     <ul>
      *         <li>
@@ -265,27 +265,27 @@ public class PersonDetailWindow extends UiPart<Stage> {
      *     </ul>
      */
     public void show() {
-        logger.fine("Showing person detail window.");
+        logger.fine("Showing player detail window.");
         getRoot().show();
         getRoot().centerOnScreen();
     }
 
     /**
-     * Returns true if the person detail window is currently being shown.
+     * Returns true if the player detail window is currently being shown.
      */
     public boolean isShowing() {
         return getRoot().isShowing();
     }
 
     /**
-     * Hides the person detail window.
+     * Hides the player detail window.
      */
     public void hide() {
         getRoot().hide();
     }
 
     /**
-     * Focuses on the person detail window.
+     * Focuses on the player detail window.
      */
     public void focus() {
         getRoot().requestFocus();

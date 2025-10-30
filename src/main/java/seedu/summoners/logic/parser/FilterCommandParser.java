@@ -1,23 +1,23 @@
-package seedu.address.logic.parser;
+package seedu.summoners.logic.parser;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CHAMPION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_RANK;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SCORE;
+import static seedu.summoners.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_CHAMPION;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_RANK;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_ROLE;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_SCORE;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 
-import seedu.address.logic.commands.FilterCommand;
-import seedu.address.logic.commands.FilterCommand.FilterPersonDescriptor;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Champion;
-import seedu.address.model.person.Rank;
-import seedu.address.model.person.Role;
+import seedu.summoners.logic.commands.FilterCommand;
+import seedu.summoners.logic.commands.FilterCommand.FilterPlayerDescriptor;
+import seedu.summoners.logic.parser.exceptions.ParseException;
+import seedu.summoners.model.player.Champion;
+import seedu.summoners.model.player.Rank;
+import seedu.summoners.model.player.Role;
 
 /**
  * Parses input arguments and creates a new FilterCommand object
@@ -34,26 +34,26 @@ public class FilterCommandParser implements Parser<FilterCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_ROLE, PREFIX_RANK, PREFIX_CHAMPION, PREFIX_SCORE);
 
-        FilterPersonDescriptor filterPersonDescriptor = new FilterPersonDescriptor();
+        FilterPlayerDescriptor filterPlayerDescriptor = new FilterPlayerDescriptor();
 
         parseRanksForFilter(argMultimap.getAllValues(PREFIX_RANK))
-                .ifPresent(filterPersonDescriptor::setRanks);
+                .ifPresent(filterPlayerDescriptor::setRanks);
 
         parseRolesForFilter(argMultimap.getAllValues(PREFIX_ROLE))
-                .ifPresent(filterPersonDescriptor::setRoles);
+                .ifPresent(filterPlayerDescriptor::setRoles);
 
         parseChampionsForFilter(argMultimap.getAllValues(PREFIX_CHAMPION))
-                .ifPresent(filterPersonDescriptor::setChampions);
+                .ifPresent(filterPlayerDescriptor::setChampions);
 
         parseScoreForFilter(argMultimap.getAllValues(PREFIX_SCORE))
-                .ifPresent(filterPersonDescriptor::setScoreThreshold);
+                .ifPresent(filterPlayerDescriptor::setScoreThreshold);
 
-        if (!filterPersonDescriptor.isAnyFieldFiltered()) {
+        if (!filterPlayerDescriptor.isAnyFieldFiltered()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_NOT_FILTERED));
         }
 
-        return new FilterCommand(filterPersonDescriptor);
+        return new FilterCommand(filterPlayerDescriptor);
     }
 
     /**

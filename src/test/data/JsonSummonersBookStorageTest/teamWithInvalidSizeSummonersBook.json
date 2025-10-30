@@ -1,7 +1,7 @@
 {
-  "persons": [
+  "players": [
     {
-      "id": "person-1",
+      "id": "player-1",
       "name": "Alice Pauline",
       "role": "mid",
       "rank": "gold",
@@ -15,7 +15,7 @@
       }
     },
     {
-      "id": "person-2",
+      "id": "player-2",
       "name": "Benson Meier",
       "role": "top",
       "rank": "silver",
@@ -29,7 +29,7 @@
       }
     },
     {
-      "id": "person-3",
+      "id": "player-3",
       "name": "Carl Kurz",
       "role": "jungle",
       "rank": "platinum",
@@ -46,7 +46,7 @@
   "teams": [
     {
       "id": "team-1",
-      "personIds": ["person-1", "person-2", "person-3"],
+      "playerIds": ["player-1", "player-2", "player-3"],
       "wins": 0,
       "losses": 0
     }

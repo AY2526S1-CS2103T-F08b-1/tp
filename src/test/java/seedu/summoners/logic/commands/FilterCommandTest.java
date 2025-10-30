@@ -1,39 +1,39 @@
-package seedu.address.logic.commands;
+package seedu.summoners.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
-import static seedu.address.logic.commands.CommandTestUtil.FILTER_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.FILTER_AMY_AND_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_CHAMPION_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_RANK_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ROLE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ROLE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.BENSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.summoners.logic.Messages.MESSAGE_PLAYERS_LISTED_OVERVIEW;
+import static seedu.summoners.logic.commands.CommandTestUtil.FILTER_AMY;
+import static seedu.summoners.logic.commands.CommandTestUtil.FILTER_AMY_AND_BOB;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_CHAMPION_AMY;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_RANK_AMY;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_ROLE_AMY;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_ROLE_BOB;
+import static seedu.summoners.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.summoners.testutil.Assert.assertThrows;
+import static seedu.summoners.testutil.TypicalPlayers.ALICE;
+import static seedu.summoners.testutil.TypicalPlayers.BENSON;
+import static seedu.summoners.testutil.TypicalPlayers.getTypicalSummonersBook;
 
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.FilterCommand.FilterPersonDescriptor;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.testutil.FilterPersonDescriptorBuilder;
+import seedu.summoners.logic.commands.FilterCommand.FilterPlayerDescriptor;
+import seedu.summoners.logic.commands.exceptions.CommandException;
+import seedu.summoners.model.Model;
+import seedu.summoners.model.ModelManager;
+import seedu.summoners.model.UserPrefs;
+import seedu.summoners.testutil.FilterPlayerDescriptorBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
 public class FilterCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalSummonersBook(), new UserPrefs());
+    private Model expectedModel = new ModelManager(getTypicalSummonersBook(), new UserPrefs());
 
     @Test
     public void constructor_nullDescriptor_throwsNullPointerException() {
@@ -45,7 +45,7 @@ public class FilterCommandTest {
         final FilterCommand standardCommand = new FilterCommand(FILTER_AMY);
 
         // same values -> returns true
-        FilterPersonDescriptor copyDescriptor = new FilterPersonDescriptor(FILTER_AMY);
+        FilterPlayerDescriptor copyDescriptor = new FilterPlayerDescriptor(FILTER_AMY);
         FilterCommand commandWithSameValues = new FilterCommand(copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
@@ -58,47 +58,47 @@ public class FilterCommandTest {
         // different types -> returns false
         assertFalse(standardCommand.equals(new ClearCommand()));
 
-        FilterPersonDescriptor anotherDescriptor = new FilterPersonDescriptorBuilder(FILTER_AMY)
+        FilterPlayerDescriptor anotherDescriptor = new FilterPlayerDescriptorBuilder(FILTER_AMY)
                 .withRanks("silver", "gold").build();
         // different ranks -> returns false
         assertFalse(standardCommand.equals(new FilterCommand(anotherDescriptor)));
 
-        anotherDescriptor = new FilterPersonDescriptorBuilder(FILTER_AMY)
+        anotherDescriptor = new FilterPlayerDescriptorBuilder(FILTER_AMY)
                 .withRoles("mid", "top").build();
         // different roles -> returns false
         assertFalse(standardCommand.equals(new FilterCommand(anotherDescriptor)));
 
-        anotherDescriptor = new FilterPersonDescriptorBuilder(FILTER_AMY)
+        anotherDescriptor = new FilterPlayerDescriptorBuilder(FILTER_AMY)
                 .withChampions("xayah", "rakan").build();
         // different champions -> returns false
         assertFalse(standardCommand.equals(new FilterCommand(anotherDescriptor)));
     }
 
     @Test
-    public void execute_multipleKeywords_multiplePersonsFound() throws CommandException {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
+    public void execute_multipleKeywords_multiplePlayersFound() throws CommandException {
+        String expectedMessage = String.format(MESSAGE_PLAYERS_LISTED_OVERVIEW, 2);
         FilterCommand command = new FilterCommand(FILTER_AMY_AND_BOB);
         command.execute(expectedModel);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(ALICE, BENSON), model.getFilteredPersonList());
+        assertEquals(Arrays.asList(ALICE, BENSON), model.getFilteredPlayerList());
     }
 
     @Test
     public void descriptor_isAnyFieldFiltered_correctlyDetects() {
-        FilterPersonDescriptor empty = new FilterPersonDescriptorBuilder()
+        FilterPlayerDescriptor empty = new FilterPlayerDescriptorBuilder()
                 .withScoreThreshold(null)
                 .build();
         assertFalse(empty.isAnyFieldFiltered());
 
-        FilterPersonDescriptor filled = new FilterPersonDescriptorBuilder()
+        FilterPlayerDescriptor filled = new FilterPlayerDescriptorBuilder()
                 .withChampions(VALID_CHAMPION_AMY).build();
         assertTrue(filled.isAnyFieldFiltered());
 
-        filled = new FilterPersonDescriptorBuilder()
+        filled = new FilterPlayerDescriptorBuilder()
                 .withRanks(VALID_RANK_AMY).build();
         assertTrue(filled.isAnyFieldFiltered());
 
-        filled = new FilterPersonDescriptorBuilder()
+        filled = new FilterPlayerDescriptorBuilder()
                 .withRoles(VALID_ROLE_AMY).build();
         assertTrue(filled.isAnyFieldFiltered());
     }
@@ -106,13 +106,13 @@ public class FilterCommandTest {
     @Test
     public void descriptor_isAnyFieldFiltered_withScoreThresholdzeroOrNull() {
         // scoreThreshold null
-        FilterPersonDescriptor descriptor = new FilterPersonDescriptorBuilder()
+        FilterPlayerDescriptor descriptor = new FilterPlayerDescriptorBuilder()
                 .withScoreThreshold(null)
                 .build();
         assertFalse(descriptor.isAnyFieldFiltered());
 
         // scoreThreshold 0.0
-        descriptor = new FilterPersonDescriptorBuilder()
+        descriptor = new FilterPlayerDescriptorBuilder()
                 .withScoreThreshold(0.0F)
                 .build();
         assertFalse(descriptor.isAnyFieldFiltered());
@@ -120,7 +120,7 @@ public class FilterCommandTest {
 
     @Test
     public void descriptor_isAnyFieldFiltered_withScoreThresholdpositive() {
-        FilterPersonDescriptor descriptor = new FilterPersonDescriptorBuilder()
+        FilterPlayerDescriptor descriptor = new FilterPlayerDescriptorBuilder()
                 .withScoreThreshold(1.5F)
                 .build();
         assertTrue(descriptor.isAnyFieldFiltered());
@@ -128,20 +128,20 @@ public class FilterCommandTest {
 
     @Test
     public void execute_filterByScore_only() throws CommandException {
-        // Assuming some persons have scores above 2.0
-        FilterPersonDescriptor descriptor = new FilterPersonDescriptorBuilder()
+        // Assuming some players have scores above 2.0
+        FilterPlayerDescriptor descriptor = new FilterPlayerDescriptorBuilder()
                 .withScoreThreshold(2.0F).build();
         FilterCommand command = new FilterCommand(descriptor);
         command.execute(expectedModel);
 
-        // All filtered persons should have score >= 2.0
-        expectedModel.getFilteredPersonList().forEach(person ->
-                assertTrue(person.getStats().getValue() >= 2.0F));
+        // All filtered players should have score >= 2.0
+        expectedModel.getFilteredPlayerList().forEach(player ->
+                assertTrue(player.getStats().getValue() >= 2.0F));
     }
 
     @Test
     public void execute_filterByMultipleFields() throws CommandException {
-        FilterPersonDescriptor descriptor = new FilterPersonDescriptorBuilder()
+        FilterPlayerDescriptor descriptor = new FilterPlayerDescriptorBuilder()
                 .withRoles(VALID_ROLE_AMY)
                 .withRanks(VALID_RANK_AMY)
                 .withChampions(VALID_CHAMPION_AMY)
@@ -150,19 +150,19 @@ public class FilterCommandTest {
         FilterCommand command = new FilterCommand(descriptor);
         command.execute(expectedModel);
 
-        expectedModel.getFilteredPersonList().forEach(person -> {
-            assertTrue(Arrays.asList(person.getRole()).contains(VALID_ROLE_AMY));
-            assertTrue(Arrays.asList(person.getRank()).contains(VALID_RANK_AMY));
-            assertTrue(Arrays.asList(person.getChampion()).contains(VALID_CHAMPION_AMY));
-            assertTrue(person.getStats().getValue() >= 1.0F);
+        expectedModel.getFilteredPlayerList().forEach(player -> {
+            assertTrue(Arrays.asList(player.getRole()).contains(VALID_ROLE_AMY));
+            assertTrue(Arrays.asList(player.getRank()).contains(VALID_RANK_AMY));
+            assertTrue(Arrays.asList(player.getChampion()).contains(VALID_CHAMPION_AMY));
+            assertTrue(player.getStats().getValue() >= 1.0F);
         });
     }
 
     @Test
     public void equals_sameObjectAndDifferentObjects() {
-        FilterPersonDescriptor descriptor1 = new FilterPersonDescriptorBuilder()
+        FilterPlayerDescriptor descriptor1 = new FilterPlayerDescriptorBuilder()
                 .withRoles(VALID_ROLE_AMY).build();
-        FilterPersonDescriptor descriptor2 = new FilterPersonDescriptorBuilder()
+        FilterPlayerDescriptor descriptor2 = new FilterPlayerDescriptorBuilder()
                 .withRoles(VALID_ROLE_BOB).build();
 
         FilterCommand command1 = new FilterCommand(descriptor1);
@@ -182,22 +182,22 @@ public class FilterCommandTest {
     }
 
     @Test
-    public void filterPersonDescriptor_copyConstructor_createsEqualCopy() {
-        FilterPersonDescriptor original = new FilterPersonDescriptorBuilder()
+    public void filterPlayerDescriptor_copyConstructor_createsEqualCopy() {
+        FilterPlayerDescriptor original = new FilterPlayerDescriptorBuilder()
                 .withRoles(VALID_ROLE_AMY)
                 .withRanks(VALID_RANK_AMY)
                 .withChampions(VALID_CHAMPION_AMY)
                 .withScoreThreshold(2.0F)
                 .build();
 
-        FilterPersonDescriptor copy = new FilterPersonDescriptor(original);
+        FilterPlayerDescriptor copy = new FilterPlayerDescriptor(original);
         assertEquals(original, copy);
         assertNotSame(original, copy); // ensure defensive copy
     }
 
     @Test
-    public void filterPersonDescriptor_toString_containsAllFields() {
-        FilterPersonDescriptor descriptor = new FilterPersonDescriptorBuilder()
+    public void filterPlayerDescriptor_toString_containsAllFields() {
+        FilterPlayerDescriptor descriptor = new FilterPlayerDescriptorBuilder()
                 .withRoles(VALID_ROLE_AMY)
                 .withRanks(VALID_RANK_AMY)
                 .withChampions(VALID_CHAMPION_AMY)
@@ -213,10 +213,10 @@ public class FilterCommandTest {
 
     @Test
     public void toStringMethod() {
-        FilterPersonDescriptor filterPersonDescriptor = new FilterPersonDescriptor();
-        FilterCommand filterCommand = new FilterCommand(filterPersonDescriptor);
-        String expected = FilterCommand.class.getCanonicalName() + "{filterPersonDescriptor="
-                + filterPersonDescriptor + "}";
+        FilterPlayerDescriptor filterPlayerDescriptor = new FilterPlayerDescriptor();
+        FilterCommand filterCommand = new FilterCommand(filterPlayerDescriptor);
+        String expected = FilterCommand.class.getCanonicalName() + "{filterPlayerDescriptor="
+                + filterPlayerDescriptor + "}";
         assertEquals(expected, filterCommand.toString());
     }
 }

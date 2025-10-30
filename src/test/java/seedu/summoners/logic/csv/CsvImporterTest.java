@@ -1,4 +1,4 @@
-package seedu.address.logic.csv;
+package seedu.summoners.logic.csv;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -11,11 +11,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import seedu.address.logic.csv.exceptions.InvalidCsvException;
-import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
+import seedu.summoners.logic.csv.exceptions.InvalidCsvException;
+import seedu.summoners.model.SummonersBook;
+import seedu.summoners.model.Model;
+import seedu.summoners.model.ModelManager;
+import seedu.summoners.model.UserPrefs;
 
 public class CsvImporterTest {
 
@@ -26,7 +26,7 @@ public class CsvImporterTest {
 
     @BeforeEach
     public void setUp() {
-        model = new ModelManager(new AddressBook(), new UserPrefs());
+        model = new ModelManager(new SummonersBook(), new UserPrefs());
     }
 
     @Test
@@ -41,7 +41,7 @@ public class CsvImporterTest {
         assertEquals(2, r.imported);
         assertEquals(0, r.duplicates);
         assertEquals(0, r.invalid);
-        assertEquals(2, model.getAddressBook().getPersonList().size());
+        assertEquals(2, model.getSummonersBook().getPlayerList().size());
     }
 
     @Test

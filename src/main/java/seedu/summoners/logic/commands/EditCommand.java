@@ -1,13 +1,13 @@
-package seedu.address.logic.commands;
+package seedu.summoners.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CHAMPION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_RANK;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TEAMS;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_CHAMPION;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_RANK;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_ROLE;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.summoners.model.Model.PREDICATE_SHOW_ALL_PLAYERS;
+import static seedu.summoners.model.Model.PREDICATE_SHOW_ALL_TEAMS;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,31 +17,31 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.util.CollectionUtil;
-import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.logic.Messages;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.model.person.Champion;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Rank;
-import seedu.address.model.person.Role;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.team.Team;
-import seedu.address.model.team.exceptions.DuplicateChampionException;
-import seedu.address.model.team.exceptions.DuplicateRoleException;
+import seedu.summoners.commons.core.index.Index;
+import seedu.summoners.commons.util.CollectionUtil;
+import seedu.summoners.commons.util.ToStringBuilder;
+import seedu.summoners.logic.Messages;
+import seedu.summoners.logic.commands.exceptions.CommandException;
+import seedu.summoners.model.Model;
+import seedu.summoners.model.player.Champion;
+import seedu.summoners.model.player.Name;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.player.Rank;
+import seedu.summoners.model.player.Role;
+import seedu.summoners.model.tag.Tag;
+import seedu.summoners.model.team.Team;
+import seedu.summoners.model.team.exceptions.DuplicateChampionException;
+import seedu.summoners.model.team.exceptions.DuplicateRoleException;
 
 /**
- * Edits the details of an existing person in the address book.
+ * Edits the details of an existing player in the summoners book.
  */
 public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
-            + "by the index number used in the displayed person list. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the player identified "
+            + "by the index number used in the displayed player list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
@@ -53,101 +53,101 @@ public class EditCommand extends Command {
             + PREFIX_RANK + "Diamond "
             + PREFIX_CHAMPION + "Yasuo";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
+    public static final String MESSAGE_EDIT_PLAYER_SUCCESS = "Edited Player: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_PLAYER = "This player already exists in the summoners book.";
 
     private final Index index;
-    private final EditPersonDescriptor editPersonDescriptor;
+    private final EditPlayerDescriptor editPlayerDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
-     * @param editPersonDescriptor details to edit the person with
+     * @param index of the player in the filtered player list to edit
+     * @param editPlayerDescriptor details to edit the player with
      */
-    public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
+    public EditCommand(Index index, EditPlayerDescriptor editPlayerDescriptor) {
         requireNonNull(index);
-        requireNonNull(editPersonDescriptor);
+        requireNonNull(editPlayerDescriptor);
 
         this.index = index;
-        this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
+        this.editPlayerDescriptor = new EditPlayerDescriptor(editPlayerDescriptor);
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Person> lastShownPersonList = model.getFilteredPersonList();
+        List<Player> lastShownPlayerList = model.getFilteredPlayerList();
         List<Team> lastShownTeamList = model.getFilteredTeamList();
 
-        if (index.getZeroBased() >= lastShownPersonList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        if (index.getZeroBased() >= lastShownPlayerList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PLAYER_DISPLAYED_INDEX);
         }
 
-        Person personToEdit = lastShownPersonList.get(index.getZeroBased());
-        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        Player playerToEdit = lastShownPlayerList.get(index.getZeroBased());
+        Player editedPlayer = createEditedPlayer(playerToEdit, editPlayerDescriptor);
 
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        if (!playerToEdit.isSamePlayer(editedPlayer) && model.hasPlayer(editedPlayer)) {
+            throw new CommandException(MESSAGE_DUPLICATE_PLAYER);
         }
 
         Optional<Team> teamToEditOptional = lastShownTeamList.stream()
-                .filter(team -> team.hasPerson(personToEdit))
+                .filter(team -> team.hasPlayer(playerToEdit))
                 .findFirst();
 
         if (teamToEditOptional.isPresent()) {
             Team teamToEdit = teamToEditOptional.get();
 
-            // Tries to create an updated team that includes the edited person.
+            // Tries to create an updated team that includes the edited player.
             // This step validates that no duplicate roles or champions exist.
             // If validation fails, an exception is thrown and no model updates occur.
             try {
-                Team editedTeam = createEditedTeam(teamToEdit, personToEdit, editedPerson);
+                Team editedTeam = createEditedTeam(teamToEdit, playerToEdit, editedPlayer);
 
                 // Apply the updates only after successful validation.
-                model.setPerson(personToEdit, editedPerson);
+                model.setPlayer(playerToEdit, editedPlayer);
                 model.setTeam(teamToEdit, editedTeam);
             } catch (DuplicateRoleException | DuplicateChampionException e) {
                 throw new CommandException(e.getMessage());
             }
         } else {
-            model.setPerson(personToEdit, editedPerson);
+            model.setPlayer(playerToEdit, editedPlayer);
         }
 
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredPlayerList(PREDICATE_SHOW_ALL_PLAYERS);
         model.updateFilteredTeamList(PREDICATE_SHOW_ALL_TEAMS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+        return new CommandResult(String.format(MESSAGE_EDIT_PLAYER_SUCCESS, Messages.format(editedPlayer)));
     }
 
     /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * Creates and returns a {@code Player} with the details of {@code playerToEdit}
+     * edited with {@code editPlayerDescriptor}.
      */
-    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
-        assert personToEdit != null;
+    private static Player createEditedPlayer(Player playerToEdit, EditPlayerDescriptor editPlayerDescriptor) {
+        assert playerToEdit != null;
 
-        String id = personToEdit.getId();
-        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Rank updatedRank = editPersonDescriptor.getRank().orElse(personToEdit.getRank());
-        Role updatedRole = editPersonDescriptor.getRole().orElse(personToEdit.getRole());
-        Champion updatedChampion = editPersonDescriptor.getChampion().orElse(personToEdit.getChampion());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-        int wins = personToEdit.getWins();
-        int losses = personToEdit.getLosses();
+        String id = playerToEdit.getId();
+        Name updatedName = editPlayerDescriptor.getName().orElse(playerToEdit.getName());
+        Rank updatedRank = editPlayerDescriptor.getRank().orElse(playerToEdit.getRank());
+        Role updatedRole = editPlayerDescriptor.getRole().orElse(playerToEdit.getRole());
+        Champion updatedChampion = editPlayerDescriptor.getChampion().orElse(playerToEdit.getChampion());
+        Set<Tag> updatedTags = editPlayerDescriptor.getTags().orElse(playerToEdit.getTags());
+        int wins = playerToEdit.getWins();
+        int losses = playerToEdit.getLosses();
 
-        // Preserve id from the original person
-        return new Person(id, updatedName, updatedRole, updatedRank, updatedChampion, updatedTags, wins, losses);
+        // Preserve id from the original player
+        return new Player(id, updatedName, updatedRole, updatedRank, updatedChampion, updatedTags, wins, losses);
     }
 
-    private static Team createEditedTeam(Team teamToEdit, Person personToEdit, Person editedPerson) {
-        assert teamToEdit.hasPerson(personToEdit);
+    private static Team createEditedTeam(Team teamToEdit, Player playerToEdit, Player editedPlayer) {
+        assert teamToEdit.hasPlayer(playerToEdit);
 
         String id = teamToEdit.getId();
-        List<Person> updatedPersonList = new ArrayList<>(teamToEdit.getPersons());
-        int personIndex = updatedPersonList.indexOf(personToEdit);
-        updatedPersonList.set(personIndex, editedPerson);
+        List<Player> updatedPlayerList = new ArrayList<>(teamToEdit.getPlayers());
+        int playerIndex = updatedPlayerList.indexOf(playerToEdit);
+        updatedPlayerList.set(playerIndex, editedPlayer);
         int wins = teamToEdit.getWins();
         int losses = teamToEdit.getLosses();
 
-        return new Team(id, updatedPersonList, wins, losses);
+        return new Team(id, updatedPlayerList, wins, losses);
     }
 
     @Override
@@ -163,35 +163,35 @@ public class EditCommand extends Command {
 
         EditCommand otherEditCommand = (EditCommand) other;
         return index.equals(otherEditCommand.index)
-                && editPersonDescriptor.equals(otherEditCommand.editPersonDescriptor);
+                && editPlayerDescriptor.equals(otherEditCommand.editPlayerDescriptor);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("index", index)
-                .add("editPersonDescriptor", editPersonDescriptor)
+                .add("editPlayerDescriptor", editPlayerDescriptor)
                 .toString();
     }
 
     /**
-     * Stores the details to edit the person with. Each non-empty field value will replace the
-     * corresponding field value of the person.
+     * Stores the details to edit the player with. Each non-empty field value will replace the
+     * corresponding field value of the player.
      */
-    public static class EditPersonDescriptor {
+    public static class EditPlayerDescriptor {
         private Name name;
         private Role role;
         private Rank rank;
         private Champion champion;
         private Set<Tag> tags;
 
-        public EditPersonDescriptor() {}
+        public EditPlayerDescriptor() {}
 
         /**
          * Copy constructor.
          * A defensive copy of {@code tags} is used internally.
          */
-        public EditPersonDescriptor(EditPersonDescriptor toCopy) {
+        public EditPlayerDescriptor(EditPlayerDescriptor toCopy) {
             setName(toCopy.name);
             setRole(toCopy.role);
             setRank(toCopy.rank);
@@ -262,16 +262,16 @@ public class EditCommand extends Command {
             }
 
             // instanceof handles nulls
-            if (!(other instanceof EditPersonDescriptor)) {
+            if (!(other instanceof EditPlayerDescriptor)) {
                 return false;
             }
 
-            EditPersonDescriptor otherEditPersonDescriptor = (EditPersonDescriptor) other;
-            return Objects.equals(name, otherEditPersonDescriptor.name)
-                    && Objects.equals(role, otherEditPersonDescriptor.role)
-                    && Objects.equals(rank, otherEditPersonDescriptor.rank)
-                    && Objects.equals(champion, otherEditPersonDescriptor.champion)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+            EditPlayerDescriptor otherEditPlayerDescriptor = (EditPlayerDescriptor) other;
+            return Objects.equals(name, otherEditPlayerDescriptor.name)
+                    && Objects.equals(role, otherEditPlayerDescriptor.role)
+                    && Objects.equals(rank, otherEditPlayerDescriptor.rank)
+                    && Objects.equals(champion, otherEditPlayerDescriptor.champion)
+                    && Objects.equals(tags, otherEditPlayerDescriptor.tags);
         }
 
         @Override

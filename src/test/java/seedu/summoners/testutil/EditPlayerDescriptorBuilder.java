@@ -1,87 +1,87 @@
-package seedu.address.testutil;
+package seedu.summoners.testutil;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
-import seedu.address.model.person.Champion;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Rank;
-import seedu.address.model.person.Role;
-import seedu.address.model.tag.Tag;
+import seedu.summoners.logic.commands.EditCommand.EditPlayerDescriptor;
+import seedu.summoners.model.player.Champion;
+import seedu.summoners.model.player.Name;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.player.Rank;
+import seedu.summoners.model.player.Role;
+import seedu.summoners.model.tag.Tag;
 
 /**
- * A utility class to help with building EditPersonDescriptor objects.
+ * A utility class to help with building EditPlayerDescriptor objects.
  */
-public class EditPersonDescriptorBuilder {
+public class EditPlayerDescriptorBuilder {
 
-    private EditPersonDescriptor descriptor;
+    private EditPlayerDescriptor descriptor;
 
-    public EditPersonDescriptorBuilder() {
-        descriptor = new EditPersonDescriptor();
+    public EditPlayerDescriptorBuilder() {
+        descriptor = new EditPlayerDescriptor();
     }
 
-    public EditPersonDescriptorBuilder(EditPersonDescriptor descriptor) {
-        this.descriptor = new EditPersonDescriptor(descriptor);
-    }
-
-    /**
-     * Returns an {@code EditPersonDescriptor} with fields containing {@code person}'s details
-     */
-    public EditPersonDescriptorBuilder(Person person) {
-        descriptor = new EditPersonDescriptor();
-        descriptor.setName(person.getName());
-        descriptor.setRole(person.getRole());
-        descriptor.setRank(person.getRank());
-        descriptor.setChampion(person.getChampion());
-        descriptor.setTags(person.getTags());
+    public EditPlayerDescriptorBuilder(EditPlayerDescriptor descriptor) {
+        this.descriptor = new EditPlayerDescriptor(descriptor);
     }
 
     /**
-     * Sets the {@code Name} of the {@code EditPersonDescriptor} that we are building.
+     * Returns an {@code EditPlayerDescriptor} with fields containing {@code player}'s details
      */
-    public EditPersonDescriptorBuilder withName(String name) {
+    public EditPlayerDescriptorBuilder(Player player) {
+        descriptor = new EditPlayerDescriptor();
+        descriptor.setName(player.getName());
+        descriptor.setRole(player.getRole());
+        descriptor.setRank(player.getRank());
+        descriptor.setChampion(player.getChampion());
+        descriptor.setTags(player.getTags());
+    }
+
+    /**
+     * Sets the {@code Name} of the {@code EditPlayerDescriptor} that we are building.
+     */
+    public EditPlayerDescriptorBuilder withName(String name) {
         descriptor.setName(new Name(name));
         return this;
     }
 
     /**
-     * Sets the {@code Role} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Role} of the {@code EditPlayerDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withRole(String role) {
+    public EditPlayerDescriptorBuilder withRole(String role) {
         descriptor.setRole(new Role(role));
         return this;
     }
 
     /**
-     * Sets the {@code Rank} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Rank} of the {@code EditPlayerDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withRank(String rank) {
+    public EditPlayerDescriptorBuilder withRank(String rank) {
         descriptor.setRank(new Rank(rank));
         return this;
     }
 
     /**
-     * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Summoners} of the {@code EditPlayerDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withChampion(String champion) {
+    public EditPlayerDescriptorBuilder withChampion(String champion) {
         descriptor.setChampion(new Champion(champion));
         return this;
     }
 
     /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
+     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPlayerDescriptor}
      * that we are building.
      */
-    public EditPersonDescriptorBuilder withTags(String... tags) {
+    public EditPlayerDescriptorBuilder withTags(String... tags) {
         Set<Tag> tagSet = Stream.of(tags).map(Tag::new).collect(Collectors.toSet());
         descriptor.setTags(tagSet);
         return this;
     }
 
-    public EditPersonDescriptor build() {
+    public EditPlayerDescriptor build() {
         return descriptor;
     }
 }

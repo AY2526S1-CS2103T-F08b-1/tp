@@ -1,6 +1,6 @@
 {
-  "persons": [ {
-    "name": "Valid Person",
+  "players": [ {
+    "name": "Valid Player",
     "role": "mid",
     "rank": "gold",
     "champion": "Ahri",
@@ -12,7 +12,7 @@
       "scores" : [ ]
     }
   }, {
-    "name": "Person With Invalid Phone Field",
+    "name": "Player With Invalid Phone Field",
     "role": "top",
     "rank": "silver",
     "champion": "Garen",

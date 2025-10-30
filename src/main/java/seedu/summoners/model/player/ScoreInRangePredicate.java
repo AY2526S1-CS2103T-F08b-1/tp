@@ -1,13 +1,13 @@
-package seedu.address.model.person;
+package seedu.summoners.model.player;
 
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.ToStringBuilder;
+import seedu.summoners.commons.util.ToStringBuilder;
 
 /**
- * Tests that a {@code Person}'s {@code score} is greater than or equal to the given threshold.
+ * Tests that a {@code Player}'s {@code score} is greater than or equal to the given threshold.
  */
-public class ScoreInRangePredicate implements Predicate<Person> {
+public class ScoreInRangePredicate implements Predicate<Player> {
 
     private final Float threshold;
 
@@ -16,8 +16,8 @@ public class ScoreInRangePredicate implements Predicate<Person> {
     }
 
     @Override
-    public boolean test(Person person) {
-        return person.getStats().value >= threshold;
+    public boolean test(Player player) {
+        return player.getStats().value >= threshold;
     }
 
     @Override

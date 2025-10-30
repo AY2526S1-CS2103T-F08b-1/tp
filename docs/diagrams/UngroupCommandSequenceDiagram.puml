@@ -4,7 +4,7 @@ skinparam ArrowFontStyle plain
 
 box Logic LOGIC_COLOR_T1
 participant ":LogicManager" as LogicManager LOGIC_COLOR
-participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":SummonersBookParser" as SummonersBookParser LOGIC_COLOR
 participant ":UngroupCommandParser" as UngroupCommandParser LOGIC_COLOR
 participant "u:UngroupCommand" as UngroupCommand LOGIC_COLOR
 participant "r:CommandResult" as CommandResult LOGIC_COLOR
@@ -17,17 +17,17 @@ end box
 [-> LogicManager : execute("ungroup 1")
 activate LogicManager
 
-LogicManager -> AddressBookParser : parseCommand("ungroup 1")
-activate AddressBookParser
+LogicManager -> SummonersBookParser : parseCommand("ungroup 1")
+activate SummonersBookParser
 
 create UngroupCommandParser
-AddressBookParser -> UngroupCommandParser
+SummonersBookParser -> UngroupCommandParser
 activate UngroupCommandParser
 
-UngroupCommandParser --> AddressBookParser
+UngroupCommandParser --> SummonersBookParser
 deactivate UngroupCommandParser
 
-AddressBookParser -> UngroupCommandParser : parse("1")
+SummonersBookParser -> UngroupCommandParser : parse("1")
 activate UngroupCommandParser
 
 create UngroupCommand
@@ -37,14 +37,14 @@ activate UngroupCommand
 UngroupCommand --> UngroupCommandParser
 deactivate UngroupCommand
 
-UngroupCommandParser --> AddressBookParser : u
+UngroupCommandParser --> SummonersBookParser : u
 deactivate UngroupCommandParser
 'Hidden arrow to position the destroy marker below the end of the activation bar.
-UngroupCommandParser -[hidden]-> AddressBookParser
+UngroupCommandParser -[hidden]-> SummonersBookParser
 destroy UngroupCommandParser
 
-AddressBookParser --> LogicManager : u
-deactivate AddressBookParser
+SummonersBookParser --> LogicManager : u
+deactivate SummonersBookParser
 
 LogicManager -> UngroupCommand : execute(m)
 activate UngroupCommand

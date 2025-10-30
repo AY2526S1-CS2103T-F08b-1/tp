@@ -4,7 +4,7 @@ skinparam ArrowFontStyle plain
 
 box Logic LOGIC_COLOR_T1
 participant ":LogicManager" as LogicManager LOGIC_COLOR
-participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":SummonersBookParser" as SummonersBookParser LOGIC_COLOR
 participant ":ViewCommandParser" as ViewCommandParser LOGIC_COLOR
 participant "v:ViewCommand" as ViewCommand LOGIC_COLOR
 participant "r:CommandResult" as CommandResult LOGIC_COLOR
@@ -16,23 +16,23 @@ end box
 
 box UI UI_COLOR_T1
 participant ":MainWindow" as MainWindow UI_COLOR
-participant ":PersonDetailWindow" as PersonDetailWindow UI_COLOR
+participant ":PlayerDetailWindow" as PlayerDetailWindow UI_COLOR
 end box
 
 [-> LogicManager : execute("view 1")
 activate LogicManager
 
-LogicManager -> AddressBookParser : parseCommand("view 1")
-activate AddressBookParser
+LogicManager -> SummonersBookParser : parseCommand("view 1")
+activate SummonersBookParser
 
 create ViewCommandParser
-AddressBookParser -> ViewCommandParser
+SummonersBookParser -> ViewCommandParser
 activate ViewCommandParser
 
-ViewCommandParser --> AddressBookParser
+ViewCommandParser --> SummonersBookParser
 deactivate ViewCommandParser
 
-AddressBookParser -> ViewCommandParser : parse("1")
+SummonersBookParser -> ViewCommandParser : parse("1")
 activate ViewCommandParser
 
 create ViewCommand
@@ -42,26 +42,26 @@ activate ViewCommand
 ViewCommand --> ViewCommandParser
 deactivate ViewCommand
 
-ViewCommandParser --> AddressBookParser : v
+ViewCommandParser --> SummonersBookParser : v
 deactivate ViewCommandParser
 'Hidden arrow to position the destroy marker below the end of the activation bar.
-ViewCommandParser -[hidden]-> AddressBookParser
+ViewCommandParser -[hidden]-> SummonersBookParser
 destroy ViewCommandParser
 
-AddressBookParser --> LogicManager : v
-deactivate AddressBookParser
+SummonersBookParser --> LogicManager : v
+deactivate SummonersBookParser
 
 LogicManager -> ViewCommand : execute(m)
 activate ViewCommand
 
-ViewCommand -> Model : getFilteredPersonList()
+ViewCommand -> Model : getFilteredPlayerList()
 activate Model
 
-Model --> ViewCommand : personList
+Model --> ViewCommand : playerList
 deactivate Model
 
 create CommandResult
-ViewCommand -> CommandResult : showPersonDetail(message, person)
+ViewCommand -> CommandResult : showPlayerDetail(message, player)
 activate CommandResult
 
 CommandResult --> ViewCommand
@@ -76,36 +76,36 @@ deactivate LogicManager
 MainWindow -> MainWindow : handleCommandResult(r)
 activate MainWindow
 
-MainWindow -> CommandResult : isShowPersonDetail()
+MainWindow -> CommandResult : isShowPlayerDetail()
 activate CommandResult
 
 CommandResult --> MainWindow : true
 deactivate CommandResult
 
-MainWindow -> CommandResult : getPersonToShow()
+MainWindow -> CommandResult : getPlayerToShow()
 activate CommandResult
 
-CommandResult --> MainWindow : person
+CommandResult --> MainWindow : player
 deactivate CommandResult
 
-create PersonDetailWindow
-MainWindow -> PersonDetailWindow : new PersonDetailWindow()
-activate PersonDetailWindow
+create PlayerDetailWindow
+MainWindow -> PlayerDetailWindow : new PlayerDetailWindow()
+activate PlayerDetailWindow
 
-PersonDetailWindow --> MainWindow
-deactivate PersonDetailWindow
+PlayerDetailWindow --> MainWindow
+deactivate PlayerDetailWindow
 
-MainWindow -> PersonDetailWindow : setPerson(person)
-activate PersonDetailWindow
+MainWindow -> PlayerDetailWindow : setPlayer(player)
+activate PlayerDetailWindow
 
-PersonDetailWindow --> MainWindow
-deactivate PersonDetailWindow
+PlayerDetailWindow --> MainWindow
+deactivate PlayerDetailWindow
 
-MainWindow -> PersonDetailWindow : show()
-activate PersonDetailWindow
+MainWindow -> PlayerDetailWindow : show()
+activate PlayerDetailWindow
 
-PersonDetailWindow --> MainWindow
-deactivate PersonDetailWindow
+PlayerDetailWindow --> MainWindow
+deactivate PlayerDetailWindow
 
 deactivate MainWindow
 

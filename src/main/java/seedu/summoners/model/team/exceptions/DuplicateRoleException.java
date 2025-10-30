@@ -1,34 +1,34 @@
-package seedu.address.model.team.exceptions;
+package seedu.summoners.model.team.exceptions;
 
-import seedu.address.model.person.Person;
+import seedu.summoners.model.player.Player;
 
 /**
  * Signals that the operation would result in duplicate roles in a team.
- * Each team must have exactly one person for each of the five roles: Top, Jungle, Mid, ADC, Support.
+ * Each team must have exactly one player for each of the five roles: Top, Jungle, Mid, ADC, Support.
  */
 public class DuplicateRoleException extends RuntimeException {
-    private final Person person1;
-    private final Person person2;
+    private final Player player1;
+    private final Player player2;
 
     /**
-     * Constructs a DuplicateRoleException with the two persons who have conflicting roles.
+     * Constructs a DuplicateRoleException with the two players who have conflicting roles.
      *
-     * @param person1 The first person with the duplicate role.
-     * @param person2 The second person with the duplicate role.
+     * @param player1 The first player with the duplicate role.
+     * @param player2 The second player with the duplicate role.
      */
-    public DuplicateRoleException(Person person1, Person person2) {
+    public DuplicateRoleException(Player player1, Player player2) {
         super("Operation would result in duplicate roles in the team. "
-                + person1.getName() + " and " + person2.getName() + " both have the role: "
-                + person1.getRole());
-        this.person1 = person1;
-        this.person2 = person2;
+                + player1.getName() + " and " + player2.getName() + " both have the role: "
+                + player1.getRole());
+        this.player1 = player1;
+        this.player2 = player2;
     }
 
-    public Person getPerson1() {
-        return person1;
+    public Player getPlayer1() {
+        return player1;
     }
 
-    public Person getPerson2() {
-        return person2;
+    public Player getPlayer2() {
+        return player2;
     }
 }

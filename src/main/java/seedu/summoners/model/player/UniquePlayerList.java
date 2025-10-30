@@ -1,111 +1,111 @@
-package seedu.address.model.person;
+package seedu.summoners.model.player;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.summoners.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Iterator;
 import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.summoners.model.player.exceptions.DuplicatePlayerException;
+import seedu.summoners.model.player.exceptions.PlayerNotFoundException;
 
 /**
- * A list of persons that enforces uniqueness between its elements and does not allow nulls.
- * A person is considered unique by comparing using {@code Person#isSamePerson(Person)}. As such, adding and updating of
- * persons uses Person#isSamePerson(Person) for equality so as to ensure that the person being added or updated is
- * unique in terms of identity in the UniquePersonList. However, the removal of a person uses Person#equals(Object) so
- * as to ensure that the person with exactly the same fields will be removed.
+ * A list of players that enforces uniqueness between its elements and does not allow nulls.
+ * A player is considered unique by comparing using {@code Player#isSamePlayer(Player)}. As such, adding and updating of
+ * players uses Player#isSamePlayer(Player) for equality so as to ensure that the player being added or updated is
+ * unique in terms of identity in the UniquePlayerList. However, the removal of a player uses Player#equals(Object) so
+ * as to ensure that the player with exactly the same fields will be removed.
  *
  * Supports a minimal set of list operations.
  *
- * @see Person#isSamePerson(Person)
+ * @see Player#isSamePlayer(Player)
  */
-public class UniquePersonList implements Iterable<Person> {
+public class UniquePlayerList implements Iterable<Player> {
 
-    private final ObservableList<Person> internalList = FXCollections.observableArrayList();
-    private final ObservableList<Person> internalUnmodifiableList =
+    private final ObservableList<Player> internalList = FXCollections.observableArrayList();
+    private final ObservableList<Player> internalUnmodifiableList =
             FXCollections.unmodifiableObservableList(internalList);
 
     /**
-     * Returns true if the list contains an equivalent person as the given argument.
+     * Returns true if the list contains an equivalent player as the given argument.
      */
-    public boolean contains(Person toCheck) {
+    public boolean contains(Player toCheck) {
         requireNonNull(toCheck);
-        return internalList.stream().anyMatch(toCheck::isSamePerson);
+        return internalList.stream().anyMatch(toCheck::isSamePlayer);
     }
 
     /**
-     * Adds a person to the list.
-     * The person must not already exist in the list.
+     * Adds a player to the list.
+     * The player must not already exist in the list.
      */
-    public void add(Person toAdd) {
+    public void add(Player toAdd) {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
-            throw new DuplicatePersonException();
+            throw new DuplicatePlayerException();
         }
         internalList.add(toAdd);
     }
 
     /**
-     * Replaces the person {@code target} in the list with {@code editedPerson}.
+     * Replaces the player {@code target} in the list with {@code editedPlayer}.
      * {@code target} must exist in the list.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the list.
+     * The player identity of {@code editedPlayer} must not be the same as another existing player in the list.
      */
-    public void setPerson(Person target, Person editedPerson) {
-        requireAllNonNull(target, editedPerson);
+    public void setPlayer(Player target, Player editedPlayer) {
+        requireAllNonNull(target, editedPlayer);
 
         int index = internalList.indexOf(target);
         if (index == -1) {
-            throw new PersonNotFoundException();
+            throw new PlayerNotFoundException();
         }
 
-        if (!target.isSamePerson(editedPerson) && contains(editedPerson)) {
-            throw new DuplicatePersonException();
+        if (!target.isSamePlayer(editedPlayer) && contains(editedPlayer)) {
+            throw new DuplicatePlayerException();
         }
 
-        internalList.set(index, editedPerson);
+        internalList.set(index, editedPlayer);
     }
 
     /**
-     * Removes the equivalent person from the list.
-     * The person must exist in the list.
+     * Removes the equivalent player from the list.
+     * The player must exist in the list.
      */
-    public void remove(Person toRemove) {
+    public void remove(Player toRemove) {
         requireNonNull(toRemove);
         if (!internalList.remove(toRemove)) {
-            throw new PersonNotFoundException();
+            throw new PlayerNotFoundException();
         }
     }
 
-    public void setPersons(UniquePersonList replacement) {
+    public void setPlayers(UniquePlayerList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
     }
 
     /**
-     * Replaces the contents of this list with {@code persons}.
-     * {@code persons} must not contain duplicate persons.
+     * Replaces the contents of this list with {@code players}.
+     * {@code players} must not contain duplicate players.
      */
-    public void setPersons(List<Person> persons) {
-        requireAllNonNull(persons);
-        if (!personsAreUnique(persons)) {
-            throw new DuplicatePersonException();
+    public void setPlayers(List<Player> players) {
+        requireAllNonNull(players);
+        if (!playersAreUnique(players)) {
+            throw new DuplicatePlayerException();
         }
 
-        internalList.setAll(persons);
+        internalList.setAll(players);
     }
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
-    public ObservableList<Person> asUnmodifiableObservableList() {
+    public ObservableList<Player> asUnmodifiableObservableList() {
         return internalUnmodifiableList;
     }
 
     @Override
-    public Iterator<Person> iterator() {
+    public Iterator<Player> iterator() {
         return internalList.iterator();
     }
 
@@ -116,12 +116,12 @@ public class UniquePersonList implements Iterable<Person> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof UniquePersonList)) {
+        if (!(other instanceof UniquePlayerList)) {
             return false;
         }
 
-        UniquePersonList otherUniquePersonList = (UniquePersonList) other;
-        return internalList.equals(otherUniquePersonList.internalList);
+        UniquePlayerList otherUniquePlayerList = (UniquePlayerList) other;
+        return internalList.equals(otherUniquePlayerList.internalList);
     }
 
     @Override
@@ -135,12 +135,12 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     * Returns true if {@code persons} contains only unique persons.
+     * Returns true if {@code players} contains only unique players.
      */
-    private boolean personsAreUnique(List<Person> persons) {
-        for (int i = 0; i < persons.size() - 1; i++) {
-            for (int j = i + 1; j < persons.size(); j++) {
-                if (persons.get(i).isSamePerson(persons.get(j))) {
+    private boolean playersAreUnique(List<Player> players) {
+        for (int i = 0; i < players.size() - 1; i++) {
+            for (int j = i + 1; j < players.size(); j++) {
+                if (players.get(i).isSamePlayer(players.get(j))) {
                     return false;
                 }
             }

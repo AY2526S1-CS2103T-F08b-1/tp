@@ -1,11 +1,11 @@
-package seedu.address.commons.util;
+package seedu.summoners.commons.util;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
 
-import seedu.address.commons.core.Config;
-import seedu.address.commons.exceptions.DataLoadingException;
+import seedu.summoners.commons.core.Config;
+import seedu.summoners.commons.exceptions.DataLoadingException;
 
 /**
  * A class for accessing the Config File.

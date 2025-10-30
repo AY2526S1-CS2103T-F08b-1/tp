@@ -1,4 +1,4 @@
-package seedu.address.logic.csv;
+package seedu.summoners.logic.csv;
 
 import static java.util.Objects.requireNonNull;
 
@@ -12,12 +12,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import seedu.address.model.Model;
-import seedu.address.model.person.Person;
-import seedu.address.model.team.Team;
+import seedu.summoners.model.Model;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.team.Team;
 
 /**
- * Utility class that exports {@link Person} and {@link Team} data from the model
+ * Utility class that exports {@link Player} and {@link Team} data from the model
  * into CSV files following RFC4180 minimal formatting.
  * <p>
  * Supports exporting both player and team datasets with consistent columns.
@@ -41,7 +41,7 @@ public final class CsvExporter {
         List<String> lines = new ArrayList<>();
         lines.add(PLAYERS_HEADER);
 
-        for (Person p : model.getAddressBook().getPersonList()) {
+        for (Player p : model.getSummonersBook().getPlayerList()) {
             lines.add(String.join(",",
                     csv(p.getName().toString()),
                     csv(p.getRole().toString()),
@@ -72,8 +72,8 @@ public final class CsvExporter {
         List<String> lines = new ArrayList<>();
         lines.add(TEAMS_HEADER);
 
-        for (Team t : model.getAddressBook().getTeamList()) {
-            Map<String, String> roleToName = t.getPersons().stream()
+        for (Team t : model.getSummonersBook().getTeamList()) {
+            Map<String, String> roleToName = t.getPlayers().stream()
                     .collect(Collectors.toMap(p -> p.getRole().toString(), p -> p.getName().toString()));
 
             int wins = t.getWins();

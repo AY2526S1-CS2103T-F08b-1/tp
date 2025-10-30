@@ -1,15 +1,15 @@
-package seedu.address.storage;
+package seedu.summoners.storage;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
 
-import seedu.address.commons.exceptions.DataLoadingException;
-import seedu.address.model.ReadOnlyUserPrefs;
-import seedu.address.model.UserPrefs;
+import seedu.summoners.commons.exceptions.DataLoadingException;
+import seedu.summoners.model.ReadOnlyUserPrefs;
+import seedu.summoners.model.UserPrefs;
 
 /**
- * Represents a storage for {@link seedu.address.model.UserPrefs}.
+ * Represents a storage for {@link seedu.summoners.model.UserPrefs}.
  */
 public interface UserPrefsStorage {
 
@@ -27,7 +27,7 @@ public interface UserPrefsStorage {
     Optional<UserPrefs> readUserPrefs() throws DataLoadingException;
 
     /**
-     * Saves the given {@link seedu.address.model.ReadOnlyUserPrefs} to the storage.
+     * Saves the given {@link seedu.summoners.model.ReadOnlyUserPrefs} to the storage.
      * @param userPrefs cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */

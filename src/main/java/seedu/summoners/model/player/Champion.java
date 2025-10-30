@@ -1,7 +1,7 @@
-package seedu.address.model.person;
+package seedu.summoners.model.player;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.summoners.commons.util.AppUtil.checkArgument;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Represents a Person's champion in the address book.
+ * Represents a Player's champion in the summoners book.
  * Guarantees: immutable; valid if the name exists in champions.txt.
  */
 public class Champion {

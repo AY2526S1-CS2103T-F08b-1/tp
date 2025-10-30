@@ -1,10 +1,10 @@
-package seedu.address.model.person;
+package seedu.summoners.model.player;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.summoners.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Person's rank in the address book.
+ * Represents a Player's rank in the summoners book.
  * Guarantees: immutable; is valid as declared in {@link #isValidRank(String)}
  * Implements Comparable to allow natural ordering from lowest (Iron) to highest (Challenger).
  */

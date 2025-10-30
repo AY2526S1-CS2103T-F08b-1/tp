@@ -1,15 +1,15 @@
-package seedu.address.logic.parser;
+package seedu.summoners.logic.parser;
 
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.summoners.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.summoners.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
+import static seedu.summoners.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.summoners.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_FIRST_PLAYER;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.DeleteStatsCommand;
+import seedu.summoners.commons.core.index.Index;
+import seedu.summoners.logic.commands.DeleteStatsCommand;
 
 /**
  * Unit tests for {@link DeleteStatsCommandParser}.
@@ -20,7 +20,7 @@ public class DeleteStatsCommandParserTest {
 
     @Test
     public void parse_validIndex_success() {
-        Index target = INDEX_FIRST_PERSON;
+        Index target = INDEX_FIRST_PLAYER;
 
         // canonical
         assertParseSuccess(parser, String.valueOf(target.getOneBased()),

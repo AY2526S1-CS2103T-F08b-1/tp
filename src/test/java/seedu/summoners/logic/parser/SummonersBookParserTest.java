@@ -1,16 +1,16 @@
-package seedu.address.logic.parser;
+package seedu.summoners.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIFTH_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TEAM;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FOURTH_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
+import static seedu.summoners.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.summoners.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.summoners.testutil.Assert.assertThrows;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_FIFTH_PLAYER;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_FIRST_PLAYER;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_FIRST_TEAM;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_FOURTH_PLAYER;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_SECOND_PLAYER;
+import static seedu.summoners.testutil.TypicalIndexes.INDEX_THIRD_PLAYER;
 
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -19,46 +19,46 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.AddStatsCommand;
-import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.DeleteStatsCommand;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
-import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.ExportCommand;
-import seedu.address.logic.commands.FilterCommand;
-import seedu.address.logic.commands.FilterCommand.FilterPersonDescriptor;
-import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.commands.GroupCommand;
-import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.ImportCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.ListTeamCommand;
-import seedu.address.logic.commands.LoseCommand;
-import seedu.address.logic.commands.MakeGroupCommand;
-import seedu.address.logic.commands.ViewCommand;
-import seedu.address.logic.commands.ViewTeamCommand;
-import seedu.address.logic.commands.WinCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.Person;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
-import seedu.address.testutil.FilterPersonDescriptorBuilder;
-import seedu.address.testutil.PersonBuilder;
-import seedu.address.testutil.PersonUtil;
+import seedu.summoners.commons.core.index.Index;
+import seedu.summoners.logic.commands.AddCommand;
+import seedu.summoners.logic.commands.AddStatsCommand;
+import seedu.summoners.logic.commands.ClearCommand;
+import seedu.summoners.logic.commands.DeleteCommand;
+import seedu.summoners.logic.commands.DeleteStatsCommand;
+import seedu.summoners.logic.commands.EditCommand;
+import seedu.summoners.logic.commands.EditCommand.EditPlayerDescriptor;
+import seedu.summoners.logic.commands.ExitCommand;
+import seedu.summoners.logic.commands.ExportCommand;
+import seedu.summoners.logic.commands.FilterCommand;
+import seedu.summoners.logic.commands.FilterCommand.FilterPlayerDescriptor;
+import seedu.summoners.logic.commands.FindCommand;
+import seedu.summoners.logic.commands.GroupCommand;
+import seedu.summoners.logic.commands.HelpCommand;
+import seedu.summoners.logic.commands.ImportCommand;
+import seedu.summoners.logic.commands.ListCommand;
+import seedu.summoners.logic.commands.ListTeamCommand;
+import seedu.summoners.logic.commands.LoseCommand;
+import seedu.summoners.logic.commands.MakeGroupCommand;
+import seedu.summoners.logic.commands.ViewCommand;
+import seedu.summoners.logic.commands.ViewTeamCommand;
+import seedu.summoners.logic.commands.WinCommand;
+import seedu.summoners.logic.parser.exceptions.ParseException;
+import seedu.summoners.model.player.NameContainsKeywordsPredicate;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.testutil.EditPlayerDescriptorBuilder;
+import seedu.summoners.testutil.FilterPlayerDescriptorBuilder;
+import seedu.summoners.testutil.PlayerBuilder;
+import seedu.summoners.testutil.PlayerUtil;
 
-public class AddressBookParserTest {
+public class SummonersBookParserTest {
 
-    private final AddressBookParser parser = new AddressBookParser();
+    private final SummonersBookParser parser = new SummonersBookParser();
 
     @Test
     public void parseCommand_add() throws Exception {
-        Person person = new PersonBuilder().build();
-        AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
-        assertEquals(new AddCommand(person), command);
+        Player player = new PlayerBuilder().build();
+        AddCommand command = (AddCommand) parser.parseCommand(PlayerUtil.getAddCommand(player));
+        assertEquals(new AddCommand(player), command);
     }
 
     @Test
@@ -70,17 +70,17 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
+                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PLAYER.getOneBased());
+        assertEquals(new DeleteCommand(INDEX_FIRST_PLAYER), command);
     }
 
     @Test
     public void parseCommand_edit() throws Exception {
-        Person person = new PersonBuilder().build();
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
+        Player player = new PlayerBuilder().build();
+        EditPlayerDescriptor descriptor = new EditPlayerDescriptorBuilder(player).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
-        assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
+                + INDEX_FIRST_PLAYER.getOneBased() + " " + PlayerUtil.getEditPlayerDescriptorDetails(descriptor));
+        assertEquals(new EditCommand(INDEX_FIRST_PLAYER, descriptor), command);
     }
 
     @Test
@@ -124,7 +124,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_filter() throws Exception {
-        FilterPersonDescriptor descriptor = new FilterPersonDescriptorBuilder()
+        FilterPlayerDescriptor descriptor = new FilterPlayerDescriptorBuilder()
                 .withChampions("annie", "leblanc").build();
         assertTrue(parser.parseCommand(FilterCommand.COMMAND_WORD + " rk/gold") instanceof FilterCommand);
         assertEquals(parser.parseCommand(FilterCommand.COMMAND_WORD + " c/annie c/leblanc"),
@@ -145,8 +145,8 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_makeGroup() throws Exception {
-        List<Index> indices = Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON, INDEX_THIRD_PERSON,
-                INDEX_FOURTH_PERSON, INDEX_FIFTH_PERSON);
+        List<Index> indices = Arrays.asList(INDEX_FIRST_PLAYER, INDEX_SECOND_PLAYER, INDEX_THIRD_PLAYER,
+                INDEX_FOURTH_PLAYER, INDEX_FIFTH_PLAYER);
 
         String arguments = indices.stream().map(index -> String.valueOf(index.getOneBased()))
                 .collect(Collectors.joining(" "));
@@ -159,8 +159,8 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_view() throws Exception {
         ViewCommand command = (ViewCommand) parser.parseCommand(
-                ViewCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new ViewCommand(INDEX_FIRST_PERSON), command);
+                ViewCommand.COMMAND_WORD + " " + INDEX_FIRST_PLAYER.getOneBased());
+        assertEquals(new ViewCommand(INDEX_FIRST_PLAYER), command);
     }
 
     @Test
@@ -186,13 +186,13 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_deleteStats() throws Exception {
-        String input = DeleteStatsCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased();
+        String input = DeleteStatsCommand.COMMAND_WORD + " " + INDEX_FIRST_PLAYER.getOneBased();
         assertTrue(parser.parseCommand(input) instanceof DeleteStatsCommand);
     }
 
     @Test
     public void parseCommand_addStats() throws Exception {
-        String input = AddStatsCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
+        String input = AddStatsCommand.COMMAND_WORD + " " + INDEX_FIRST_PLAYER.getOneBased()
                 + " " + "cpm/10.2 gd15/2000 kda/2.2";
         assertTrue(parser.parseCommand(input) instanceof AddStatsCommand);
     }

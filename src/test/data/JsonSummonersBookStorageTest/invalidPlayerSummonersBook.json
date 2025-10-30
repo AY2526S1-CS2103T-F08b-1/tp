@@ -1,6 +1,6 @@
 {
-  "persons": [ {
-    "name": "Person with invalid name field: Ha!ns Mu@ster",
+  "players": [ {
+    "name": "Player with invalid name field: Ha!ns Mu@ster",
     "role": "mid",
     "rank": "gold",
     "champion": "Ahri",

@@ -1,14 +1,14 @@
-package seedu.address.model.person;
+package seedu.summoners.model.player;
 
-import static seedu.address.commons.util.AppUtil.checkArgument;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.summoners.commons.util.AppUtil.checkArgument;
+import static seedu.summoners.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
 
 /**
- * Represents a person's performance statistics in the address book.
+ * Represents a player's performance statistics in the summoners book.
  * <p>
- * A {@code Stats} object stores cumulative information about a person's
+ * A {@code Stats} object stores cumulative information about a player's
  * game metrics across matches — specifically:
  * <ul>
  *     <li>CS per minute (creep score efficiency)</li>

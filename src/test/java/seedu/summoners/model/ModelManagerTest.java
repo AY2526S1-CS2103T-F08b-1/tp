@@ -1,14 +1,14 @@
-package seedu.address.model;
+package seedu.summoners.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.BENSON;
-import static seedu.address.testutil.TypicalTeams.TEAM_A;
-import static seedu.address.testutil.TypicalTeams.TEAM_B;
+import static seedu.summoners.model.Model.PREDICATE_SHOW_ALL_PLAYERS;
+import static seedu.summoners.testutil.Assert.assertThrows;
+import static seedu.summoners.testutil.TypicalPlayers.ALICE;
+import static seedu.summoners.testutil.TypicalPlayers.BENSON;
+import static seedu.summoners.testutil.TypicalTeams.TEAM_A;
+import static seedu.summoners.testutil.TypicalTeams.TEAM_B;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,11 +16,11 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.core.GuiSettings;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.Person;
-import seedu.address.testutil.AddressBookBuilder;
-import seedu.address.testutil.PersonBuilder;
+import seedu.summoners.commons.core.GuiSettings;
+import seedu.summoners.model.player.NameContainsKeywordsPredicate;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.testutil.SummonersBookBuilder;
+import seedu.summoners.testutil.PlayerBuilder;
 
 public class ModelManagerTest {
 
@@ -30,7 +30,7 @@ public class ModelManagerTest {
     public void constructor() {
         assertEquals(new UserPrefs(), modelManager.getUserPrefs());
         assertEquals(new GuiSettings(), modelManager.getGuiSettings());
-        assertEquals(new AddressBook(), new AddressBook(modelManager.getAddressBook()));
+        assertEquals(new SummonersBook(), new SummonersBook(modelManager.getSummonersBook()));
     }
 
     @Test
@@ -41,14 +41,14 @@ public class ModelManagerTest {
     @Test
     public void setUserPrefs_validUserPrefs_copiesUserPrefs() {
         UserPrefs userPrefs = new UserPrefs();
-        userPrefs.setAddressBookFilePath(Paths.get("address/book/file/path"));
+        userPrefs.setSummonersBookFilePath(Paths.get("summoners/book/file/path"));
         userPrefs.setGuiSettings(new GuiSettings(1, 2, 3, 4));
         modelManager.setUserPrefs(userPrefs);
         assertEquals(userPrefs, modelManager.getUserPrefs());
 
         // Modifying userPrefs should not modify modelManager's userPrefs
         UserPrefs oldUserPrefs = new UserPrefs(userPrefs);
-        userPrefs.setAddressBookFilePath(Paths.get("new/address/book/file/path"));
+        userPrefs.setSummonersBookFilePath(Paths.get("new/summoners/book/file/path"));
         assertEquals(oldUserPrefs, modelManager.getUserPrefs());
     }
 
@@ -65,51 +65,51 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void setAddressBookFilePath_nullPath_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> modelManager.setAddressBookFilePath(null));
+    public void setSummonersBookFilePath_nullPath_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.setSummonersBookFilePath(null));
     }
 
     @Test
-    public void setAddressBookFilePath_validPath_setsAddressBookFilePath() {
-        Path path = Paths.get("address/book/file/path");
-        modelManager.setAddressBookFilePath(path);
-        assertEquals(path, modelManager.getAddressBookFilePath());
+    public void setSummonersBookFilePath_validPath_setsSummonersBookFilePath() {
+        Path path = Paths.get("summoners/book/file/path");
+        modelManager.setSummonersBookFilePath(path);
+        assertEquals(path, modelManager.getSummonersBookFilePath());
     }
 
     @Test
-    public void hasPerson_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> modelManager.hasPerson(null));
+    public void hasPlayer_nullPlayer_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.hasPlayer(null));
     }
 
     @Test
-    public void hasPerson_personNotInAddressBook_returnsFalse() {
-        assertFalse(modelManager.hasPerson(ALICE));
+    public void hasPlayer_playerNotInSummonersBook_returnsFalse() {
+        assertFalse(modelManager.hasPlayer(ALICE));
     }
 
     @Test
-    public void hasPerson_personInAddressBook_returnsTrue() {
-        modelManager.addPerson(ALICE);
-        assertTrue(modelManager.hasPerson(ALICE));
+    public void hasPlayer_playerInSummonersBook_returnsTrue() {
+        modelManager.addPlayer(ALICE);
+        assertTrue(modelManager.hasPlayer(ALICE));
     }
 
     @Test
-    public void deletePerson_deletesPerson_success() {
-        modelManager.addPerson(ALICE);
-        modelManager.deletePerson(ALICE);
-        assertFalse(modelManager.hasPerson(ALICE));
+    public void deletePlayer_deletesPlayer_success() {
+        modelManager.addPlayer(ALICE);
+        modelManager.deletePlayer(ALICE);
+        assertFalse(modelManager.hasPlayer(ALICE));
     }
 
     @Test
-    public void setPerson_replacesPerson_success() {
-        modelManager.addPerson(ALICE);
-        modelManager.setPerson(ALICE, BENSON);
-        assertFalse(modelManager.hasPerson(ALICE));
-        assertTrue(modelManager.hasPerson(BENSON));
+    public void setPlayer_replacesPlayer_success() {
+        modelManager.addPlayer(ALICE);
+        modelManager.setPlayer(ALICE, BENSON);
+        assertFalse(modelManager.hasPlayer(ALICE));
+        assertTrue(modelManager.hasPlayer(BENSON));
     }
 
     @Test
-    public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
-        assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredPersonList().remove(0));
+    public void getFilteredPlayerList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredPlayerList().remove(0));
     }
 
     @Test
@@ -118,12 +118,12 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void hasTeam_teamNotInAddressBook_returnsFalse() {
+    public void hasTeam_teamNotInSummonersBook_returnsFalse() {
         assertFalse(modelManager.hasTeam(TEAM_A));
     }
 
     @Test
-    public void hasTeam_teamInAddressBook_returnsTrue() {
+    public void hasTeam_teamInSummonersBook_returnsTrue() {
         modelManager.addTeam(TEAM_A);
         assertTrue(modelManager.hasTeam(TEAM_A));
     }
@@ -149,45 +149,45 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void getUnassignedPersonList_noTeams_returnsAllPersons() {
-        modelManager.addPerson(ALICE);
-        modelManager.addPerson(BENSON);
+    public void getUnassignedPlayerList_noTeams_returnsAllPlayers() {
+        modelManager.addPlayer(ALICE);
+        modelManager.addPlayer(BENSON);
 
-        assertEquals(2, modelManager.getUnassignedPersonList().size());
-        assertTrue(modelManager.getUnassignedPersonList().contains(ALICE));
-        assertTrue(modelManager.getUnassignedPersonList().contains(BENSON));
+        assertEquals(2, modelManager.getUnassignedPlayerList().size());
+        assertTrue(modelManager.getUnassignedPlayerList().contains(ALICE));
+        assertTrue(modelManager.getUnassignedPlayerList().contains(BENSON));
     }
 
     @Test
-    public void getUnassignedPersonList_someInTeam_returnsOnlyUnassigned() {
-        // Add all persons for TEAM_A (ALICE, BENSON, CARL, DANIEL, ELLE)
-        modelManager.addPerson(ALICE);
-        modelManager.addPerson(BENSON);
+    public void getUnassignedPlayerList_someInTeam_returnsOnlyUnassigned() {
+        // Add all players for TEAM_A (ALICE, BENSON, CARL, DANIEL, ELLE)
+        modelManager.addPlayer(ALICE);
+        modelManager.addPlayer(BENSON);
 
-        // Add person not in any team
-        Person george = new PersonBuilder().withName("George Best").build();
-        modelManager.addPerson(george);
+        // Add player not in any team
+        Player george = new PlayerBuilder().withName("George Best").build();
+        modelManager.addPlayer(george);
 
         // Add team containing ALICE and BENSON (but not george)
         modelManager.addTeam(TEAM_A);
 
         // Only george should be unassigned
-        assertEquals(1, modelManager.getUnassignedPersonList().size());
-        assertTrue(modelManager.getUnassignedPersonList().contains(george));
-        assertFalse(modelManager.getUnassignedPersonList().contains(ALICE));
-        assertFalse(modelManager.getUnassignedPersonList().contains(BENSON));
+        assertEquals(1, modelManager.getUnassignedPlayerList().size());
+        assertTrue(modelManager.getUnassignedPlayerList().contains(george));
+        assertFalse(modelManager.getUnassignedPlayerList().contains(ALICE));
+        assertFalse(modelManager.getUnassignedPlayerList().contains(BENSON));
     }
 
     @Test
     public void equals() {
-        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON)
+        SummonersBook summonersBook = new SummonersBookBuilder().withPlayer(ALICE).withPlayer(BENSON)
                 .withTeam(TEAM_A).build();
-        AddressBook differentAddressBook = new AddressBook();
+        SummonersBook differentSummonersBook = new SummonersBook();
         UserPrefs userPrefs = new UserPrefs();
 
         // same values -> returns true
-        modelManager = new ModelManager(addressBook, userPrefs);
-        ModelManager modelManagerCopy = new ModelManager(addressBook, userPrefs);
+        modelManager = new ModelManager(summonersBook, userPrefs);
+        ModelManager modelManagerCopy = new ModelManager(summonersBook, userPrefs);
         assertTrue(modelManager.equals(modelManagerCopy));
 
         // same object -> returns true
@@ -199,27 +199,27 @@ public class ModelManagerTest {
         // different types -> returns false
         assertFalse(modelManager.equals(5));
 
-        // different addressBook -> returns false
-        assertFalse(modelManager.equals(new ModelManager(differentAddressBook, userPrefs)));
+        // different summonersBook -> returns false
+        assertFalse(modelManager.equals(new ModelManager(differentSummonersBook, userPrefs)));
 
         // different filteredList -> returns false
         String[] keywords = ALICE.getName().fullName.split("\\s+");
-        modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
-        assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
+        modelManager.updateFilteredPlayerList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+        assertFalse(modelManager.equals(new ModelManager(summonersBook, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests
-        modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        modelManager.updateFilteredPlayerList(PREDICATE_SHOW_ALL_PLAYERS);
 
         // different filteredTeamList -> returns false
         modelManager.updateFilteredTeamList(team -> false);
-        assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(summonersBook, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests
         modelManager.updateFilteredTeamList(Model.PREDICATE_SHOW_ALL_TEAMS);
 
         // different userPrefs -> returns false
         UserPrefs differentUserPrefs = new UserPrefs();
-        differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
-        assertFalse(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
+        differentUserPrefs.setSummonersBookFilePath(Paths.get("differentFilePath"));
+        assertFalse(modelManager.equals(new ModelManager(summonersBook, differentUserPrefs)));
     }
 }

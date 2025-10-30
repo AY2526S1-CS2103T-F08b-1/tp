@@ -1,4 +1,4 @@
-package seedu.address.logic.parser;
+package seedu.summoners.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -7,9 +7,9 @@ import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.ExportCommand;
-import seedu.address.logic.commands.ExportCommand.Target;
-import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.summoners.logic.commands.ExportCommand;
+import seedu.summoners.logic.commands.ExportCommand.Target;
+import seedu.summoners.logic.parser.exceptions.ParseException;
 
 public class ExportCommandParserTest {
 

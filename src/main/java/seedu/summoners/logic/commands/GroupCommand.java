@@ -1,4 +1,4 @@
-package seedu.address.logic.commands;
+package seedu.summoners.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
@@ -6,31 +6,31 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.teammatcher.InsufficientPersonsException;
-import seedu.address.logic.teammatcher.TeamMatcher;
-import seedu.address.model.Model;
-import seedu.address.model.person.Person;
-import seedu.address.model.team.Team;
+import seedu.summoners.commons.util.ToStringBuilder;
+import seedu.summoners.logic.commands.exceptions.CommandException;
+import seedu.summoners.logic.teammatcher.InsufficientPlayersException;
+import seedu.summoners.logic.teammatcher.TeamMatcher;
+import seedu.summoners.model.Model;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.team.Team;
 
 /**
- * Automatically creates balanced teams from unassigned persons.
- * Uses a role-based matching algorithm that considers person ranks and champions.
+ * Automatically creates balanced teams from unassigned players.
+ * Uses a role-based matching algorithm that considers player ranks and champions.
  */
 public class GroupCommand extends Command {
 
     public static final String COMMAND_WORD = "group";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Automatically creates balanced teams from all unassigned persons.\n"
-            + "The algorithm groups persons by role, sorts by rank, and ensures no duplicate champions per team.\n"
+            + ": Automatically creates balanced teams from all unassigned players.\n"
+            + "The algorithm groups players by role, sorts by rank, and ensures no duplicate champions per team.\n"
             + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_SUCCESS = "Successfully created %1$d team(s):\n%2$s\n\n"
-            + "%3$d person(s) remain unassigned.";
+            + "%3$d player(s) remain unassigned.";
     public static final String MESSAGE_NO_TEAMS_FORMED = "No teams could be formed. "
-            + "Ensure there is at least one unassigned person for each role (Top, Jungle, Mid, ADC, Support).";
+            + "Ensure there is at least one unassigned player for each role (Top, Jungle, Mid, ADC, Support).";
 
     private final TeamMatcher teamMatcher;
 
@@ -56,18 +56,18 @@ public class GroupCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        // Get all unassigned persons
-        List<Person> unassignedPersons = model.getUnassignedPersonList();
+        // Get all unassigned players
+        List<Player> unassignedPlayers = model.getUnassignedPlayerList();
 
-        if (unassignedPersons.isEmpty()) {
-            throw new CommandException("No unassigned persons available to form teams.");
+        if (unassignedPlayers.isEmpty()) {
+            throw new CommandException("No unassigned players available to form teams.");
         }
 
         // Use TeamMatcher to form teams
         List<Team> teams;
         try {
-            teams = teamMatcher.matchTeams(unassignedPersons);
-        } catch (InsufficientPersonsException e) {
+            teams = teamMatcher.matchTeams(unassignedPlayers);
+        } catch (InsufficientPlayersException e) {
             throw new CommandException(e.getMessage());
         }
 
@@ -80,13 +80,13 @@ public class GroupCommand extends Command {
             model.addTeam(team);
         }
 
-        // Get the actual count of remaining unassigned persons from the model
-        int remainingPersons = model.getUnassignedPersonList().size();
+        // Get the actual count of remaining unassigned players from the model
+        int remainingPlayers = model.getUnassignedPlayerList().size();
 
         // Format the success message
         String teamsFormatted = formatTeams(teams);
         return new CommandResult(String.format(MESSAGE_SUCCESS,
-                teams.size(), teamsFormatted, remainingPersons));
+                teams.size(), teamsFormatted, remainingPlayers));
     }
 
     /**

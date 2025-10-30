@@ -1,8 +1,8 @@
-package seedu.address.model;
+package seedu.summoners.model;
 
 import java.nio.file.Path;
 
-import seedu.address.commons.core.GuiSettings;
+import seedu.summoners.commons.core.GuiSettings;
 
 /**
  * Unmodifiable view of user prefs.
@@ -11,6 +11,6 @@ public interface ReadOnlyUserPrefs {
 
     GuiSettings getGuiSettings();
 
-    Path getAddressBookFilePath();
+    Path getSummonersBookFilePath();
 
 }

@@ -1,13 +1,13 @@
-package seedu.address.model.person;
+package seedu.summoners.model.player;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_CHAMPION_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.BOB;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_CHAMPION_BOB;
+import static seedu.summoners.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.summoners.testutil.Assert.assertThrows;
+import static seedu.summoners.testutil.TypicalPlayers.ALICE;
+import static seedu.summoners.testutil.TypicalPlayers.BOB;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,161 +15,161 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.testutil.PersonBuilder;
+import seedu.summoners.model.player.exceptions.DuplicatePlayerException;
+import seedu.summoners.model.player.exceptions.PlayerNotFoundException;
+import seedu.summoners.testutil.PlayerBuilder;
 
-public class UniquePersonListTest {
+public class UniquePlayerListTest {
 
-    private final UniquePersonList uniquePersonList = new UniquePersonList();
+    private final UniquePlayerList uniquePlayerList = new UniquePlayerList();
 
     @Test
-    public void contains_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> uniquePersonList.contains(null));
+    public void contains_nullPlayer_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> uniquePlayerList.contains(null));
     }
 
     @Test
-    public void contains_personNotInList_returnsFalse() {
-        assertFalse(uniquePersonList.contains(ALICE));
+    public void contains_playerNotInList_returnsFalse() {
+        assertFalse(uniquePlayerList.contains(ALICE));
     }
 
     @Test
-    public void contains_personInList_returnsTrue() {
-        uniquePersonList.add(ALICE);
-        assertTrue(uniquePersonList.contains(ALICE));
+    public void contains_playerInList_returnsTrue() {
+        uniquePlayerList.add(ALICE);
+        assertTrue(uniquePlayerList.contains(ALICE));
     }
 
     @Test
-    public void contains_personWithSameIdentityFieldsInList_returnsTrue() {
-        uniquePersonList.add(ALICE);
-        Person editedAlice = new PersonBuilder(ALICE).withChampion(VALID_CHAMPION_BOB).withTags(VALID_TAG_HUSBAND)
+    public void contains_playerWithSameIdentityFieldsInList_returnsTrue() {
+        uniquePlayerList.add(ALICE);
+        Player editedAlice = new PlayerBuilder(ALICE).withChampion(VALID_CHAMPION_BOB).withTags(VALID_TAG_HUSBAND)
                 .build();
-        assertTrue(uniquePersonList.contains(editedAlice));
+        assertTrue(uniquePlayerList.contains(editedAlice));
     }
 
     @Test
-    public void add_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> uniquePersonList.add(null));
+    public void add_nullPlayer_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> uniquePlayerList.add(null));
     }
 
     @Test
-    public void add_duplicatePerson_throwsDuplicatePersonException() {
-        uniquePersonList.add(ALICE);
-        assertThrows(DuplicatePersonException.class, () -> uniquePersonList.add(ALICE));
+    public void add_duplicatePlayer_throwsDuplicatePlayerException() {
+        uniquePlayerList.add(ALICE);
+        assertThrows(DuplicatePlayerException.class, () -> uniquePlayerList.add(ALICE));
     }
 
     @Test
-    public void setPerson_nullTargetPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> uniquePersonList.setPerson(null, ALICE));
+    public void setPlayer_nullTargetPlayer_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> uniquePlayerList.setPlayer(null, ALICE));
     }
 
     @Test
-    public void setPerson_nullEditedPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> uniquePersonList.setPerson(ALICE, null));
+    public void setPlayer_nullEditedPlayer_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> uniquePlayerList.setPlayer(ALICE, null));
     }
 
     @Test
-    public void setPerson_targetPersonNotInList_throwsPersonNotFoundException() {
-        assertThrows(PersonNotFoundException.class, () -> uniquePersonList.setPerson(ALICE, ALICE));
+    public void setPlayer_targetPlayerNotInList_throwsPlayerNotFoundException() {
+        assertThrows(PlayerNotFoundException.class, () -> uniquePlayerList.setPlayer(ALICE, ALICE));
     }
 
     @Test
-    public void setPerson_editedPersonIsSamePerson_success() {
-        uniquePersonList.add(ALICE);
-        uniquePersonList.setPerson(ALICE, ALICE);
-        UniquePersonList expectedUniquePersonList = new UniquePersonList();
-        expectedUniquePersonList.add(ALICE);
-        assertEquals(expectedUniquePersonList, uniquePersonList);
+    public void setPlayer_editedPlayerIsSamePlayer_success() {
+        uniquePlayerList.add(ALICE);
+        uniquePlayerList.setPlayer(ALICE, ALICE);
+        UniquePlayerList expectedUniquePlayerList = new UniquePlayerList();
+        expectedUniquePlayerList.add(ALICE);
+        assertEquals(expectedUniquePlayerList, uniquePlayerList);
     }
 
     @Test
-    public void setPerson_editedPersonHasSameIdentity_success() {
-        uniquePersonList.add(ALICE);
-        Person editedAlice = new PersonBuilder(ALICE).withChampion(VALID_CHAMPION_BOB).withTags(VALID_TAG_HUSBAND)
+    public void setPlayer_editedPlayerHasSameIdentity_success() {
+        uniquePlayerList.add(ALICE);
+        Player editedAlice = new PlayerBuilder(ALICE).withChampion(VALID_CHAMPION_BOB).withTags(VALID_TAG_HUSBAND)
                 .build();
-        uniquePersonList.setPerson(ALICE, editedAlice);
-        UniquePersonList expectedUniquePersonList = new UniquePersonList();
-        expectedUniquePersonList.add(editedAlice);
-        assertEquals(expectedUniquePersonList, uniquePersonList);
+        uniquePlayerList.setPlayer(ALICE, editedAlice);
+        UniquePlayerList expectedUniquePlayerList = new UniquePlayerList();
+        expectedUniquePlayerList.add(editedAlice);
+        assertEquals(expectedUniquePlayerList, uniquePlayerList);
     }
 
     @Test
-    public void setPerson_editedPersonHasDifferentIdentity_success() {
-        uniquePersonList.add(ALICE);
-        uniquePersonList.setPerson(ALICE, BOB);
-        UniquePersonList expectedUniquePersonList = new UniquePersonList();
-        expectedUniquePersonList.add(BOB);
-        assertEquals(expectedUniquePersonList, uniquePersonList);
+    public void setPlayer_editedPlayerHasDifferentIdentity_success() {
+        uniquePlayerList.add(ALICE);
+        uniquePlayerList.setPlayer(ALICE, BOB);
+        UniquePlayerList expectedUniquePlayerList = new UniquePlayerList();
+        expectedUniquePlayerList.add(BOB);
+        assertEquals(expectedUniquePlayerList, uniquePlayerList);
     }
 
     @Test
-    public void setPerson_editedPersonHasNonUniqueIdentity_throwsDuplicatePersonException() {
-        uniquePersonList.add(ALICE);
-        uniquePersonList.add(BOB);
-        assertThrows(DuplicatePersonException.class, () -> uniquePersonList.setPerson(ALICE, BOB));
+    public void setPlayer_editedPlayerHasNonUniqueIdentity_throwsDuplicatePlayerException() {
+        uniquePlayerList.add(ALICE);
+        uniquePlayerList.add(BOB);
+        assertThrows(DuplicatePlayerException.class, () -> uniquePlayerList.setPlayer(ALICE, BOB));
     }
 
     @Test
-    public void remove_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> uniquePersonList.remove(null));
+    public void remove_nullPlayer_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> uniquePlayerList.remove(null));
     }
 
     @Test
-    public void remove_personDoesNotExist_throwsPersonNotFoundException() {
-        assertThrows(PersonNotFoundException.class, () -> uniquePersonList.remove(ALICE));
+    public void remove_playerDoesNotExist_throwsPlayerNotFoundException() {
+        assertThrows(PlayerNotFoundException.class, () -> uniquePlayerList.remove(ALICE));
     }
 
     @Test
-    public void remove_existingPerson_removesPerson() {
-        uniquePersonList.add(ALICE);
-        uniquePersonList.remove(ALICE);
-        UniquePersonList expectedUniquePersonList = new UniquePersonList();
-        assertEquals(expectedUniquePersonList, uniquePersonList);
+    public void remove_existingPlayer_removesPlayer() {
+        uniquePlayerList.add(ALICE);
+        uniquePlayerList.remove(ALICE);
+        UniquePlayerList expectedUniquePlayerList = new UniquePlayerList();
+        assertEquals(expectedUniquePlayerList, uniquePlayerList);
     }
 
     @Test
-    public void setPersons_nullUniquePersonList_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> uniquePersonList.setPersons((UniquePersonList) null));
+    public void setPlayers_nullUniquePlayerList_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> uniquePlayerList.setPlayers((UniquePlayerList) null));
     }
 
     @Test
-    public void setPersons_uniquePersonList_replacesOwnListWithProvidedUniquePersonList() {
-        uniquePersonList.add(ALICE);
-        UniquePersonList expectedUniquePersonList = new UniquePersonList();
-        expectedUniquePersonList.add(BOB);
-        uniquePersonList.setPersons(expectedUniquePersonList);
-        assertEquals(expectedUniquePersonList, uniquePersonList);
+    public void setPlayers_uniquePlayerList_replacesOwnListWithProvidedUniquePlayerList() {
+        uniquePlayerList.add(ALICE);
+        UniquePlayerList expectedUniquePlayerList = new UniquePlayerList();
+        expectedUniquePlayerList.add(BOB);
+        uniquePlayerList.setPlayers(expectedUniquePlayerList);
+        assertEquals(expectedUniquePlayerList, uniquePlayerList);
     }
 
     @Test
-    public void setPersons_nullList_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> uniquePersonList.setPersons((List<Person>) null));
+    public void setPlayers_nullList_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> uniquePlayerList.setPlayers((List<Player>) null));
     }
 
     @Test
-    public void setPersons_list_replacesOwnListWithProvidedList() {
-        uniquePersonList.add(ALICE);
-        List<Person> personList = Collections.singletonList(BOB);
-        uniquePersonList.setPersons(personList);
-        UniquePersonList expectedUniquePersonList = new UniquePersonList();
-        expectedUniquePersonList.add(BOB);
-        assertEquals(expectedUniquePersonList, uniquePersonList);
+    public void setPlayers_list_replacesOwnListWithProvidedList() {
+        uniquePlayerList.add(ALICE);
+        List<Player> playerList = Collections.singletonList(BOB);
+        uniquePlayerList.setPlayers(playerList);
+        UniquePlayerList expectedUniquePlayerList = new UniquePlayerList();
+        expectedUniquePlayerList.add(BOB);
+        assertEquals(expectedUniquePlayerList, uniquePlayerList);
     }
 
     @Test
-    public void setPersons_listWithDuplicatePersons_throwsDuplicatePersonException() {
-        List<Person> listWithDuplicatePersons = Arrays.asList(ALICE, ALICE);
-        assertThrows(DuplicatePersonException.class, () -> uniquePersonList.setPersons(listWithDuplicatePersons));
+    public void setPlayers_listWithDuplicatePlayers_throwsDuplicatePlayerException() {
+        List<Player> listWithDuplicatePlayers = Arrays.asList(ALICE, ALICE);
+        assertThrows(DuplicatePlayerException.class, () -> uniquePlayerList.setPlayers(listWithDuplicatePlayers));
     }
 
     @Test
     public void asUnmodifiableObservableList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, ()
-            -> uniquePersonList.asUnmodifiableObservableList().remove(0));
+            -> uniquePlayerList.asUnmodifiableObservableList().remove(0));
     }
 
     @Test
     public void toStringMethod() {
-        assertEquals(uniquePersonList.asUnmodifiableObservableList().toString(), uniquePersonList.toString());
+        assertEquals(uniquePlayerList.asUnmodifiableObservableList().toString(), uniquePlayerList.toString());
     }
 }

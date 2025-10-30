@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.summoners.storage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,32 +8,32 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.AddressBook;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Person;
-import seedu.address.model.team.Team;
+import seedu.summoners.commons.exceptions.IllegalValueException;
+import seedu.summoners.model.SummonersBook;
+import seedu.summoners.model.ReadOnlySummonersBook;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.team.Team;
 
 /**
- * An Immutable AddressBook that is serializable to JSON format.
+ * An Immutable SummonersBook that is serializable to JSON format.
  */
-@JsonRootName(value = "addressbook")
-class JsonSerializableAddressBook {
+@JsonRootName(value = "summonersbook")
+class JsonSerializableSummonersBook {
 
-    public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
+    public static final String MESSAGE_DUPLICATE_PLAYER = "Players list contains duplicate player(s).";
     public static final String MESSAGE_DUPLICATE_TEAM = "Teams list contains duplicate team(s).";
 
-    private final List<JsonAdaptedPerson> persons = new ArrayList<>();
+    private final List<JsonAdaptedPlayer> players = new ArrayList<>();
     private final List<JsonAdaptedTeam> teams = new ArrayList<>();
 
     /**
-     * Constructs a {@code JsonSerializableAddressBook} with the given persons.
+     * Constructs a {@code JsonSerializableSummonersBook} with the given players.
      */
     @JsonCreator
-    public JsonSerializableAddressBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons,
+    public JsonSerializableSummonersBook(@JsonProperty("players") List<JsonAdaptedPlayer> players,
                                        @JsonProperty("teams") List<JsonAdaptedTeam> teams) {
-        if (persons != null) {
-            this.persons.addAll(persons);
+        if (players != null) {
+            this.players.addAll(players);
         }
         if (teams != null) {
             this.teams.addAll(teams);
@@ -41,41 +41,41 @@ class JsonSerializableAddressBook {
     }
 
     /**
-     * Converts a given {@code ReadOnlyAddressBook} into this class for Jackson use.
+     * Converts a given {@code ReadOnlySummonersBook} into this class for Jackson use.
      *
-     * @param source future changes to this will not affect the created {@code JsonSerializableAddressBook}.
+     * @param source future changes to this will not affect the created {@code JsonSerializableSummonersBook}.
      */
-    public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
-        persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).collect(Collectors.toList()));
+    public JsonSerializableSummonersBook(ReadOnlySummonersBook source) {
+        players.addAll(source.getPlayerList().stream().map(JsonAdaptedPlayer::new).collect(Collectors.toList()));
         teams.addAll(source.getTeamList().stream().map(JsonAdaptedTeam::new).collect(Collectors.toList()));
     }
 
     /**
-     * Converts this address book into the model's {@code AddressBook} object.
+     * Converts this summoners book into the model's {@code SummonersBook} object.
      *
      * @throws IllegalValueException if there were any data constraints violated.
      */
-    public AddressBook toModelType() throws IllegalValueException {
-        AddressBook addressBook = new AddressBook();
+    public SummonersBook toModelType() throws IllegalValueException {
+        SummonersBook summonersBook = new SummonersBook();
 
-        List<Person> personList = new ArrayList<>();
-        for (JsonAdaptedPerson jsonAdaptedPerson : persons) {
-            Person person = jsonAdaptedPerson.toModelType();
-            if (addressBook.hasPerson(person)) {
-                throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
+        List<Player> playerList = new ArrayList<>();
+        for (JsonAdaptedPlayer jsonAdaptedPlayer : players) {
+            Player player = jsonAdaptedPlayer.toModelType();
+            if (summonersBook.hasPlayer(player)) {
+                throw new IllegalValueException(MESSAGE_DUPLICATE_PLAYER);
             }
-            addressBook.addPerson(person);
-            personList.add(person);
+            summonersBook.addPlayer(player);
+            playerList.add(player);
         }
 
         for (JsonAdaptedTeam jsonAdaptedTeam : teams) {
-            Team team = jsonAdaptedTeam.toModelType(personList);
-            if (addressBook.hasTeam(team)) {
+            Team team = jsonAdaptedTeam.toModelType(playerList);
+            if (summonersBook.hasTeam(team)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_TEAM);
             }
-            addressBook.addTeam(team);
+            summonersBook.addTeam(team);
         }
 
-        return addressBook;
+        return summonersBook;
     }
 }

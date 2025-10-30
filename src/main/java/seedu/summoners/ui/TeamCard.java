@@ -1,11 +1,11 @@
-package seedu.address.ui;
+package seedu.summoners.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.address.model.person.Person;
-import seedu.address.model.team.Team;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.team.Team;
 
 /**
  * A UI component that displays information of a {@code Team}.
@@ -23,15 +23,15 @@ public class TeamCard extends UiPart<Region> {
     @FXML
     private Label teamName;
     @FXML
-    private HBox topPersonDetails;
+    private HBox topPlayerDetails;
     @FXML
-    private HBox junglePersonDetails;
+    private HBox junglePlayerDetails;
     @FXML
-    private HBox midPersonDetails;
+    private HBox midPlayerDetails;
     @FXML
-    private HBox adcPersonDetails;
+    private HBox adcPlayerDetails;
     @FXML
-    private HBox supportPersonDetails;
+    private HBox supportPlayerDetails;
 
 
     /**
@@ -43,22 +43,22 @@ public class TeamCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         teamName.setText("Team " + displayedIndex);
 
-        for (Person person : team.getPersons()) {
-            switch (person.getRole().toString().toUpperCase()) {
+        for (Player player : team.getPlayers()) {
+            switch (player.getRole().toString().toUpperCase()) {
             case "TOP":
-                populatePersonDetails(topPersonDetails, person);
+                populatePlayerDetails(topPlayerDetails, player);
                 break;
             case "JUNGLE":
-                populatePersonDetails(junglePersonDetails, person);
+                populatePlayerDetails(junglePlayerDetails, player);
                 break;
             case "MID":
-                populatePersonDetails(midPersonDetails, person);
+                populatePlayerDetails(midPlayerDetails, player);
                 break;
             case "ADC":
-                populatePersonDetails(adcPersonDetails, person);
+                populatePlayerDetails(adcPlayerDetails, player);
                 break;
             case "SUPPORT":
-                populatePersonDetails(supportPersonDetails, person);
+                populatePlayerDetails(supportPlayerDetails, player);
                 break;
             default:
                 break;
@@ -67,25 +67,25 @@ public class TeamCard extends UiPart<Region> {
     }
 
     /**
-     * A clean helper method to create and add all UI components for a single person's details.
+     * A clean helper method to create and add all UI components for a single player's details.
      *
-     * @param personDetails The HBox container for the person's info.
-     * @param person The person to display in the row.
+     * @param playerDetails The HBox container for the player's info.
+     * @param player The player to display in the row.
      */
-    private void populatePersonDetails(HBox personDetails, Person person) {
+    private void populatePlayerDetails(HBox playerDetails, Player player) {
         Label bulletPoint = new Label("•");
         bulletPoint.getStyleClass().add("bullet_point");
 
-        Label nameLabel = new Label(person.getName().fullName);
+        Label nameLabel = new Label(player.getName().fullName);
         nameLabel.getStyleClass().add("cell_small_label");
         nameLabel.setMinWidth(120);
 
-        StyledLabel roleLabel = new StyledLabel(person.getRole().value, "role", "details_label");
-        StyledLabel rankLabel = new StyledLabel(person.getRank().value, "rank", "details_label");
-        StyledLabel championLabel = new StyledLabel(person.getChampion().value, "champion", "details_label");
+        StyledLabel roleLabel = new StyledLabel(player.getRole().value, "role", "details_label");
+        StyledLabel rankLabel = new StyledLabel(player.getRank().value, "rank", "details_label");
+        StyledLabel championLabel = new StyledLabel(player.getChampion().value, "champion", "details_label");
 
-        personDetails.getChildren().clear();
-        personDetails.getChildren().addAll(bulletPoint, roleLabel.getRoot(), rankLabel.getRoot(),
+        playerDetails.getChildren().clear();
+        playerDetails.getChildren().addAll(bulletPoint, roleLabel.getRoot(), rankLabel.getRoot(),
                 championLabel.getRoot(), nameLabel);
     }
 }

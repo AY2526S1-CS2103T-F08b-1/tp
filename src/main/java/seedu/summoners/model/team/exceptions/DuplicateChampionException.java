@@ -1,34 +1,34 @@
-package seedu.address.model.team.exceptions;
+package seedu.summoners.model.team.exceptions;
 
-import seedu.address.model.person.Person;
+import seedu.summoners.model.player.Player;
 
 /**
  * Signals that the operation would result in duplicate champions in a team.
- * Each team cannot have multiple persons with the same champion.
+ * Each team cannot have multiple players with the same champion.
  */
 public class DuplicateChampionException extends RuntimeException {
-    private final Person person1;
-    private final Person person2;
+    private final Player player1;
+    private final Player player2;
 
     /**
-     * Constructs a DuplicateChampionException with the two persons who have conflicting champions.
+     * Constructs a DuplicateChampionException with the two players who have conflicting champions.
      *
-     * @param person1 The first person with the duplicate champion.
-     * @param person2 The second person with the duplicate champion.
+     * @param player1 The first player with the duplicate champion.
+     * @param player2 The second player with the duplicate champion.
      */
-    public DuplicateChampionException(Person person1, Person person2) {
+    public DuplicateChampionException(Player player1, Player player2) {
         super("Operation would result in duplicate champions in the team. "
-                + person1.getName() + " and " + person2.getName() + " both play: "
-                + person1.getChampion());
-        this.person1 = person1;
-        this.person2 = person2;
+                + player1.getName() + " and " + player2.getName() + " both play: "
+                + player1.getChampion());
+        this.player1 = player1;
+        this.player2 = player2;
     }
 
-    public Person getPerson1() {
-        return person1;
+    public Player getPlayer1() {
+        return player1;
     }
 
-    public Person getPerson2() {
-        return person2;
+    public Player getPlayer2() {
+        return player2;
     }
 }

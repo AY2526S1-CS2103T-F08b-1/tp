@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.summoners.storage;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -9,21 +9,21 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Champion;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Rank;
-import seedu.address.model.person.Role;
-import seedu.address.model.person.Stats;
-import seedu.address.model.tag.Tag;
+import seedu.summoners.commons.exceptions.IllegalValueException;
+import seedu.summoners.model.player.Champion;
+import seedu.summoners.model.player.Name;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.player.Rank;
+import seedu.summoners.model.player.Role;
+import seedu.summoners.model.player.Stats;
+import seedu.summoners.model.tag.Tag;
 
 /**
- * Jackson-friendly version of {@link Person}.
+ * Jackson-friendly version of {@link Player}.
  */
-class JsonAdaptedPerson {
+class JsonAdaptedPlayer {
 
-    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Player's %s field is missing!";
 
     private final String id;
     private final String name;
@@ -36,10 +36,10 @@ class JsonAdaptedPerson {
     private final JsonAdaptedStats stats;
 
     /**
-     * Constructs a {@code JsonAdaptedPerson} with the given person details.
+     * Constructs a {@code JsonAdaptedPlayer} with the given player details.
      */
     @JsonCreator
-    public JsonAdaptedPerson(@JsonProperty("id") String id,
+    public JsonAdaptedPlayer(@JsonProperty("id") String id,
                              @JsonProperty("name") String name,
                              @JsonProperty("role") String role,
                              @JsonProperty("rank") String rank,
@@ -62,9 +62,9 @@ class JsonAdaptedPerson {
     }
 
     /**
-     * Converts a given {@code Person} into this class for Jackson use.
+     * Converts a given {@code Player} into this class for Jackson use.
      */
-    public JsonAdaptedPerson(Person source) {
+    public JsonAdaptedPlayer(Player source) {
         id = source.getId();
         name = source.getName().fullName;
         role = source.getRole().toString();
@@ -79,14 +79,14 @@ class JsonAdaptedPerson {
     }
 
     /**
-     * Converts this Jackson-friendly adapted person object into the model's {@code Person} object.
+     * Converts this Jackson-friendly adapted player object into the model's {@code Player} object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person.
+     * @throws IllegalValueException if there were any data constraints violated in the adapted player.
      */
-    public Person toModelType() throws IllegalValueException {
-        final List<Tag> personTags = new ArrayList<>();
+    public Player toModelType() throws IllegalValueException {
+        final List<Tag> playerTags = new ArrayList<>();
         for (JsonAdaptedTag tag : tags) {
-            personTags.add(tag.toModelType());
+            playerTags.add(tag.toModelType());
         }
 
         if (id == null) {
@@ -127,11 +127,11 @@ class JsonAdaptedPerson {
         }
         final Champion modelChampion = new Champion(champion);
 
-        final Set<Tag> modelTags = new HashSet<>(personTags);
+        final Set<Tag> modelTags = new HashSet<>(playerTags);
 
         Stats modelStats = stats != null ? stats.toModelType() : new Stats();
 
-        return new Person(modelId, modelName, modelRole, modelRank, modelChampion, modelTags, wins, losses, modelStats);
+        return new Player(modelId, modelName, modelRole, modelRank, modelChampion, modelTags, wins, losses, modelStats);
     }
 
 }

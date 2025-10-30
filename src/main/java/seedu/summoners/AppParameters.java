@@ -1,4 +1,4 @@
-package seedu.address;
+package seedu.summoners;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -7,9 +7,9 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import javafx.application.Application;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.util.FileUtil;
-import seedu.address.commons.util.ToStringBuilder;
+import seedu.summoners.commons.core.LogsCenter;
+import seedu.summoners.commons.util.FileUtil;
+import seedu.summoners.commons.util.ToStringBuilder;
 
 /**
  * Represents the parsed command-line parameters given to the application.

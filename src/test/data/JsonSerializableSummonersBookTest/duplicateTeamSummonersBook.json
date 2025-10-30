@@ -1,5 +1,5 @@
 {
-  "persons": [
+  "players": [
     {
       "id": "a1f2c3d4-e5f6-4789-abcd-1234567890ab",
       "name": "Top Player",
@@ -73,7 +73,7 @@
   ],
   "teams": [ {
     "teamId": "e3c89f5c-1de0-4c41-a1d4-2dd5795be9a3",
-    "personIds": [
+    "playerIds": [
       "a1f2c3d4-e5f6-4789-abcd-1234567890ab",
       "b2f3d4e5-f6a7-4890-bcde-2345678901bc",
       "c3f4e5d6-a7b8-4901-cdef-3456789012cd",
@@ -82,7 +82,7 @@
     ]
   }, {
     "teamId": "e3c89f5c-1de0-4c41-a1d4-2dd5795be9a3",
-    "personIds": [
+    "playerIds": [
       "a1f2c3d4-e5f6-4789-abcd-1234567890ab",
       "b2f3d4e5-f6a7-4890-bcde-2345678901bc",
       "c3f4e5d6-a7b8-4901-cdef-3456789012cd",

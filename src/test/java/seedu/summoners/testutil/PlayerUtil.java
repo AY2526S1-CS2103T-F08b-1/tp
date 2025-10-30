@@ -1,49 +1,49 @@
-package seedu.address.testutil;
+package seedu.summoners.testutil;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CHAMPION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_RANK;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_CHAMPION;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_RANK;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_ROLE;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Set;
 
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
-import seedu.address.model.person.Person;
-import seedu.address.model.tag.Tag;
+import seedu.summoners.logic.commands.AddCommand;
+import seedu.summoners.logic.commands.EditCommand.EditPlayerDescriptor;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.tag.Tag;
 
 /**
- * A utility class for Person.
+ * A utility class for Player.
  */
-public class PersonUtil {
+public class PlayerUtil {
 
     /**
-     * Returns an add command string for adding the {@code person}.
+     * Returns an add command string for adding the {@code player}.
      */
-    public static String getAddCommand(Person person) {
-        return AddCommand.COMMAND_WORD + " " + getPersonDetails(person);
+    public static String getAddCommand(Player player) {
+        return AddCommand.COMMAND_WORD + " " + getPlayerDetails(player);
     }
 
     /**
-     * Returns the part of command string for the given {@code person}'s details.
+     * Returns the part of command string for the given {@code player}'s details.
      */
-    public static String getPersonDetails(Person person) {
+    public static String getPlayerDetails(Player player) {
         StringBuilder sb = new StringBuilder();
-        sb.append(PREFIX_NAME).append(person.getName().fullName).append(" ");
-        sb.append(PREFIX_RANK).append(person.getRank().toString()).append(" ");
-        sb.append(PREFIX_ROLE).append(person.getRole().toString()).append(" ");
-        sb.append(PREFIX_CHAMPION).append(person.getChampion().toString()).append(" ");
-        person.getTags().stream().forEach(
+        sb.append(PREFIX_NAME).append(player.getName().fullName).append(" ");
+        sb.append(PREFIX_RANK).append(player.getRank().toString()).append(" ");
+        sb.append(PREFIX_ROLE).append(player.getRole().toString()).append(" ");
+        sb.append(PREFIX_CHAMPION).append(player.getChampion().toString()).append(" ");
+        player.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
         return sb.toString();
     }
 
     /**
-     * Returns the part of command string for the given {@code EditPersonDescriptor}'s details.
+     * Returns the part of command string for the given {@code EditPlayerDescriptor}'s details.
      */
-    public static String getEditPersonDescriptorDetails(EditPersonDescriptor descriptor) {
+    public static String getEditPlayerDescriptorDetails(EditPlayerDescriptor descriptor) {
         StringBuilder sb = new StringBuilder();
         descriptor.getName().ifPresent(name -> sb.append(PREFIX_NAME).append(name.fullName).append(" "));
         descriptor.getRole().ifPresent(role -> sb.append(PREFIX_ROLE).append(role.value).append(" "));

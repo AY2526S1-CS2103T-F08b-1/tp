@@ -1,6 +1,6 @@
-package seedu.address.logic.commands;
+package seedu.summoners.logic.commands;
 
-import seedu.address.model.Model;
+import seedu.summoners.model.Model;
 
 /**
  * Format full help instructions for every command for display.

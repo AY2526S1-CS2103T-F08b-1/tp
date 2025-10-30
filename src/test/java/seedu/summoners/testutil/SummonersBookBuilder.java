@@ -1,43 +1,43 @@
-package seedu.address.testutil;
+package seedu.summoners.testutil;
 
-import seedu.address.model.AddressBook;
-import seedu.address.model.person.Person;
-import seedu.address.model.team.Team;
+import seedu.summoners.model.SummonersBook;
+import seedu.summoners.model.player.Player;
+import seedu.summoners.model.team.Team;
 
 /**
- * A utility class to help with building Addressbook objects.
+ * A utility class to help with building Summonersbook objects.
  * Example usage: <br>
- *     {@code AddressBook ab = new AddressBookBuilder().withPerson("John", "Doe").build();}
+ *     {@code SummonersBook ab = new SummonersBookBuilder().withPlayer("John", "Doe").build();}
  */
-public class AddressBookBuilder {
+public class SummonersBookBuilder {
 
-    private AddressBook addressBook;
+    private SummonersBook summonersBook;
 
-    public AddressBookBuilder() {
-        addressBook = new AddressBook();
+    public SummonersBookBuilder() {
+        summonersBook = new SummonersBook();
     }
 
-    public AddressBookBuilder(AddressBook addressBook) {
-        this.addressBook = addressBook;
+    public SummonersBookBuilder(SummonersBook summonersBook) {
+        this.summonersBook = summonersBook;
     }
 
     /**
-     * Adds a new {@code Person} to the {@code AddressBook} that we are building.
+     * Adds a new {@code Player} to the {@code SummonersBook} that we are building.
      */
-    public AddressBookBuilder withPerson(Person person) {
-        addressBook.addPerson(person);
+    public SummonersBookBuilder withPlayer(Player player) {
+        summonersBook.addPlayer(player);
         return this;
     }
 
     /**
-     * Adds a new {@code Team} to the {@code AddressBook} that we are building.
+     * Adds a new {@code Team} to the {@code SummonersBook} that we are building.
      */
-    public AddressBookBuilder withTeam(Team team) {
-        addressBook.addTeam(team);
+    public SummonersBookBuilder withTeam(Team team) {
+        summonersBook.addTeam(team);
         return this;
     }
 
-    public AddressBook build() {
-        return addressBook;
+    public SummonersBook build() {
+        return summonersBook;
     }
 }

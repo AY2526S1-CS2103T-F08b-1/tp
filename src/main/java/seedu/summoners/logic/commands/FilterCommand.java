@@ -1,10 +1,10 @@
-package seedu.address.logic.commands;
+package seedu.summoners.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CHAMPION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_RANK;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SCORE;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_CHAMPION;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_RANK;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_ROLE;
+import static seedu.summoners.logic.parser.CliSyntax.PREFIX_SCORE;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -12,29 +12,29 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import seedu.address.commons.util.CollectionUtil;
-import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.logic.Messages;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.model.person.Champion;
-import seedu.address.model.person.ChampionContainsKeywordsPredicate;
-import seedu.address.model.person.Rank;
-import seedu.address.model.person.RankContainsKeywordsPredicate;
-import seedu.address.model.person.Role;
-import seedu.address.model.person.RoleContainsKeywordsPredicate;
-import seedu.address.model.person.ScoreInRangePredicate;
+import seedu.summoners.commons.util.CollectionUtil;
+import seedu.summoners.commons.util.ToStringBuilder;
+import seedu.summoners.logic.Messages;
+import seedu.summoners.logic.commands.exceptions.CommandException;
+import seedu.summoners.model.Model;
+import seedu.summoners.model.player.Champion;
+import seedu.summoners.model.player.ChampionContainsKeywordsPredicate;
+import seedu.summoners.model.player.Rank;
+import seedu.summoners.model.player.RankContainsKeywordsPredicate;
+import seedu.summoners.model.player.Role;
+import seedu.summoners.model.player.RoleContainsKeywordsPredicate;
+import seedu.summoners.model.player.ScoreInRangePredicate;
 
 /**
- * Filters the list of persons in the address book based on the specified criteria:
- * ranks, roles, champions, and/or score threshold. Only persons matching all
+ * Filters the list of players in the summoners book based on the specified criteria:
+ * ranks, roles, champions, and/or score threshold. Only players matching all
  * provided criteria will be included in the filtered list.
  *
  * <p>At least one filter criterion must be specified. If no criteria are provided,
  * a {@code ParseException} is thrown when parsing the command.
  *
  * <p>The filtered list is updated in the model, and the command returns a summary
- * message indicating the number of persons found.
+ * message indicating the number of players found.
  */
 public class FilterCommand extends Command {
 
@@ -60,28 +60,28 @@ public class FilterCommand extends Command {
     private final ChampionContainsKeywordsPredicate championPredicate;
     private final ScoreInRangePredicate scorePredicate;
 
-    private final FilterPersonDescriptor filterPersonDescriptor;
+    private final FilterPlayerDescriptor filterPlayerDescriptor;
 
     /**
-     * @param filterPersonDescriptor details to edit the person with
+     * @param filterPlayerDescriptor details to edit the player with
      */
-    public FilterCommand(FilterPersonDescriptor filterPersonDescriptor) {
-        requireNonNull(filterPersonDescriptor);
-        this.filterPersonDescriptor = new FilterPersonDescriptor(filterPersonDescriptor);
-        this.rankPredicate = new RankContainsKeywordsPredicate(List.of(filterPersonDescriptor.getRanks()));
-        this.rolePredicate = new RoleContainsKeywordsPredicate(List.of(filterPersonDescriptor.getRoles()));
-        this.championPredicate = new ChampionContainsKeywordsPredicate(List.of(filterPersonDescriptor.getChampions()));
-        this.scorePredicate = new ScoreInRangePredicate(filterPersonDescriptor.getScoreThreshold());
+    public FilterCommand(FilterPlayerDescriptor filterPlayerDescriptor) {
+        requireNonNull(filterPlayerDescriptor);
+        this.filterPlayerDescriptor = new FilterPlayerDescriptor(filterPlayerDescriptor);
+        this.rankPredicate = new RankContainsKeywordsPredicate(List.of(filterPlayerDescriptor.getRanks()));
+        this.rolePredicate = new RoleContainsKeywordsPredicate(List.of(filterPlayerDescriptor.getRoles()));
+        this.championPredicate = new ChampionContainsKeywordsPredicate(List.of(filterPlayerDescriptor.getChampions()));
+        this.scorePredicate = new ScoreInRangePredicate(filterPlayerDescriptor.getScoreThreshold());
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        model.updateFilteredPersonList(
+        model.updateFilteredPlayerList(
                 rankPredicate.and(rolePredicate).and(championPredicate).and(scorePredicate)
         );
         return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
+                String.format(Messages.MESSAGE_PLAYERS_LISTED_OVERVIEW, model.getFilteredPlayerList().size()));
     }
 
     @Override
@@ -96,21 +96,21 @@ public class FilterCommand extends Command {
         }
 
         FilterCommand otherFilterCommand = (FilterCommand) other;
-        return filterPersonDescriptor.equals(otherFilterCommand.filterPersonDescriptor);
+        return filterPlayerDescriptor.equals(otherFilterCommand.filterPlayerDescriptor);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("filterPersonDescriptor", filterPersonDescriptor)
+                .add("filterPlayerDescriptor", filterPlayerDescriptor)
                 .toString();
     }
 
     /**
-     * Stores the details to edit the person with. Each non-empty field value will replace the
-     * corresponding field value of the person.
+     * Stores the details to edit the player with. Each non-empty field value will replace the
+     * corresponding field value of the player.
      */
-    public static class FilterPersonDescriptor {
+    public static class FilterPlayerDescriptor {
         private static final float DEFAULT_SCORE_THRESHOLD = 0.0F;
 
         private Set<Role> roles;
@@ -118,13 +118,13 @@ public class FilterCommand extends Command {
         private Set<Champion> champions;
         private Float scoreThreshold = DEFAULT_SCORE_THRESHOLD;
 
-        public FilterPersonDescriptor() {}
+        public FilterPlayerDescriptor() {}
 
         /**
          * Copy constructor.
          * A defensive copy of {@code tags} is used internally.
          */
-        public FilterPersonDescriptor(FilterPersonDescriptor toCopy) {
+        public FilterPlayerDescriptor(FilterPlayerDescriptor toCopy) {
             setRoles(toCopy.roles);
             setRanks(toCopy.ranks);
             setChampions(toCopy.champions);
@@ -218,15 +218,15 @@ public class FilterCommand extends Command {
             }
 
             // instanceof handles nulls
-            if (!(other instanceof FilterPersonDescriptor)) {
+            if (!(other instanceof FilterPlayerDescriptor)) {
                 return false;
             }
 
-            FilterPersonDescriptor otherFilterPersonDescriptor = (FilterPersonDescriptor) other;
-            return Objects.equals(roles, otherFilterPersonDescriptor.roles)
-                    && Objects.equals(ranks, otherFilterPersonDescriptor.ranks)
-                    && Objects.equals(champions, otherFilterPersonDescriptor.champions)
-                    && Objects.equals(scoreThreshold, otherFilterPersonDescriptor.scoreThreshold);
+            FilterPlayerDescriptor otherFilterPlayerDescriptor = (FilterPlayerDescriptor) other;
+            return Objects.equals(roles, otherFilterPlayerDescriptor.roles)
+                    && Objects.equals(ranks, otherFilterPlayerDescriptor.ranks)
+                    && Objects.equals(champions, otherFilterPlayerDescriptor.champions)
+                    && Objects.equals(scoreThreshold, otherFilterPlayerDescriptor.scoreThreshold);
         }
 
         @Override
