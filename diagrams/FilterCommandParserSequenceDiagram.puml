@@ -1,0 +1,43 @@
+@startuml
+!include style.puml
+skinparam participantStyle Rectangle
+skinparam shadowing false
+
+participant FilterCommandParser LOGIC_COLOR
+participant "FilterPersonDescriptor" as Descriptor LOGIC_COLOR
+participant FilterCommand LOGIC_COLOR
+
+-> FilterCommandParser
+activate FilterCommandParser
+create Descriptor
+FilterCommandParser -> Descriptor : new()
+activate Descriptor
+Descriptor --> FilterCommandParser
+deactivate Descriptor
+
+FilterCommandParser -> FilterCommandParser : parseRanksForFilter()
+FilterCommandParser -> Descriptor : setRanks(Set<Rank>)
+activate Descriptor
+Descriptor --> FilterCommandParser
+deactivate Descriptor
+
+FilterCommandParser -> FilterCommandParser : parseRolesForFilter()
+FilterCommandParser -> Descriptor : setRoles(Set<Role>)
+activate Descriptor
+Descriptor --> FilterCommandParser
+deactivate Descriptor
+
+FilterCommandParser -> FilterCommandParser : parseChampionsForFilter()
+FilterCommandParser -> Descriptor : setChampions(Set<Champion>)
+activate Descriptor
+Descriptor --> FilterCommandParser
+deactivate Descriptor
+
+create FilterCommand
+FilterCommandParser -> FilterCommand : new(Descriptor)
+activate FilterCommand
+FilterCommand --> FilterCommandParser
+deactivate FilterCommand
+<-- FilterCommandParser
+deactivate FilterCommandParser
+@enduml

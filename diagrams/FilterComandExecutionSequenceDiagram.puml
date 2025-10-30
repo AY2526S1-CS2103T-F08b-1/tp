@@ -1,0 +1,48 @@
+@startuml
+!include style.puml
+skinparam participantStyle Rectangle
+skinparam shadowing false
+
+actor User
+participant UI LOGIC_COLOR
+participant LogicManager LOGIC_COLOR
+participant AddressBookParser LOGIC_COLOR
+participant FilterCommandParser LOGIC_COLOR
+participant FilterCommand LOGIC_COLOR
+participant Model LOGIC_COLOR
+
+
+User -> UI : enter "filter rk/Diamond c/Yasuo"
+activate UI
+UI -> LogicManager : execute(cmdText)
+activate LogicManager
+LogicManager -> AddressBookParser : parseCommand(cmdText)
+activate AddressBookParser
+AddressBookParser -> FilterCommandParser : parse(args)
+activate FilterCommandParser
+
+ref over FilterCommandParser: details omitted
+create FilterCommand
+FilterCommandParser -> FilterCommand : FilterCommand(descriptor)
+
+activate FilterCommand
+FilterCommand --> FilterCommandParser
+deactivate FilterCommand
+FilterCommandParser --> AddressBookParser
+deactivate FilterCommandParser
+AddressBookParser --> LogicManager : FilterCommand
+deactivate AddressBookParser
+
+LogicManager -> FilterCommand : execute(model)
+activate FilterCommand
+FilterCommand -> Model : updateFilteredPersonList(predicates)
+activate Model
+Model --> FilterCommand : filtered list updated
+deactivate Model
+FilterCommand --> LogicManager : CommandResult
+deactivate FilterCommand
+LogicManager --> UI : CommandResult
+deactivate LogicManager
+UI --> User : render filtered list
+deactivate UI
+@enduml
