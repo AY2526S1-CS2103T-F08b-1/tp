@@ -13,16 +13,13 @@ Class HelpWindow
 Class ResultDisplay
 Class PersonListPanel
 Class PersonCard
-Class StatusBarFooter
-Class CommandBox
-
-' === Teams UI (added) ===
 Class TeamListPanel
 Class TeamCard
-Class TeamStatsWindow
-
-' === Persons UI (added) ===
+Class StatusBarFooter
+Class CommandBox
 Class PersonDetailWindow
+Class TeamStatsWindow
+Class StyledLabel
 }
 
 package Model <<Rectangle>> {
@@ -81,10 +78,11 @@ PersonListPanel -[hidden]left- HelpWindow
 HelpWindow -[hidden]left- CommandBox
 CommandBox -[hidden]left- ResultDisplay
 ResultDisplay -[hidden]left- StatusBarFooter
-' === Teams UI (added) ===
 TeamListPanel -[hidden]left- TeamStatsWindow
-' === Persons UI (added) ===
 TeamStatsWindow -[hidden]left- PersonDetailWindow
+
+PersonCard *--> "*" StyledLabel
+TeamCard *--> "*" StyledLabel
 
 MainWindow -[hidden]-|> UiPart
 @enduml
