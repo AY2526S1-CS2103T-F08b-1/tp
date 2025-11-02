@@ -1,0 +1,46 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+mainframe **sd** Scenario: Forms At Least One Team
+
+box Logic LOGIC_COLOR_T1
+participant "g:GroupCommand" as GroupCommand LOGIC_COLOR
+participant ":TeamMatcher" as TeamMatcher LOGIC_COLOR
+end box
+
+activate GroupCommand
+
+GroupCommand -> TeamMatcher : matchTeams(unassignedPersons)
+activate TeamMatcher
+
+TeamMatcher -> TeamMatcher : groupByRole(...)
+TeamMatcher -> TeamMatcher : validateMinimumPersons(...)
+TeamMatcher -> TeamMatcher : createSortedCopy(...)
+TeamMatcher -> TeamMatcher : validateNoInitialConflict(...)
+note right: Validation passes, at least one team can be formed.
+
+loop while canFormTeam()
+
+    TeamMatcher -> TeamMatcher : trySelectTeamMembers(...)
+
+    alt A full team was successfully selected
+        TeamMatcher -> TeamMatcher : createTeam(members)
+        TeamMatcher -> TeamMatcher : addToTeamsList(team)
+        TeamMatcher -> TeamMatcher : remove members from pools
+    else No conflict-free team could be formed
+        break no person available
+            note right
+                No valid combination of players remains.
+                Stop forming teams.
+            end note
+        end
+    end
+
+    deactivate TeamMatcher
+end
+
+TeamMatcher --> GroupCommand : teams
+deactivate TeamMatcher
+
+@enduml
