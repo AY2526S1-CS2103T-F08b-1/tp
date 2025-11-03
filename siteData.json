@@ -237,11 +237,10 @@
         "project-summonersbook": "Project: SummonersBook",
         "new-features": "New Features",
         "code-contributions": "Code Contributions",
-        "project-management": "Project Management",
         "enhancements-to-existing-features": "Enhancements to Existing Features",
         "documentation": "Documentation",
-        "community": "Community",
-        "tools": "Tools"
+        "project-management": "Project Management",
+        "community": "Community"
       },
       "headingKeywords": {}
     },
