@@ -3,14 +3,14 @@
 skinparam participantStyle Rectangle
 skinparam shadowing false
 
-participant FilterCommandParser LOGIC_COLOR
-participant "FilterPersonDescriptor" as Descriptor LOGIC_COLOR
-participant FilterCommand LOGIC_COLOR
+participant ":FilterCommandParser" as FilterCommandParser LOGIC_COLOR
+participant "descriptor:FilterPersonDescriptor" as Descriptor LOGIC_COLOR
+participant ":FilterCommand" as FilterCommand LOGIC_COLOR
 
 -> FilterCommandParser
 activate FilterCommandParser
 create Descriptor
-FilterCommandParser -> Descriptor : new()
+FilterCommandParser -> Descriptor : FilterPersonDescriptor()
 activate Descriptor
 Descriptor --> FilterCommandParser
 deactivate Descriptor
@@ -34,7 +34,7 @@ Descriptor --> FilterCommandParser
 deactivate Descriptor
 
 create FilterCommand
-FilterCommandParser -> FilterCommand : new(Descriptor)
+FilterCommandParser -> FilterCommand : FilterCommand(descriptor)
 activate FilterCommand
 FilterCommand --> FilterCommandParser
 deactivate FilterCommand

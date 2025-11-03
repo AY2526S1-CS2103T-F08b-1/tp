@@ -52,6 +52,8 @@
         "common-classes": "Common classes",
         "implementation": "Implementation",
         "filter-feature": "Filter Feature",
+        "addstats": "AddStats",
+        "delete-stats-feature": "Delete Stats Feature",
         "auto-grouping-feature": "Auto-Grouping Feature",
         "viewing-person-details-feature": "Viewing Person Details Feature",
         "ungrouping-teams-feature": "Ungrouping Teams Feature",

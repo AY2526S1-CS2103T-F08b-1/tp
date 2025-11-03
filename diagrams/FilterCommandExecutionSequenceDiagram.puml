@@ -2,14 +2,16 @@
 !include style.puml
 skinparam participantStyle Rectangle
 skinparam shadowing false
+skinparam sequenceReferenceBackgroundColor white
 
 actor User
-participant UI LOGIC_COLOR
-participant LogicManager LOGIC_COLOR
-participant AddressBookParser LOGIC_COLOR
-participant FilterCommandParser LOGIC_COLOR
-participant FilterCommand LOGIC_COLOR
-participant Model LOGIC_COLOR
+participant ":UI" as UI LOGIC_COLOR
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":FilterCommandParser" as FilterCommandParser LOGIC_COLOR
+participant "descriptor:FilterPersonDescriptor" as Descriptor LOGIC_COLOR
+participant ":FilterCommand" as FilterCommand LOGIC_COLOR
+participant "m:Model" as Model LOGIC_COLOR
 
 
 User -> UI : enter "filter rk/Diamond c/Yasuo"
@@ -20,8 +22,12 @@ LogicManager -> AddressBookParser : parseCommand(cmdText)
 activate AddressBookParser
 AddressBookParser -> FilterCommandParser : parse(args)
 activate FilterCommandParser
-
-ref over FilterCommandParser: details omitted
+create Descriptor
+FilterCommandParser -> Descriptor : FilterPersonDescriptor()
+activate Descriptor
+ref over FilterCommandParser, Descriptor: Setting up parameters for FilterPersonDescriptor object: descriptor
+Descriptor --> FilterCommandParser
+deactivate Descriptor
 create FilterCommand
 FilterCommandParser -> FilterCommand : FilterCommand(descriptor)
 
