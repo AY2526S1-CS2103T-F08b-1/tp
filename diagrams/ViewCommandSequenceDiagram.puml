@@ -1,6 +1,11 @@
 @startuml
 !include style.puml
 skinparam ArrowFontStyle plain
+skinparam sequenceMessageAlign center
+
+title View Person Details Sequence Diagram
+
+autonumber
 
 box Logic LOGIC_COLOR_T1
 participant "v:ViewCommand" as ViewCommand LOGIC_COLOR
@@ -16,8 +21,15 @@ participant ":MainWindow" as MainWindow UI_COLOR
 participant ":PersonDetailWindow" as PersonDetailWindow UI_COLOR
 end box
 
+group Command Execution
+
 [-> ViewCommand : execute(m)
 activate ViewCommand
+
+note right of ViewCommand
+  The ViewCommand retrieves the person
+  at the specified index from the model.
+end note
 
 ViewCommand -> Model : getFilteredPersonList()
 activate Model
@@ -25,10 +37,10 @@ activate Model
 Model --> ViewCommand : personList
 deactivate Model
 
-ViewCommand -> ViewCommand : get person at index
+ViewCommand -> ViewCommand : get person at target index
 
 create CommandResult
-ViewCommand -> CommandResult : showPersonDetail(message, person)
+ViewCommand -> CommandResult : new CommandResult(message, person)
 activate CommandResult
 
 CommandResult --> ViewCommand
@@ -36,37 +48,48 @@ deactivate CommandResult
 
 [<-- ViewCommand : r
 deactivate ViewCommand
+end
 
-[-> MainWindow : executeCommand()
+group UI Display Logic
+
+[-> MainWindow : executeCommand(r)
 activate MainWindow
 
-MainWindow -> MainWindow : isShowPersonDetail()
+opt isShowPersonDetail() is true
 
-MainWindow -> MainWindow : getPersonToShow()
+    MainWindow -> r : getPersonToShow()
+    activate r
+    r --> MainWindow : person
+    deactivate r
 
-create PersonDetailWindow
-MainWindow -> PersonDetailWindow
-activate PersonDetailWindow
+    note right of MainWindow
+      A new PersonDetailWindow is created
+      to display the details of the selected person.
+    end note
+    create PersonDetailWindow
+    MainWindow -> PersonDetailWindow : new()
+    activate PersonDetailWindow
 
-PersonDetailWindow --> MainWindow
-deactivate PersonDetailWindow
+    PersonDetailWindow --> MainWindow
+    deactivate PersonDetailWindow
 
-MainWindow -> PersonDetailWindow : setPerson(person)
-activate PersonDetailWindow
+    MainWindow -> PersonDetailWindow : setPerson(person)
+    activate PersonDetailWindow
 
-PersonDetailWindow -> PersonDetailWindow : displayPersonDetails()
-PersonDetailWindow -> PersonDetailWindow : displayCharts()
+    PersonDetailWindow -> PersonDetailWindow : displayPersonDetails()
+    PersonDetailWindow -> PersonDetailWindow : displayCharts()
 
-PersonDetailWindow --> MainWindow
-deactivate PersonDetailWindow
+    PersonDetailWindow --> MainWindow
+    deactivate PersonDetailWindow
 
-MainWindow -> PersonDetailWindow : show()
-activate PersonDetailWindow
+    MainWindow -> PersonDetailWindow : show()
+    activate PersonDetailWindow
+    note right of PersonDetailWindow : Window is shown to the user.
 
-PersonDetailWindow --> MainWindow
-deactivate PersonDetailWindow
+    PersonDetailWindow --> MainWindow
+    deactivate PersonDetailWindow
+end
 
 [<-- MainWindow
 deactivate MainWindow
-
 @enduml
