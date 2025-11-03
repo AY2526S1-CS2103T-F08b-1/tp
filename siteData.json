@@ -197,7 +197,9 @@
         "performance-tracking-3": "Performance Tracking",
         "team-management-3": "Team Management",
         "data-import-export-3": "Data Import/Export",
-        "utility-commands-2": "Utility Commands"
+        "utility-commands-2": "Utility Commands",
+        "appendix": "Appendix",
+        "supported-champions": "Supported Champions"
       },
       "headingKeywords": {}
     },
