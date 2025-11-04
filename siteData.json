@@ -231,7 +231,11 @@
       "src": "team/bryankcodes.md",
       "title": "Bryan Koh's Project Portfolio Page",
       "headings": {
-        "project-summonersbook": "Project: SummonersBook"
+        "project-summonersbook": "Project: SummonersBook",
+        "summary-of-contributions": "Summary of Contributions",
+        "new-features": "New Features",
+        "enhancements-to-existing-features": "Enhancements to Existing Features",
+        "contributions-to-documentation": "Contributions to Documentation"
       },
       "headingKeywords": {}
     },
