@@ -148,7 +148,10 @@
         "step-1-install-one-time-setup": "Step 1: Install (One-Time Setup)",
         "step-2-running-summonersbook": "Step 2: Running SummonersBook",
         "step-3-your-first-team": "Step 3: Your First Team",
-        "step-4-learn-the-essentials-2-minute-tutorial": "Step 4: Learn the Essentials (2-Minute Tutorial)",
+        "step-4-navigating-the-ui-and-understanding-indexes": "Step 4: Navigating the UI and Understanding Indexes",
+        "the-interface": "The Interface",
+        "understanding-indexes": "Understanding Indexes",
+        "step-5-learn-the-essentials-2-minute-tutorial": "Step 5: Learn the Essentials (2-Minute Tutorial)",
         "common-workflows": "Common Workflows",
         "workflow-1-preparing-for-scrimmage-night": "Workflow 1: Preparing for Scrimmage Night",
         "workflow-2-finding-substitutes-mid-tournament": "Workflow 2: Finding Substitutes Mid-Tournament",
@@ -214,7 +217,6 @@
         "utility-commands-2": "Utility Commands",
         "appendix": "Appendix",
         "supported-champions": "Supported Champions",
-        "back-to-top": "Back to Top",
         "understanding-rank-ordered-teams": "Understanding Rank-Ordered Teams"
       },
       "headingKeywords": {}
